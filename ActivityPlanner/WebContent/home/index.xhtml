@@ -5,13 +5,24 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<title>Hello JSF!</title>
+	<title>Novo usuário</title>
 </h:head>
-<h:body> #{helloMB.message} 
-<p:panel header="Teste" style="width:50%">
-		<p:button value="Teste" />
-		<p:outputLabel value="Teste Planning"/>
-	</p:panel>
+<h:body>
+	<h:form>
+		<p:panel header="Cadastro de Usuário" style="width:100%">
+			<p:outputLabel value="Nome" />
+			<p:inputText style="display: block;" />
+			<p:outputLabel value="Email" />
+			<p:inputText style="display: block;" />
+			<p:outputLabel value="Cargo" />
+			<p:inputText style="display: block;" />
+			<p:outputLabel value="Gerente" />
+			<p:selectBooleanCheckbox
+				style=" margin-top: 10px; margin-left: 10px;" />
+			<p:commandButton styleClass="btn btn-success" icon="ui-icon-check" value="Salvar" style="display: block;">
+			</p:commandButton>
+		</p:panel>
+	</h:form>
 </h:body>
 </html>
 
