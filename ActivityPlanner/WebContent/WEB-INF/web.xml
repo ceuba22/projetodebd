@@ -5,7 +5,7 @@
 	id="WebApp_ID" version="3.0">
 	<display-name>ActivityPlanner</display-name>
 	<welcome-file-list>
-		<welcome-file>home/index.jsf</welcome-file>
+		<welcome-file>home/singUp.jsf</welcome-file>
 	</welcome-file-list>
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
