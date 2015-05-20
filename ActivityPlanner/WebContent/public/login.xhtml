@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Login</title>
+	<style>
+#divLogin {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-top: -100px;
+	margin-left: -250px;
+	width: 400px;
+	height: 200px;
+}
+</style>
+</h:head>
+<h:body style="background:url(public/01.jpg);">
+	<h:form>
+		<p:messages showDetail="true" />
+		<div id="divLogin">
+			<p:panel header="Login" style="width:100%;">
+				<div align="center">
+					<p:outputLabel value="Nome"
+						style=" margin-bottom: 10px; display: block;" />
+					<p:inputText style="display: block;  margin-bottom: 10px;"
+						value="#{loginMB.userLogin.email}" />
+					<p:outputLabel value="Senha"
+						style="  display: block; margin-bottom: 10px;" />
+					<p:password value="#{loginMB.userLogin.senha}"
+						style="margin-bottom: 10px;" />
+				</div>
+				<p:commandButton styleClass="btn btn-success" icon="ui-icon-check"
+					value="Logar" actionListener="#{loginMB.login}" update="@form">
+				</p:commandButton>
+				<a href="http://localhost:8080/ActivityPlanner/public/singUp.jsf"
+					style="border: 1px solid #a6c9e2; text-decoration: inherit; background: #0078ae; color: #ffffff; font-weight: normal; font-size: 1em; font-family: Verdana, Arial, sans-serif; border-radius: 5px; -webkit-appearance: button; padding: .3em 1em .3em 2.1em; line-height: 1.4;">
+					<span> <i class="fa fa-question"></i>Não sou cadastrado
+				</span>
+				</a>
+
+			</p:panel>
+		</div>
+	</h:form>
+</h:body>
+</html>
+
+

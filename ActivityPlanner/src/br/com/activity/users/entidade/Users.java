@@ -1,4 +1,4 @@
-package br.com.activity.entidade.users;
+package br.com.activity.users.entidade;
 
 import java.util.Date;
 
@@ -44,7 +44,7 @@ public class Users {
 	@Column(name="CARGO")
 	private String cargo;
 	
-	@Column(name="CARGO")
+	@Column(name="MANAGER")
 	private boolean manager;
 
 	public long getId() {

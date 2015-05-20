@@ -1,5 +1,8 @@
 package br.com.activity.facade;
 
+import br.com.activity.users.dao.UsersDAO;
+import br.com.activity.users.entidade.Users;
+
 
 public class ActivityFacade {
 	
@@ -13,5 +16,11 @@ public class ActivityFacade {
 	} 
 	
 	public ActivityFacade(){}
-
+	
+	public void saveUser(Users users) throws ClassNotFoundException{
+		UsersDAO.getInstance().adiciona(users);
+	}
+	public boolean isloginUsers(Users users) throws ClassNotFoundException{
+		return UsersDAO.getInstance().isloginUsers(users);
+	}
 }

@@ -5,9 +5,9 @@ import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import br.com.activity.entidade.users.Users;
-import br.com.activity.entidade.users.UsersDAO;
-import br.com.activity.to.users.UsersTO;
+import br.com.activity.facade.ActivityFacade;
+import br.com.activity.users.entidade.Users;
+import br.com.activity.users.to.UsersTO;
 
 
 @ViewScoped
@@ -29,7 +29,14 @@ public class SingUpMB implements Serializable {
 	
 	public void save(){
 		Users users = newUsers.toVO();
-		UsersDAO.getInstance().save(users);
+		
+		try {
+			ActivityFacade.getInstance().saveUser(users);
+			setNewUsers(new UsersTO());
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public UsersTO getNewUsers() {

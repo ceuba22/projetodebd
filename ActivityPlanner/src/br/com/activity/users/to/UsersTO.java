@@ -1,8 +1,8 @@
-package br.com.activity.to.users;
+package br.com.activity.users.to;
 
 import java.util.Date;
 
-import br.com.activity.entidade.users.Users;
+import br.com.activity.users.entidade.Users;
 
 
 public class UsersTO implements Comparable<UsersTO> {
