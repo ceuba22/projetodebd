@@ -6,11 +6,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.faces.context.FacesContext;
+
+import br.com.activity.beans.users.UsersMB;
 import br.com.activity.hibenate.ConnectionFactory;
 import br.com.activity.users.entidade.Users;
 import br.com.activity.util.ActivityUtil;
 
 public class UsersDAO {
+	private UsersMB usersMB;
 	private Connection connection;
 	String nome;
 	String cargo;
@@ -56,11 +60,24 @@ public class UsersDAO {
 		boolean islogin = false;
 		String sql = "SELECT * FROM users where EMAIL = '"+users.getEmail()+"' AND SENHA = '"+ActivityUtil.getInstance().md5(users.getSenha())+"'";
 		PreparedStatement stmt;
+		
 		ResultSet rs;
 		try {
 			stmt = connection.prepareStatement(sql);
 			rs = stmt.executeQuery(sql);
 			if(rs.first()){
+				usersMB = new UsersMB();
+				usersMB.setNome(rs.getString("NOME"));
+				usersMB.setSenha(sql);
+				usersMB.setId(rs.getLong("ID"));
+				usersMB.setCargo(rs.getString("CARGO"));
+				usersMB.setEmail(rs.getString("EMAIL"));
+				usersMB.setManager(rs.getBoolean("MANAGER"));
+				usersMB.setCriadoEm(rs.getDate("CRIADO_EM"));
+				usersMB.setAtualizadoEm(rs.getDate("ATUALIZADO_EM"));
+				
+				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usersMB", usersMB);
+				
 				islogin = true;
 			}
 			stmt.close();
@@ -69,5 +86,13 @@ public class UsersDAO {
 			e.printStackTrace();
 		}
 		return islogin;
+	}
+
+	public UsersMB getUsersMB() {
+		return usersMB;
+	}
+
+	public void setUsersMB(UsersMB usersMB) {
+		this.usersMB = usersMB;
 	}
 }

@@ -20,13 +20,21 @@
 </h:head>
 <h:body style="background:url(01.jpg);">
 	<h:form>
-		<div >
+		<h:outputFormat rendered="#{principalMB.usersTO.manager eq true}">
 			<p:panel header="Activity Planner" style="width:100%;">
-			
-			
+				<div align="right">
+					<p>Seja Bem-Vindo Sr(a): #{principalMB.usersTO.nome}.</p>
+					<p>Cargo: #{principalMB.usersTO.cargo}.</p>
+				</div>
 
+				<div>
+					<p:dataTable id="project" var="project" widgetVar="project" emptyMessage="Não Existe Projetos Ativos.">
+					
+					</p:dataTable>
+				</div>
 			</p:panel>
-		</div>
+		</h:outputFormat>
+		<h:outputFormat rendered="#{principalMB.usersTO.manager ne true}" />
 	</h:form>
 </h:body>
 </html>
