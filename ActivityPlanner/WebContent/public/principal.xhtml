@@ -5,7 +5,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<title>Login</title>
+	<title>Inicio</title>
 </h:head>
 <h:body style="background:url(01.jpg);">
 	<h:form>
@@ -22,18 +22,19 @@
 
 				<div style="float: left; margin: 50px 0px 0px 10px;">
 					<p:panelMenu style="width:300px; float: left;">
-						<p:submenu label="Projeto">
-							<p:menuitem value="Criar Projeto" icon="ui-icon-disk"
+						<p:submenu label="Projeto" icon="ui-icon-folder-collapsed">
+							<p:menuitem value="Criar Projeto" icon="ui-icon-folder-open"
 								onclick="PF('criarProjetoDialog').show()" />
 						</p:submenu>
 						<p:submenu label="Monitoramento">
 						</p:submenu>
 						<p:separator />
 						<p:submenu label="Departamento">
-							<p:menuitem value="Criar Departamento" icon="ui-icon-signal" />
+							<p:menuitem value="Criar Departamento" icon="ui-icon-flag" />
 						</p:submenu>
 						<p:submenu label="Atividade">
-							<p:menuitem value="Criar Atividade" icon="ui-icon-signal" />
+							<p:menuitem value="Criar Atividade" icon="ui-icon-clipboard"
+								onclick="PF('criarAtividadeDialog').show()" />
 						</p:submenu>
 						<p:submenu label="Relato">
 						</p:submenu>
@@ -65,8 +66,10 @@
 		</h:outputFormat>
 
 		<p:confirmDialog id="criarProjetoDialog" modal="true"
-			appendTo="@(body)" header="Formulário de Criação de Projeto"
-			widgetVar="criarProjetoDialog">
+			appendTo="@(body)" header="Formulário de Projeto"
+			message="Preencha corretamente os campos a seguir."
+			widgetVar="criarProjetoDialog" height="100%" width="75%"
+			closable="false">
 
 			<p:outputLabel value="Nome do Projeto"
 				style=" margin-bottom: 10px; display: block;" />
@@ -74,19 +77,108 @@
 			<p:outputLabel value="Descrição"
 				style=" margin-bottom: 10px; display: block;" />
 			<p:inputText style="display: block;  margin-bottom: 10px;" />
-			<p:outputLabel for="calendarCriacao" value="Data de Criação" />
-			<p:calendar id="calendarCriacao" value="#{calendarView.date2}"  locale="br"/>
+			<p:outputLabel value="Data de Criação"
+				style="margin-bottom: 10px; display: block;" />
+			<p:calendar id="calendarCriacaoProjeto" value="#{calendarView.date2}"
+				locale="pt" style="display: block;  margin-bottom: 10px;" />
+			<div style="float: right">
+				<p:outputLabel value="Atividades"
+					style="margin-bottom: 10px; display: block;" />
+				<p:pickList id="listAtividades" value="#{principalMB.departamentos}"
+					var="departamentos" itemLabel="#{departamentos}"
+					itemValue="#{departamentos}"
+					style="display: block;  margin-bottom: 10px;" />
+			</div>
+			<p:outputLabel value="Departamentos"
+				style="margin-bottom: 10px; display: block;" />
+			<p:pickList id="listDepartamentos"
+				value="#{principalMB.departamentos}" var="departamentos"
+				itemLabel="#{departamentos}" itemValue="#{departamentos}"
+				style="display: block;  margin-bottom: 10px;" />
 
-			<p:commandButton id="confirm" value="Sim"
+			<p:commandButton id="confirmProjeto" value="Salvar"
 				onclick="PF('criarProjetoDialog').hide();" update="@form"
 				process="@this" />
-			<p:commandButton id="decline" value="Não"
+			<p:commandButton id="declineProjeto" value="Cancelar"
 				onclick="PF('criarProjetoDialog').hide()" type="button" />
+
+		</p:confirmDialog>
+
+		<p:confirmDialog id="criarAtividadeDialog" modal="true"
+			appendTo="@(body)" header="Formulário de Atividade"
+			message="Preencha corretamente os campos a seguir."
+			widgetVar="criarAtividadeDialog" height="100%" width="75%"
+			closable="false">
+
+			<p:outputLabel value="Nome do Atividade"
+				style=" margin-bottom: 10px; display: block;" />
+			<p:inputText style="display: block;  margin-bottom: 10px;" />
+			<p:outputLabel value="Descrição"
+				style=" margin-bottom: 10px; display: block;" />
+			<p:inputText style="display: block;  margin-bottom: 10px;" />
+			<p:outputLabel value="Data de Criação"
+				style="margin-bottom: 10px; display: block;" />
+			<p:calendar id="calendarCriacaoAtividade"
+				value="#{calendarView.date2}" locale="pt"
+				style="display: block;  margin-bottom: 10px;" />
+
+			<h:outputLabel for="peso" value="Peso "
+				style="margin-bottom: 10px; display: block;" />
+			<p:spinner id="peso" maxlength="10"
+				style=" display: table;  margin-bottom: 10px;" />
+				<p:outputLabel value="Tempo de Execucao: "
+					style=" margin-bottom: 10px;" />
+				<p:inputText style="margin-bottom: 10px;" />
+				<p:selectOneMenu id="console"
+					style="width:100px; margin-left: 10px;">
+					<f:selectItem itemLabel="min" itemValue="min" />
+					<f:selectItem itemLabel="Hora" itemValue="Hora" />
+					<f:selectItem itemLabel="Dia(s)" itemValue="Dia(s)" />
+				</p:selectOneMenu>
+			<p:outputLabel value="Tag"
+				style=" margin-bottom: 10px; display: block;" />
+			<p:inputText style="display: block;  margin-bottom: 10px;" />
+
+			<p:commandButton id="confirmAtividade" value="Salvar"
+				onclick="PF('criarAtividadeDialog').hide();" update="@form"
+				process="@this" />
+			<p:commandButton id="declineAtividade" value="Cancelar"
+				onclick="PF('criarAtividadeDialog').hide()" type="button" />
 
 		</p:confirmDialog>
 		<h:outputFormat rendered="#{principalMB.usersTO.manager ne true}" />
 	</h:form>
 </h:body>
+
+<script type="text/javascript">
+PrimeFaces.locales['pt'] = {
+                closeText: 'Fechar',
+                prevText: 'Anterior',
+                nextText: 'Próximo',
+                currentText: 'Começo',
+                monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+                monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun', 'Jul','Ago','Set','Out','Nov','Des'],
+                dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+                dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],
+                dayNamesMin: ['D','S','T','Q','Q','S','S'],
+                weekHeader: 'Semana',
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Só Horas',
+                timeText: 'Tempo',
+                hourText: 'Hora',
+                minuteText: 'Minuto',
+                secondText: 'Segundo',
+                currentText: 'Data Atual',
+                ampm: false,
+                month: 'Mês',
+                week: 'Semana',
+                day: 'Dia',
+                allDayText : 'Todo Dia'
+            };
+</script>
 </html>
 
 
