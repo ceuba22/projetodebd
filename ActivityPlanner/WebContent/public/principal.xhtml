@@ -6,34 +6,84 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<title>Login</title>
-	<style>
-#divLogin {
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	margin-top: -100px;
-	margin-left: -250px;
-	width: 400px;
-	height: 200px;
-}
-</style>
 </h:head>
 <h:body style="background:url(01.jpg);">
 	<h:form>
 		<h:outputFormat rendered="#{principalMB.usersTO.manager eq true}">
-			<p:panel header="Activity Planner" style="width:100%;">
-				<div align="right">
-					<p>Seja Bem-Vindo Sr(a): #{principalMB.usersTO.nome}.</p>
-					<p>Cargo: #{principalMB.usersTO.cargo}.</p>
-				</div>
+			<div>
+				<p:menubar>
 
-				<div>
-					<p:dataTable id="project" var="project" widgetVar="project" emptyMessage="Não Existe Projetos Ativos.">
-					
+					<f:facet name="options">
+						<p:inputText style="margin-right:10px" placeholder="Search" />
+						<p:commandButton type="button" value="Logout"
+							icon="ui-icon-extlink" />
+					</f:facet>
+				</p:menubar>
+
+				<div style="float: left; margin: 50px 0px 0px 10px;">
+					<p:panelMenu style="width:300px; float: left;">
+						<p:submenu label="Projeto">
+							<p:menuitem value="Criar Projeto" icon="ui-icon-disk"
+								onclick="PF('criarProjetoDialog').show()" />
+						</p:submenu>
+						<p:submenu label="Monitoramento">
+						</p:submenu>
+						<p:separator />
+						<p:submenu label="Departamento">
+							<p:menuitem value="Criar Departamento" icon="ui-icon-signal" />
+						</p:submenu>
+						<p:submenu label="Atividade">
+							<p:menuitem value="Criar Atividade" icon="ui-icon-signal" />
+						</p:submenu>
+						<p:submenu label="Relato">
+						</p:submenu>
+						<p:submenu label="Colaboradores">
+							<p:menuitem value="Adicionar Colaborador" icon="ui-icon-signal" />
+						</p:submenu>
+						<p:submenu label="Relatórios">
+						</p:submenu>
+					</p:panelMenu>
+					<div align="right">
+						<p>Seja Bem-Vindo Sr(a): #{principalMB.usersTO.nome}.</p>
+						<p>Cargo: #{principalMB.usersTO.cargo}.</p>
+					</div>
+				</div>
+				<div id="dataTable"
+					style="float: right; width: 75%; margin: 50px 10px 0px 0px;">
+					<p:dataTable id="project" var="project" widgetVar="project"
+						emptyMessage="Não Existe Projetos Ativos.">
+						<p:column headerText="Projeto">
+							<a href="#{request.contextPath}/public/"> <h:outputText
+									value="Projeto" />
+							</a>
+
+						</p:column>
+
 					</p:dataTable>
 				</div>
-			</p:panel>
+			</div>
 		</h:outputFormat>
+
+		<p:confirmDialog id="criarProjetoDialog" modal="true"
+			appendTo="@(body)" header="Formulário de Criação de Projeto"
+			widgetVar="criarProjetoDialog">
+
+			<p:outputLabel value="Nome do Projeto"
+				style=" margin-bottom: 10px; display: block;" />
+			<p:inputText style="display: block;  margin-bottom: 10px;" />
+			<p:outputLabel value="Descrição"
+				style=" margin-bottom: 10px; display: block;" />
+			<p:inputText style="display: block;  margin-bottom: 10px;" />
+			<p:outputLabel for="calendarCriacao" value="Data de Criação" />
+			<p:calendar id="calendarCriacao" value="#{calendarView.date2}"  locale="br"/>
+
+			<p:commandButton id="confirm" value="Sim"
+				onclick="PF('criarProjetoDialog').hide();" update="@form"
+				process="@this" />
+			<p:commandButton id="decline" value="Não"
+				onclick="PF('criarProjetoDialog').hide()" type="button" />
+
+		</p:confirmDialog>
 		<h:outputFormat rendered="#{principalMB.usersTO.manager ne true}" />
 	</h:form>
 </h:body>
