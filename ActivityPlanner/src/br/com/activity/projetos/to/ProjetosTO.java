@@ -18,20 +18,20 @@ public class ProjetosTO {
 	
 	private String status;
 	
-	//private int criadoPor;
+	//private Users criadoPor;
 	
 	public ProjetosTO(){
 		
 	}
 	
 	public ProjetosTO(Projetos projetos){
-		//this.id = getId();
-		this.nome = getNome();
-		this.descricao = getDescricao();
-		this.prioridade = getPrioridade();
+		this.id = projetos.getId();
+		this.nome = projetos.getNome();
+		this.descricao = projetos.getDescricao();
+		this.prioridade = projetos.getPrioridade();
 		this.criadoEm = new Date();
-		this.status = getStatus();
-		//this.criadoPor = new ProjetosTO();
+		this.status = projetos.getStatus(); 
+		//this.criadoPor = getCriadoPor;
 		
 		
 		
@@ -40,12 +40,14 @@ public class ProjetosTO {
 	
 	public Projetos toVO(){
 		Projetos projetos = new Projetos();
+		
 		projetos.setNome(this.getNome());
 		projetos.setDescricao(this.getDescricao());
 		projetos.setPrioridade(this.getPrioridade());
 		projetos.setStatus(this.getStatus());
 		projetos.setCriadoEm(new Date());
-		//projetos.setCriadoPor(new Projetos());
+		//projetos.setCriadoPor(new Users());
+		
 		return projetos;	
 	}
 
@@ -96,9 +98,6 @@ public class ProjetosTO {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	
-	
 	
 	
 

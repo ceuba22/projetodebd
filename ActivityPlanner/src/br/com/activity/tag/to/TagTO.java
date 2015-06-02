@@ -12,9 +12,9 @@ public class TagTO {
 	private String descricao;
 	
 	public TagTO(Tag tag){
-		//this.id = getId();
-		this.nome = getNome();
-		this.descricao = getDescricao();
+		this.id = tag.getId();
+		this.nome = tag.getNome();
+		this.descricao = tag.getDescricao();
 	}
 	
 	
@@ -45,6 +45,16 @@ public class TagTO {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+
+	public long getId() {
+		return id;
+	}
+
+
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 	

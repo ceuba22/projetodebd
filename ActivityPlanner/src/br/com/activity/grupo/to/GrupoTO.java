@@ -6,7 +6,7 @@ import br.com.activity.grupo.entidade.Grupo;
 
 public class GrupoTO {
 	
-	//private long id;
+	private long id;
 	
 	private String nome;
 	
@@ -19,9 +19,9 @@ public class GrupoTO {
 	}
 	
 	public GrupoTO(Grupo grupo){
-		//this.id = getId();
-		this.nome = getNome();
-		this.descricao = getDescricao();
+		this.id = grupo.getId();
+		this.nome = grupo.getNome();
+		this.descricao = grupo.getDescricao();
 		this.criadoEm = new Date();
 	}
 	
@@ -58,6 +58,14 @@ public class GrupoTO {
 
 	public void setCriadoEm(Date criadoEm) {
 		this.criadoEm = criadoEm;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 	
