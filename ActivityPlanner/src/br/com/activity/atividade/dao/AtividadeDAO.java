@@ -25,7 +25,7 @@ public class AtividadeDAO {
 	}
 	
 	public void inserirAtividade(Atividade atividade){
-		String sql = "INSERT INTO atividade(NOME, DESCRICAO, CRIADO_EM, PESO, TEMPO_EXECUCAO_PREVISTO) VALUES(?,?,?,?,?)";
+		String sql = "INSERT INTO atividade(NOME, DESCRICAO, CRIADO_EM, PESO, TEMPO_EXECUCAO_PREVISTO, TEMPO_TIPO) VALUES(?,?,?,?,?,?)";
 		try {
 			
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -35,6 +35,7 @@ public class AtividadeDAO {
 //			stmt.setLong(4, atividade.getTag().getId());
 			stmt.setInt(4, atividade.getPeso());
 			stmt.setLong(5, atividade.getTempoExecucao());
+			stmt.setString(6, atividade.getTipoExecucao());
 			stmt.execute();
 			stmt.close();
 

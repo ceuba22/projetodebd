@@ -11,6 +11,10 @@ public class TagTO {
 	
 	private String descricao;
 	
+	public TagTO(){
+		
+	}
+	
 	public TagTO(Tag tag){
 		this.id = tag.getId();
 		this.nome = tag.getNome();

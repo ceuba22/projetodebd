@@ -8,7 +8,7 @@
 	<title>Inicio</title>
 </h:head>
 <h:body style="background-color: darkgrey;">
-	<h:form>
+	<h:form id="formPrincipal">
 		<h:outputFormat rendered="#{principalMB.usersTO.manager eq true}">
 			<div>
 				<p:menubar>
@@ -35,11 +35,13 @@
 						<p:submenu label="Atividade">
 							<p:menuitem value="Criar Atividade" icon="ui-icon-clipboard"
 								onclick="PF('criarAtividadeDialog').show()" />
+							<p:menuitem value="Criar Tag" icon="ui-icon-tag"
+								onclick="PF('criarTagDialog').show()" />
 						</p:submenu>
 						<p:submenu label="Relato">
 						</p:submenu>
 						<p:submenu label="Colaboradores">
-							<p:menuitem value="Adicionar Colaborador" icon="ui-icon-signal" />
+							<p:menuitem value="Adicionar Colaborador" icon="ui-icon-signal" actionListener=""/>
 						</p:submenu>
 						<p:submenu label="Relatórios">
 						</p:submenu>
@@ -142,12 +144,65 @@
 			<p:inputText style="display: block;  margin-bottom: 10px;" />
 
 			<p:commandButton id="confirmAtividade" value="Salvar"
-				actionListener="#{principalMB.insertAtividade}"
-				update="messageAtividade">
+				actionListener="#{principalMB.insertAtividade}">
 			</p:commandButton>
 			<p:commandButton id="declineAtividade" value="Cancelar"
 				actionListener="#{principalMB.cleanFormAtividade}" update="@form"
 				onsuccess="PF('criarAtividadeDialog').hide()" />
+		</p:dialog>
+
+
+		<p:dialog id="criarTagDialog" modal="true" header="Formulário de Tag"
+			message="Preencha corretamente os campos a seguir."
+			widgetVar="criarTagDialog" height="100%" width="75%" closable="false">
+			<p:messages showDetail="true" id="messageTag" />
+
+			<p:outputLabel value="Nome da Tag"
+				style=" margin-bottom: 10px; display: block;" />
+			<p:inputText style="display: block;  margin-bottom: 10px;"
+				value="#{principalMB.tagTO.nome}">
+			</p:inputText>
+			<p:outputLabel value="Descrição"
+				style=" margin-bottom: 10px; display: block;" />
+			<p:inputTextarea rows="5" cols="30" autoResize="false"
+				style="display: block;  margin-bottom: 10px;"
+				value="#{principalMB.tagTO.descricao}" />
+
+			<p:commandButton id="confirmTag" value="Salvar"
+				actionListener="#{principalMB.insertTag}">
+			</p:commandButton>
+			<p:commandButton id="declineTag" value="Cancelar"
+				actionListener="#{principalMB.cleanFormTag}" update="@form"
+				onsuccess="PF('criarTagDialog').hide()" />
+		</p:dialog>
+		
+		<p:dialog id="criarUsuarioDialog" modal="true" header="Formulário de Tag"
+			message="Preencha corretamente os campos a seguir."
+			widgetVar="criarUsuarioDialog" height="100%" width="75%" closable="false">
+			<p:messages showDetail="true" id="messageUsuario" />
+
+			<p:outputLabel value="Nome" style=" margin-bottom: 10px; display: block;" />
+			<p:inputText style="display: block;  margin-bottom: 10px;"
+				value="#{principalMB.newUsers.nome}" />
+			<p:outputLabel value="Email"  style=" margin-bottom: 10px; display: block;"/>
+			<p:inputText style="display: block;  margin-bottom: 10px;"
+				value="#{principalMB.newUsers.email}" />
+			<p:outputLabel value="Cargo" style=" margin-bottom: 10px; display: block;" />
+			<p:inputText style="display: block;  margin-bottom: 10px;"
+				value="#{principalMB.newUsers.cargo}" />
+			<p:outputLabel value="Gerente" style=" margin-bottom: 10px; display: block;" />
+			<p:selectBooleanCheckbox value="#{principalMB.newUsers.manager}"
+				style="margin-left: 10px; margin-bottom: 10px; display: block; width: 18px;" />
+			<p:outputLabel value="Senha"
+				style="  display: block; margin-bottom: 10px;" />
+			<p:password value="#{principalMB.newUsers.senha}" style="margin-bottom: 10px;"/>
+
+			<p:commandButton id="confirmTag" value="Salvar"
+				actionListener="#{principalMB.insertUsuario}">
+			</p:commandButton>
+			<p:commandButton id="declineTag" value="Cancelar"
+				actionListener="#{principalMB.cleanFormUsers}" update="@form"
+				onsuccess="PF('criarUsuarioDialog').hide()" />
 		</p:dialog>
 		<h:outputFormat rendered="#{principalMB.usersTO.manager ne true}" />
 	</h:form>
