@@ -30,7 +30,8 @@
 						</p:submenu>
 						<p:separator />
 						<p:submenu label="Departamento">
-							<p:menuitem value="Criar Departamento" icon="ui-icon-flag" />
+							<p:menuitem value="Criar Departamento" icon="ui-icon-flag" onclick="PF('criarDepartamentoDialog').show()"/>
+							<p:menuitem value="Departamentos" icon="ui-icon-flag" actionListener="#{principalMB.redirectDepartamentoUsuario}"/>
 						</p:submenu>
 						<p:submenu label="Atividade">
 							<p:menuitem value="Criar Atividade" icon="ui-icon-clipboard"
@@ -41,7 +42,8 @@
 						<p:submenu label="Relato">
 						</p:submenu>
 						<p:submenu label="Colaboradores">
-							<p:menuitem value="Adicionar Colaborador" icon="ui-icon-signal" actionListener=""/>
+							<p:menuitem value="Adicionar Colaborador" icon="ui-icon-person"
+								onclick="PF('criarUsuarioDialog').show()" />
 						</p:submenu>
 						<p:submenu label="Relatórios">
 						</p:submenu>
@@ -67,8 +69,8 @@
 			</div>
 		</h:outputFormat>
 
-		<p:confirmDialog id="criarProjetoDialog" modal="true"
-			appendTo="@(body)" header="Formulário de Projeto"
+		<p:dialog id="criarProjetoDialog" modal="true" appendTo="@(body)"
+			header="Formulário de Projeto"
 			message="Preencha corretamente os campos a seguir."
 			widgetVar="criarProjetoDialog" height="100%" width="75%"
 			closable="false">
@@ -104,7 +106,32 @@
 			<p:commandButton id="declineProjeto" value="Cancelar"
 				onsuccess="PF('criarProjetoDialog').hide()" update="@form" />
 
-		</p:confirmDialog>
+		</p:dialog>
+
+		<p:dialog id="criarDepartamentoDialog" modal="true"
+			header="Formulário de Departamento"
+			message="Preencha corretamente os campos a seguir."
+			widgetVar="criarDepartamentoDialog" height="100%" width="75%"
+			closable="false">
+			<p:messages showDetail="true" id="messageDepartamento" />
+
+			<p:outputLabel value="Nome do Projeto"
+				style=" margin-bottom: 10px; display: block;" />
+			<p:inputText style="display: block;  margin-bottom: 10px;" value="#{principalMB.grupoTO.nome}"/>
+			<p:outputLabel value="Descrição"
+				style=" margin-bottom: 10px; display: block;" />
+			<p:inputText style="display: block;  margin-bottom: 10px;" value="#{principalMB.grupoTO.descricao}"/>
+
+			<p:commandButton id="confirmDepartamento" value="Salvar"
+				actionListener="#{principalMB.insertDepartamento}">
+			</p:commandButton>
+			<p:commandButton id="declineDepartamento" value="Cancelar"
+				actionListener="#{principalMB.cleanFormDepartamento}" update="@form"
+				onsuccess="PF('criarDepartamentoDialog').hide()" />
+
+		</p:dialog>
+
+
 
 		<p:dialog id="criarAtividadeDialog" modal="true"
 			header="Formulário de Atividade"
@@ -175,32 +202,39 @@
 				actionListener="#{principalMB.cleanFormTag}" update="@form"
 				onsuccess="PF('criarTagDialog').hide()" />
 		</p:dialog>
-		
-		<p:dialog id="criarUsuarioDialog" modal="true" header="Formulário de Tag"
+
+		<p:dialog id="criarUsuarioDialog" modal="true"
+			header="Formulário de Usuário"
 			message="Preencha corretamente os campos a seguir."
-			widgetVar="criarUsuarioDialog" height="100%" width="75%" closable="false">
+			widgetVar="criarUsuarioDialog" height="100%" width="75%"
+			closable="false">
 			<p:messages showDetail="true" id="messageUsuario" />
 
-			<p:outputLabel value="Nome" style=" margin-bottom: 10px; display: block;" />
+			<p:outputLabel value="Nome"
+				style=" margin-bottom: 10px; display: block;" />
 			<p:inputText style="display: block;  margin-bottom: 10px;"
 				value="#{principalMB.newUsers.nome}" />
-			<p:outputLabel value="Email"  style=" margin-bottom: 10px; display: block;"/>
+			<p:outputLabel value="Email"
+				style=" margin-bottom: 10px; display: block;" />
 			<p:inputText style="display: block;  margin-bottom: 10px;"
 				value="#{principalMB.newUsers.email}" />
-			<p:outputLabel value="Cargo" style=" margin-bottom: 10px; display: block;" />
+			<p:outputLabel value="Cargo"
+				style=" margin-bottom: 10px; display: block;" />
 			<p:inputText style="display: block;  margin-bottom: 10px;"
 				value="#{principalMB.newUsers.cargo}" />
-			<p:outputLabel value="Gerente" style=" margin-bottom: 10px; display: block;" />
+			<p:outputLabel value="Gerente"
+				style=" margin-bottom: 10px; display: block;" />
 			<p:selectBooleanCheckbox value="#{principalMB.newUsers.manager}"
 				style="margin-left: 10px; margin-bottom: 10px; display: block; width: 18px;" />
 			<p:outputLabel value="Senha"
 				style="  display: block; margin-bottom: 10px;" />
-			<p:password value="#{principalMB.newUsers.senha}" style="margin-bottom: 10px;"/>
+			<p:password value="#{principalMB.newUsers.senha}"
+				style="margin-bottom: 10px; display: block;" />
 
-			<p:commandButton id="confirmTag" value="Salvar"
+			<p:commandButton id="confirmUser" value="Salvar"
 				actionListener="#{principalMB.insertUsuario}">
 			</p:commandButton>
-			<p:commandButton id="declineTag" value="Cancelar"
+			<p:commandButton id="declineUser" value="Cancelar"
 				actionListener="#{principalMB.cleanFormUsers}" update="@form"
 				onsuccess="PF('criarUsuarioDialog').hide()" />
 		</p:dialog>

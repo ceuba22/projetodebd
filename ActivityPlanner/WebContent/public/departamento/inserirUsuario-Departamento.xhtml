@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Departamento - Cadastro usuário</title>
+</h:head>
+<h:body style="background-color: darkgrey;">
+	<h:form id="formPrincipal">
+		<h:outputFormat rendered="#{principalMB.usersTO.manager eq true}">
+			<div>
+				<p:menubar>
+					<f:facet name="options">
+						<p:inputText style="margin-right:10px" placeholder="Search" />
+						<p:commandButton type="button" value="Logout"
+							icon="ui-icon-extlink" />
+					</f:facet>
+				</p:menubar>
+				<a href="#{request.contextPath}/public/principal.jsf"
+					style="float: right; margin-top: 10px; margin-right: 10px; border: 1px solid #a6c9e2; text-decoration: inherit; background: #0078ae; color: #ffffff; font-weight: normal; font-size: 1em; font-family: Verdana, Arial, sans-serif; border-radius: 5px; -webkit-appearance: button; padding: .3em 1em .3em 2.1em; line-height: 1.4;">
+					<span> <i class="fa fa-question"></i>Voltar
+				</span>
+				</a>
+				<div id="dataTable"
+					style="float: right; width: 100%; margin: 50px 10px 0px 0px;">
+					<p:dataTable id="grupo" var="grupo" widgetVar="grupo"
+						emptyMessage="Não Existe Projetos Ativos."
+						value="#{insertUsuarioDepartamentoMB.listGrupoTO}">
+						<p:column headerText="Grupos">
+							<a onclick="PF('criarDepartamentoDialog').show()">
+								#{grupo.nome} </a>
+
+						</p:column>
+						<p:column headerText="Editar Grupo" style="width: 122px;">
+						</p:column>
+						<p:column headerText="Excluir Grupo" style="width: 122px;">
+						</p:column>
+
+					</p:dataTable>
+				</div>
+			</div>
+
+			<p:dialog id="criarDepartamentoDialog" modal="true"
+				header="Formulário de Departamento"
+				message="Preencha corretamente os campos a seguir."
+				widgetVar="criarDepartamentoDialog" height="100%" width="75%"
+				closable="false">
+				<p:messages showDetail="true" id="messageDepartamento" />
+
+				<p:outputLabel value="Nome do Projeto"
+					style=" margin-bottom: 10px; display: block;" />
+				<p:inputText style="display: block;  margin-bottom: 10px;"
+					value="#{principalMB.grupoTO.nome}" />
+				<p:outputLabel value="Descrição"
+					style=" margin-bottom: 10px; display: block;" />
+				<p:inputText style="display: block;  margin-bottom: 10px;"
+					value="#{principalMB.grupoTO.descricao}" />
+
+				<p:commandButton id="confirmDepartamento" value="Salvar"
+					actionListener="#{principalMB.insertDepartamento}">
+				</p:commandButton>
+				<p:commandButton id="declineDepartamento" value="Cancelar"
+					actionListener="#{principalMB.cleanFormDepartamento}"
+					update="@form" onsuccess="PF('criarDepartamentoDialog').hide()" />
+
+			</p:dialog>
+
+		</h:outputFormat>
+	</h:form>
+</h:body>
+</html>

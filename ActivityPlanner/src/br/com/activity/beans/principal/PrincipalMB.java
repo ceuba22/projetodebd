@@ -18,6 +18,9 @@ import br.com.activity.atividade.entidade.Atividade;
 import br.com.activity.atividade.to.AtividadeTO;
 import br.com.activity.beans.users.UsersMB;
 import br.com.activity.facade.ActivityFacade;
+import br.com.activity.grupo.dao.GrupoDAO;
+import br.com.activity.grupo.entidade.Grupo;
+import br.com.activity.grupo.to.GrupoTO;
 import br.com.activity.projetos.to.ProjetosTO;
 import br.com.activity.tag.dao.TagDAO;
 import br.com.activity.tag.entidade.Tag;
@@ -44,6 +47,8 @@ public class PrincipalMB  implements Serializable{
 	private TagTO tagTO;
 
 	private UsersTO newUsers;
+	
+	private GrupoTO grupoTO;
 
 	private UsersMB usersMB = (UsersMB)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usersMB");
 
@@ -58,7 +63,7 @@ public class PrincipalMB  implements Serializable{
 		atividaTo = new AtividadeTO();
 		tagTO = new TagTO();
 		newUsers = new UsersTO();
-
+		grupoTO = new GrupoTO();
 	}
 
 	public void loadBean() {
@@ -97,6 +102,43 @@ public class PrincipalMB  implements Serializable{
 	public void cleanFormUsers(){
 		setNewUsers(new UsersTO());
 	}
+	
+	public void cleanFormDepartamento(){
+		setGrupoTO(new GrupoTO());
+	}
+	public void redirectDepartamentoUsuario(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		try {
+			context.getExternalContext().redirect("departamento/inserirUsuario-Departamento.jsf");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void insertDepartamento(ActionEvent event){
+		FacesContext context = FacesContext.getCurrentInstance();
+		boolean hasError = false;
+		RequestContext requestContext = RequestContext.getCurrentInstance();
+		
+		if(grupoTO.getNome().trim().isEmpty()){
+			hasError = true;
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Atenção", "Nome do Departamento está vazio."));
+			requestContext.update("formPrincipal:messageUsuario");
+		}
+		
+		if(!hasError){
+			Grupo grupo = grupoTO.toVO();
+			try {
+				GrupoDAO.getInstance().insertGrupo(grupo);
+				cleanFormDepartamento();
+				requestContext.update("formPrincipal");
+				requestContext.execute("PF('criarDepartamentoDialog').hide()");
+			} catch (Exception e) {
+			}
+			
+		}
+	}
 
 	public void insertUsuario(ActionEvent event){
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -132,14 +174,13 @@ public class PrincipalMB  implements Serializable{
 		}
 
 		if (!hasError) {
-			Users users = usersTO.toVO();
+			Users users = newUsers.toVO();
 			try {
 				ActivityFacade.getInstance().saveUser(users);
 				cleanFormUsers();
 				requestContext.update("formPrincipal");
 				requestContext.execute("PF('criarUsuarioDialog').hide()");
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -171,7 +212,6 @@ public class PrincipalMB  implements Serializable{
 				requestContext.update("formPrincipal");
 				requestContext.execute("PF('criarTagDialog').hide()");
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -183,7 +223,6 @@ public class PrincipalMB  implements Serializable{
 		try {
 			context.getExternalContext().redirect("public/SingUp.jsf");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -237,7 +276,6 @@ public class PrincipalMB  implements Serializable{
 				requestContext.execute("PF('criarAtividadeDialog').hide();");
 				setAtividaTo(new AtividadeTO());
 			} catch (Exception e) {
-				// TODO: handle exception
 			}
 		}
 
@@ -313,6 +351,14 @@ public class PrincipalMB  implements Serializable{
 
 	public void setNewUsers(UsersTO newUsers) {
 		this.newUsers = newUsers;
+	}
+
+	public GrupoTO getGrupoTO() {
+		return grupoTO;
+	}
+
+	public void setGrupoTO(GrupoTO grupoTO) {
+		this.grupoTO = grupoTO;
 	}
 
 }
