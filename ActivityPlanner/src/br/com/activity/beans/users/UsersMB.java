@@ -6,7 +6,6 @@ import java.util.Date;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import br.com.activity.facade.ActivityFacade;
 import br.com.activity.users.entidade.Users;
 import br.com.activity.users.to.UsersTO;
 

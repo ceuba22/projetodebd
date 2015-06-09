@@ -22,7 +22,7 @@ public class GrupoTO {
 		this.id = grupo.getId();
 		this.nome = grupo.getNome();
 		this.descricao = grupo.getDescricao();
-		this.criadoEm = new Date();
+		this.criadoEm = grupo.getCriadoEm();
 	}
 	
 	

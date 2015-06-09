@@ -44,6 +44,58 @@ public class GrupoDAO {
 		}
 
 	}
+	public boolean jaPossuiUsuarioNoGrupo(long usersId, long grupoId){
+		boolean possui = false;
+		String sql = "SELECT * FROM grupo_users WHERE GRUPO_ID ="+grupoId+" AND USER_ID = "+usersId;
+		ResultSet rs;
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			rs = stmt.executeQuery(sql);
+			if(rs.first()){
+				possui = true;
+			}
+			stmt.close();
+
+		} catch (SQLException u) {
+			throw new RuntimeException(u);
+		}
+		return possui;
+	}
+
+	public Grupo getGrupo(long grupoID){
+		String sql = "SELECT * FROM grupo WHERE ID ="+grupoID;
+		Grupo grupo = new Grupo();
+		ResultSet rs;
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			rs = stmt.executeQuery(sql);
+			if(rs.first()){
+				grupo.setId(rs.getLong("ID"));
+				grupo.setNome(rs.getString("NOME"));
+				grupo.setDescricao(rs.getString("DESCRICAO"));
+				grupo.setCriadoEm(rs.getDate("CRIADO_EM"));
+			}
+			stmt.close();
+
+		} catch (SQLException u) {
+			throw new RuntimeException(u);
+		}
+		return grupo;
+	}
+
+	public void addUsuarioAoDepto(long usersId, long grupoId ){
+
+		String sql = "INSERT INTO grupo_users(USER_ID, GRUPO_ID) VALUES (?,?)";
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setLong(1, usersId);
+			stmt.setLong(2, grupoId);
+			stmt.execute();
+			stmt.close();
+		} catch (SQLException u) {
+			throw new RuntimeException(u);
+		}
+	}
 
 	public List<Grupo> listGrupos(){
 		String sql = "SELECT * FROM grupo";

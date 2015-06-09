@@ -1,8 +1,15 @@
 package br.com.activity.projetos.entidade;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
+
+import br.com.activity.atividade.entidade.Atividade;
+import br.com.activity.grupo.entidade.Grupo;
+import br.com.activity.users.entidade.Users;
+import br.com.activity.util.PrioridadeTipo;
+import br.com.activity.util.StatusTipo;
 
 public class Projetos {
 	
@@ -16,16 +23,20 @@ public class Projetos {
 	private String descricao;
 	
 	@Column(name="PRIORIDADE")
-	private String prioridade;
+	private PrioridadeTipo prioridade;
 	
 	@Column(name="STATUS")
-	private String status;
+	private StatusTipo status;
 	
 	@Column(name="CRIADO_EM")
 	private Date criadoEm;
 	
-	//@Column(name="CRIADO_POR")
-	//private Projetos criadoPor;
+	@Column(name="CRIADO_POR")
+	private Users criadoPor;
+	
+	private List<Grupo> listGrupo;
+	
+	private List<Atividade> listAtividade;
 
 	public long getId() {
 		return id;
@@ -51,19 +62,19 @@ public class Projetos {
 		this.descricao = descricao;
 	}
 
-	public String getPrioridade() {
+	public PrioridadeTipo getPrioridade() {
 		return prioridade;
 	}
 
-	public void setPrioridade(String prioridade) {
+	public void setPrioridade(PrioridadeTipo prioridade) {
 		this.prioridade = prioridade;
 	}
 
-	public String getStatus() {
+	public StatusTipo getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(StatusTipo status) {
 		this.status = status;
 	}
 
@@ -75,13 +86,29 @@ public class Projetos {
 		this.criadoEm = criadoEm;
 	}
 
-	//public Projetos getCriadoPor() {
-		//return criadoPor;
-	//}
+	public Users getCriadoPor() {
+		return criadoPor;
+	}
 
-	//public void setCriadoPor(Projetos criadoPor) {
-		//this.criadoPor = criadoPor;
-	//}
+	public void setCriadoPor(Users criadoPor) {
+		this.criadoPor = criadoPor;
+	}
+
+	public List<Grupo> getListGrupo() {
+		return listGrupo;
+	}
+
+	public void setListGrupo(List<Grupo> listGrupo) {
+		this.listGrupo = listGrupo;
+	}
+
+	public List<Atividade> getListAtividade() {
+		return listAtividade;
+	}
+
+	public void setListAtividade(List<Atividade> listAtividade) {
+		this.listAtividade = listAtividade;
+	}
 	
 	
 	

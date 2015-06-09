@@ -2,7 +2,10 @@ package br.com.activity.tag.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.activity.hibenate.ConnectionFactory;
 import br.com.activity.tag.entidade.Tag;
@@ -36,6 +39,50 @@ private static TagDAO instance;
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public List<Tag> listTags(){
+			String sql = "SELECT * FROM tag";
+			PreparedStatement stmt;
+			ResultSet rs;
+			List<Tag> listTags = new ArrayList<Tag>();
+			try {
+				stmt = connection.prepareStatement(sql);
+				rs = stmt.executeQuery(sql);
+				while(rs.next()){
+					Tag tag = new Tag();
+					tag.setId(rs.getLong("ID"));
+					tag.setNome(rs.getString("NOME"));
+					tag.setDescricao("DESCRICAO");
+					listTags.add(tag);
+				}
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				listTags = new ArrayList<Tag>();
+			}
+			return listTags;
+	}
+	
+	public Tag getTag(long tagID){
+		String sql = "SELECT * FROM tag WHERE ID = "+tagID;
+		PreparedStatement stmt;
+		ResultSet rs;
+		Tag tag = new Tag();
+		try {
+			stmt = connection.prepareStatement(sql);
+			rs = stmt.executeQuery(sql);
+			if(rs.first()){
+				tag.setNome(rs.getString("NOME"));
+				tag.setId(rs.getLong("ID"));
+				tag.setDescricao(rs.getString("DESCRICAO"));
+				
+			}
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return tag;
 	}
 
 }

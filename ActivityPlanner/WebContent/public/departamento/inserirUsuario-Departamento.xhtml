@@ -29,8 +29,12 @@
 						emptyMessage="Não Existe Projetos Ativos."
 						value="#{insertUsuarioDepartamentoMB.listGrupoTO}">
 						<p:column headerText="Grupos">
-							<a onclick="PF('criarDepartamentoDialog').show()">
-								#{grupo.nome} </a>
+							<p:commandButton value="#{grupo.nome}"
+								onclick="PF('criarDepartamentoDialog').show()"
+								actionListener="#{insertUsuarioDepartamentoMB.loadDialogAddUsers}"
+								update=":formPrincipal:panelUsersDepto">
+								<f:attribute name="selectedGrupo" value="#{grupo}" />
+							</p:commandButton>
 
 						</p:column>
 						<p:column headerText="Editar Grupo" style="width: 122px;">
@@ -42,28 +46,41 @@
 				</div>
 			</div>
 
-			<p:dialog id="criarDepartamentoDialog" modal="true"
-				header="Formulário de Departamento"
+			<p:dialog id="addUsersDepartamentoDialog" modal="true"
+				header="Adicionar usuário no departamento #{insertUsuarioDepartamentoMB.selectedGrupo.nome}"
 				message="Preencha corretamente os campos a seguir."
 				widgetVar="criarDepartamentoDialog" height="100%" width="75%"
 				closable="false">
-				<p:messages showDetail="true" id="messageDepartamento" />
 
-				<p:outputLabel value="Nome do Projeto"
-					style=" margin-bottom: 10px; display: block;" />
-				<p:inputText style="display: block;  margin-bottom: 10px;"
-					value="#{principalMB.grupoTO.nome}" />
-				<p:outputLabel value="Descrição"
-					style=" margin-bottom: 10px; display: block;" />
-				<p:inputText style="display: block;  margin-bottom: 10px;"
-					value="#{principalMB.grupoTO.descricao}" />
+				<p:outputPanel id="panelUsersDepto">
+					<p:messages showDetail="true" id="messageDepartamento" />
+					<p:outputLabel value="Nome do Usuáro" for="userComplete" />
+					<p:autoComplete var="userComplete" widgetVar="userComplete"
+						id="userComplete" converter="userConverter" multiple="false"
+						minQueryLength="2" forceSelection="false" queryDelay="400"
+						value="#{insertUsuarioDepartamentoMB.selectedUser}"
+						itemLabel="#{userComplete.nome}" itemValue="#{userComplete}"
+						completeMethod="#{insertUsuarioDepartamentoMB.listUsuariosPorLike}"
+						style=" margin-bottom: 10px; display: block;" />
 
-				<p:commandButton id="confirmDepartamento" value="Salvar"
-					actionListener="#{principalMB.insertDepartamento}">
-				</p:commandButton>
-				<p:commandButton id="declineDepartamento" value="Cancelar"
-					actionListener="#{principalMB.cleanFormDepartamento}"
-					update="@form" onsuccess="PF('criarDepartamentoDialog').hide()" />
+					<p:commandButton id="confirmAddUsers" value="Salvar"
+						update="users panelUsersDepto"
+						actionListener="#{insertUsuarioDepartamentoMB.addUsuarioAoDepto}">
+					</p:commandButton>
+					<p:commandButton id="declineAddUsers" value="Encerrar"
+						actionListener="#{insertUsuarioDepartamentoMB.cleanFormDepartamento}"
+						update="@form" onclick="PF('addUsersDepartamentoDialog').hide()"
+						style=" margin-bottom: 10px;" />
+
+					<p:dataTable id="users" var="users" widgetVar="users"
+						emptyMessage="Não Existe Projetos Ativos."
+						value="#{insertUsuarioDepartamentoMB.listUserByGrupo}">
+						<p:column headerText="Grupos">
+							<h:outputText value="#{users.nome}" />
+						</p:column>
+
+					</p:dataTable>
+				</p:outputPanel>
 
 			</p:dialog>
 

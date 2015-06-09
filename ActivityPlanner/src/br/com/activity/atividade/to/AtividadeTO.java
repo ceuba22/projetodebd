@@ -3,6 +3,7 @@ package br.com.activity.atividade.to;
 import java.util.Date;
 
 import br.com.activity.atividade.entidade.Atividade;
+import br.com.activity.facade.ActivityFacade;
 import br.com.activity.tag.to.TagTO;
 
 public class AtividadeTO {
@@ -21,6 +22,8 @@ public class AtividadeTO {
 	
 	private TagTO tag;
 	
+	private long tagId;
+	
 	private String tipoExecucao;
 
 	public AtividadeTO(){
@@ -33,7 +36,7 @@ public class AtividadeTO {
 		this.peso = atividade.getPeso();
 		this.descricao = atividade.getDescricao();
 		this.tempoExecucao = atividade.getTempoExecucao();
-		this.criadoEm = new Date();
+		this.criadoEm = atividade.getCriadoEm();
 		this.tag = new TagTO(atividade.getTag());
 		this.tipoExecucao = atividade.getTipoExecucao();
 		
@@ -47,7 +50,11 @@ public class AtividadeTO {
 		atividade.setPeso(this.getPeso());
 		atividade.setTempoExecucao(this.getTempoExecucao());
 		atividade.setCriadoEm(new Date());
-//		atividade.setTag(new Tag());
+		try {
+			atividade.setTag(ActivityFacade.getInstance().getTag(this.tagId));
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 		atividade.setTipoExecucao(this.tipoExecucao);
 		
 		return atividade;
@@ -115,6 +122,14 @@ public class AtividadeTO {
 
 	public void setTipoExecucao(String tipoExecucao) {
 		this.tipoExecucao = tipoExecucao;
+	}
+
+	public long getTagId() {
+		return tagId;
+	}
+
+	public void setTagId(long tagId) {
+		this.tagId = tagId;
 	}
 	
 

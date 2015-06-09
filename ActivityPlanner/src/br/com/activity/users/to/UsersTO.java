@@ -2,6 +2,7 @@ package br.com.activity.users.to;
 
 import java.util.Date;
 
+import br.com.activity.beans.users.UsersMB;
 import br.com.activity.users.entidade.Users;
 
 
@@ -31,16 +32,30 @@ public class UsersTO implements Comparable<UsersTO> {
 		
 	}
 	
-	public UsersTO(Users users){
-//		this.id = getId();
-		this.nome = getNome();
-		this.cargo = getCargo();
-		this.atualizadoEm = new Date();
-		this.criadoEm = new Date();
+	public UsersTO(UsersMB usersMB){
+		this.id = usersMB.getId();
+		this.nome = usersMB.getNome();
+		this.email = usersMB.getEmail();
+		this.cargo = usersMB.getCargo();
+		this.atualizadoEm = usersMB.getAtualizadoEm();
+		this.criadoEm = usersMB.getCriadoEm();
 //		this.criadoPor = new UsersTO();
 //		this.atualizadoPor = new UsersTO();
-		this.manager = isManager();
-		this.senha = getSenha();
+		this.manager = usersMB.isManager();
+		this.senha = usersMB.getSenha();
+	}
+	
+	public UsersTO(Users users){
+		this.id = users.getId();
+		this.nome = users.getNome();
+		this.email = users.getEmail();
+		this.cargo = users.getCargo();
+		this.atualizadoEm = users.getAtualizadoEm();
+		this.criadoEm = users.getCriadoEm();
+//		this.criadoPor = new UsersTO();
+//		this.atualizadoPor = new UsersTO();
+		this.manager = users.isManager();
+		this.senha = users.getSenha();
 		
 	}
 	

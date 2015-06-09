@@ -1,8 +1,17 @@
 package br.com.activity.projetos.to;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import br.com.activity.atividade.entidade.Atividade;
+import br.com.activity.facade.ActivityFacade;
+import br.com.activity.grupo.entidade.Grupo;
 import br.com.activity.projetos.entidade.Projetos;
+import br.com.activity.users.to.UsersTO;
+import br.com.activity.util.ActivityUtil;
+import br.com.activity.util.PrioridadeTipo;
+import br.com.activity.util.StatusTipo;
 
 public class ProjetosTO {
 	
@@ -14,11 +23,17 @@ public class ProjetosTO {
 	
 	private String descricao;
 	
-	private String prioridade;
+	private PrioridadeTipo prioridade;
 	
-	private String status;
+	private String prioridadeString;
 	
-	//private Users criadoPor;
+	private StatusTipo status;
+	
+	private UsersTO criadoPor;
+	
+	private List<Grupo> listGrupo;
+	
+	private List<Atividade> listAtividade;
 	
 	public ProjetosTO(){
 		
@@ -31,7 +46,9 @@ public class ProjetosTO {
 		this.prioridade = projetos.getPrioridade();
 		this.criadoEm = new Date();
 		this.status = projetos.getStatus(); 
-		//this.criadoPor = getCriadoPor;
+		this.criadoPor = new UsersTO(projetos.getCriadoPor());
+		this.listAtividade = projetos.getListAtividade();
+		this.listGrupo = projetos.getListGrupo();
 		
 		
 		
@@ -43,10 +60,25 @@ public class ProjetosTO {
 		
 		projetos.setNome(this.getNome());
 		projetos.setDescricao(this.getDescricao());
-		projetos.setPrioridade(this.getPrioridade());
+		if(this.prioridadeString.equals("ALTA")){
+			projetos.setPrioridade(PrioridadeTipo.ALTA);	
+		}
+		if(this.prioridadeString.equals("MEDIA")){
+			projetos.setPrioridade(PrioridadeTipo.MEDIA);
+		}
+		if(this.prioridadeString.equals("BAIXA")){
+			projetos.setPrioridade(PrioridadeTipo.BAIXA);
+		}
 		projetos.setStatus(this.getStatus());
 		projetos.setCriadoEm(new Date());
-		//projetos.setCriadoPor(new Users());
+		projetos.setListGrupo(new ArrayList<Grupo>());
+		projetos.setListAtividade(new ArrayList<Atividade>());
+		
+		try {
+			projetos.setCriadoPor(ActivityFacade.getInstance().getUsers(ActivityUtil.getInstance().getUsersTOLogado()));
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 		
 		return projetos;	
 	}
@@ -83,20 +115,52 @@ public class ProjetosTO {
 		this.descricao = descricao;
 	}
 
-	public String getPrioridade() {
+	public PrioridadeTipo getPrioridade() {
 		return prioridade;
 	}
 
-	public void setPrioridade(String prioridade) {
+	public void setPrioridade(PrioridadeTipo prioridade) {
 		this.prioridade = prioridade;
 	}
 
-	public String getStatus() {
+	public StatusTipo getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(StatusTipo status) {
 		this.status = status;
+	}
+
+	public UsersTO getCriadoPor() {
+		return criadoPor;
+	}
+
+	public void setCriadoPor(UsersTO criadoPor) {
+		this.criadoPor = criadoPor;
+	}
+
+	public String getPrioridadeString() {
+		return prioridadeString;
+	}
+
+	public void setPrioridadeString(String prioridadeString) {
+		this.prioridadeString = prioridadeString;
+	}
+
+	public List<Grupo> getListGrupo() {
+		return listGrupo;
+	}
+
+	public void setListGrupo(List<Grupo> listGrupo) {
+		this.listGrupo = listGrupo;
+	}
+
+	public List<Atividade> getListAtividade() {
+		return listAtividade;
+	}
+
+	public void setListAtividade(List<Atividade> listAtividade) {
+		this.listAtividade = listAtividade;
 	}
 	
 	

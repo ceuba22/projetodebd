@@ -21,12 +21,14 @@ import br.com.activity.facade.ActivityFacade;
 import br.com.activity.grupo.dao.GrupoDAO;
 import br.com.activity.grupo.entidade.Grupo;
 import br.com.activity.grupo.to.GrupoTO;
+import br.com.activity.projetos.entidade.Projetos;
 import br.com.activity.projetos.to.ProjetosTO;
 import br.com.activity.tag.dao.TagDAO;
 import br.com.activity.tag.entidade.Tag;
 import br.com.activity.tag.to.TagTO;
 import br.com.activity.users.entidade.Users;
 import br.com.activity.users.to.UsersTO;
+import br.com.activity.util.StatusTipo;
 
 
 @ManagedBean
@@ -47,86 +49,148 @@ public class PrincipalMB  implements Serializable{
 	private TagTO tagTO;
 
 	private UsersTO newUsers;
-	
+
 	private GrupoTO grupoTO;
+
+	private List<Tag> listTag;
+
+	private List<Grupo> departamentoSource;
+
+	private List<Grupo> departamentosTarget; 
+
+	private DualListModel<Grupo> departamentos;
+
+	private List<Atividade> atividadeSource;
+
+	private List<Atividade> atividadeTarget;
+
+	private DualListModel<Atividade> atividades;
+
+	private List<ProjetosTO> listProjetosTO;
+
 
 	private UsersMB usersMB = (UsersMB)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usersMB");
 
-	private DualListModel<String> departamentos;
 
-	//Lista temporária em String pois dados estão estaticos
-	private List<String> departamentoSource;
-	private List<String> departamentosTarget;
 
 	public PrincipalMB(){
-		loadBean();
+		listTag = new ArrayList<Tag>();
 		atividaTo = new AtividadeTO();
 		tagTO = new TagTO();
 		newUsers = new UsersTO();
 		grupoTO = new GrupoTO();
+		projetosTO = new ProjetosTO();
+		departamentoSource = new ArrayList<Grupo>();
+		departamentosTarget = new ArrayList<Grupo>();
+		atividadeSource = new ArrayList<Atividade>();
+		atividadeTarget = new ArrayList<Atividade>();
+		listProjetosTO = new ArrayList<ProjetosTO>();
+		loadBean();
 	}
 
+
 	public void loadBean() {
-		List<String> departamentoSource = new ArrayList<String>();
-		List<String> departamentosTarget = new ArrayList<String>();
-
-		departamentoSource.add("San Francisco");
-		departamentoSource.add("London");
-		departamentoSource.add("Paris");
-		departamentoSource.add("Istanbul");
-		departamentoSource.add("Berlin");
-		departamentoSource.add("Barcelona");
-		departamentoSource.add("Rome");
-
-		departamentos = new DualListModel<String>(departamentoSource, departamentosTarget);
-
 		setUsersTO(new UsersTO());
 		usersTO.setNome(usersMB.getNome());
 		usersTO.setId(usersMB.getId());
 		usersTO.setCargo(usersMB.getCargo());
 		usersTO.setManager(usersMB.isManager());
+		loadListAtividade();
+		loadListGrupos();
+		loadListProjetos();
+		loadListTag();
+
+		departamentos = new DualListModel<Grupo>(departamentoSource, departamentosTarget);
+		atividades = new DualListModel<Atividade>(atividadeSource, atividadeTarget);
 
 	}
-	public void cleanFormAtividade(){
-		setAtividaTo(new AtividadeTO());
+
+	public void loadListTag(){
+		try {
+			if(TagDAO.getInstance().listTags().size() > 0){
+				listTag.addAll(TagDAO.getInstance().listTags());
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
-	public void cleanFormProjeto(){
-		setProjetosTO(new ProjetosTO());
+	public void loadListGrupos(){
+		try {
+			if(ActivityFacade.getInstance().listGrupos().size() > 0){
+				for (Grupo grupo : ActivityFacade.getInstance().listGrupos()) {
+					departamentoSource.add(grupo);
+				}
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
-	public void cleanFormTag(){
-		setTagTO(new TagTO());
+	public void loadListProjetos(){
+		try {
+			if(ActivityFacade.getInstance().listProjetos().size() > 0){
+
+				for (Projetos projetos : ActivityFacade.getInstance().listProjetos()) {
+					listProjetosTO.add(new ProjetosTO(projetos));
+				}
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
-	public void cleanFormUsers(){
-		setNewUsers(new UsersTO());
+	public void loadListAtividade(){
+		try {
+			if (ActivityFacade.getInstance().listAtividades().size() > 0){
+				for (Atividade atividade : ActivityFacade.getInstance().listAtividades()) {
+					atividadeSource.add(atividade);
+
+				}
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 	
-	public void cleanFormDepartamento(){
-		setGrupoTO(new GrupoTO());
-	}
 	public void redirectDepartamentoUsuario(){
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
 			context.getExternalContext().redirect("departamento/inserirUsuario-Departamento.jsf");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
+	public void redirectProjetoUsuario(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		try {
+			context.getExternalContext().redirect("departamento/inserirUsuario-Departamento.jsf");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void redirectAtividade(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		try {
+			context.getExternalContext().redirect("atividade/atividadesViews.jsf");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void insertDepartamento(ActionEvent event){
 		FacesContext context = FacesContext.getCurrentInstance();
 		boolean hasError = false;
 		RequestContext requestContext = RequestContext.getCurrentInstance();
-		
+
 		if(grupoTO.getNome().trim().isEmpty()){
 			hasError = true;
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Atenção", "Nome do Departamento está vazio."));
 			requestContext.update("formPrincipal:messageUsuario");
 		}
-		
+
 		if(!hasError){
 			Grupo grupo = grupoTO.toVO();
 			try {
@@ -136,7 +200,7 @@ public class PrincipalMB  implements Serializable{
 				requestContext.execute("PF('criarDepartamentoDialog').hide()");
 			} catch (Exception e) {
 			}
-			
+
 		}
 	}
 
@@ -229,11 +293,27 @@ public class PrincipalMB  implements Serializable{
 
 	public void insertProjeto(ActionEvent event){
 		FacesContext context = FacesContext.getCurrentInstance();
+		RequestContext requestContext = RequestContext.getCurrentInstance();
+
 		boolean hasError = false;
 
+		//		if(projetosTO.getNome().trim().isEmpty()){
+		//			hasError = true;
+		//			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Atenção", "Nome do Projeto está vazio."));
+		//			requestContext.update("formPrincipal:messageTag");
+		//		}
 
 
 		if(!hasError){
+			Projetos projetos = projetosTO.toVO();
+			projetos.setStatus(StatusTipo.ABERTO);
+			projetos.setListAtividade(getAtividades().getTarget());
+			projetos.setListGrupo(getDepartamentos().getTarget());
+			try {
+				ActivityFacade.getInstance().inserirProjeto(projetos);
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
 
 		}
 	}
@@ -281,6 +361,27 @@ public class PrincipalMB  implements Serializable{
 
 	}
 
+	public void cleanFormAtividade(){
+		setAtividaTo(new AtividadeTO());
+	}
+
+	public void cleanFormProjeto(){
+		setProjetosTO(new ProjetosTO());
+	}
+
+	public void cleanFormTag(){
+		setTagTO(new TagTO());
+	}
+
+	public void cleanFormUsers(){
+		setNewUsers(new UsersTO());
+	}
+
+	public void cleanFormDepartamento(){
+		setGrupoTO(new GrupoTO());
+	}
+
+
 	public UsersMB getUsuario() {
 		return usersMB;
 	}
@@ -297,27 +398,27 @@ public class PrincipalMB  implements Serializable{
 		this.usersTO = usersTO;
 	}
 
-	public DualListModel<String> getDepartamentos() {
+	public DualListModel<Grupo> getDepartamentos() {
 		return departamentos;
 	}
 
-	public void setDepartamentos(DualListModel<String> departamentos) {
+	public void setDepartamentos(DualListModel<Grupo> departamentos) {
 		this.departamentos = departamentos;
 	}
 
-	public List<String> getDepartamentoSource() {
+	public List<Grupo> getDepartamentoSource() {
 		return departamentoSource;
 	}
 
-	public void setDepartamentoSource(List<String> departamentoSource) {
+	public void setDepartamentoSource(List<Grupo> departamentoSource) {
 		this.departamentoSource = departamentoSource;
 	}
 
-	public List<String> getDepartamentosTarget() {
+	public List<Grupo> getDepartamentosTarget() {
 		return departamentosTarget;
 	}
 
-	public void setDepartamentosTarget(List<String> departamentosTarget) {
+	public void setDepartamentosTarget(List<Grupo> departamentosTarget) {
 		this.departamentosTarget = departamentosTarget;
 	}
 
@@ -360,5 +461,46 @@ public class PrincipalMB  implements Serializable{
 	public void setGrupoTO(GrupoTO grupoTO) {
 		this.grupoTO = grupoTO;
 	}
+
+	public List<Tag> getListTag() {
+		return listTag;
+	}
+
+	public void setListTag(List<Tag> listTag) {
+		this.listTag = listTag;
+	}
+
+	public List<Atividade> getAtividadeSource() {
+		return atividadeSource;
+	}
+
+	public void setAtividadeSource(List<Atividade> atividadeSource) {
+		this.atividadeSource = atividadeSource;
+	}
+
+	public List<Atividade> getAtividadeTarget() {
+		return atividadeTarget;
+	}
+
+	public void setAtividadeTarget(List<Atividade> atividadeTarget) {
+		this.atividadeTarget = atividadeTarget;
+	}
+
+	public DualListModel<Atividade> getAtividades() {
+		return atividades;
+	}
+
+	public void setAtividades(DualListModel<Atividade> atividades) {
+		this.atividades = atividades;
+	}
+
+	public List<ProjetosTO> getListProjetosTO() {
+		return listProjetosTO;
+	}
+
+	public void setListProjetosTO(List<ProjetosTO> listProjetosTO) {
+		this.listProjetosTO = listProjetosTO;
+	}
+
 
 }

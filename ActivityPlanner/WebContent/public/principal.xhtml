@@ -30,10 +30,14 @@
 						</p:submenu>
 						<p:separator />
 						<p:submenu label="Departamento">
-							<p:menuitem value="Criar Departamento" icon="ui-icon-flag" onclick="PF('criarDepartamentoDialog').show()"/>
-							<p:menuitem value="Departamentos" icon="ui-icon-flag" actionListener="#{principalMB.redirectDepartamentoUsuario}"/>
+							<p:menuitem value="Criar Departamento" icon="ui-icon-flag"
+								onclick="PF('criarDepartamentoDialog').show()" />
+							<p:menuitem value="Departamentos" icon="ui-icon-flag"
+								actionListener="#{principalMB.redirectDepartamentoUsuario}" />
 						</p:submenu>
 						<p:submenu label="Atividade">
+							<p:menuitem value="Atividades" icon="ui-icon-clipboard"
+								actionListener="#{principalMB.redirectAtividade}" />
 							<p:menuitem value="Criar Atividade" icon="ui-icon-clipboard"
 								onclick="PF('criarAtividadeDialog').show()" />
 							<p:menuitem value="Criar Tag" icon="ui-icon-tag"
@@ -55,54 +59,71 @@
 				</div>
 				<div id="dataTable"
 					style="float: right; width: 75%; margin: 50px 10px 0px 0px;">
-					<p:dataTable id="project" var="project" widgetVar="project"
-						emptyMessage="Não Existe Projetos Ativos.">
-						<p:column headerText="Projeto">
-							<a href="#{request.contextPath}/public/"> <h:outputText
-									value="Projeto" />
-							</a>
+					<p:panel header="Projetos Ativos">
+						<p:dataTable id="project" var="project" widgetVar="project"
+							emptyMessage="Não Existe Projetos Ativos."
+							value="#{principalMB.listProjetosTO}">
+							<p:column headerText="Projeto">
+								<p:commandButton value="#{project.nome}" />
+							</p:column>
 
-						</p:column>
+							<p:column headerText="Descrição">
+								<p:outputLabel value="#{project.descricao}" />
 
-					</p:dataTable>
+							</p:column>
+							<p:column headerText="Prioridade">
+								<p:outputLabel value="#{project.prioridade.value}" />
+
+							</p:column>
+
+						</p:dataTable>
+					</p:panel>
 				</div>
 			</div>
 		</h:outputFormat>
 
-		<p:dialog id="criarProjetoDialog" modal="true" appendTo="@(body)"
+		<p:dialog id="criarProjetoDialog" modal="true"
 			header="Formulário de Projeto"
 			message="Preencha corretamente os campos a seguir."
 			widgetVar="criarProjetoDialog" height="100%" width="75%"
 			closable="false">
+			<p:messages showDetail="true" />
 
 			<p:outputLabel value="Nome do Projeto"
 				style=" margin-bottom: 10px; display: block;" />
-			<p:inputText style="display: block;  margin-bottom: 10px;" />
+			<p:inputText style="display: block;  margin-bottom: 10px;"
+				value="#{principalMB.projetosTO.nome}" />
 			<p:outputLabel value="Descrição"
 				style=" margin-bottom: 10px; display: block;" />
-			<p:inputText style="display: block;  margin-bottom: 10px;" />
-			<p:outputLabel value="Data de Criação"
-				style="margin-bottom: 10px; display: block;" />
-			<p:calendar id="calendarCriacaoProjeto" value="#{calendarView.date2}"
-				locale="pt" style="display: block;  margin-bottom: 10px;" />
+			<p:inputText style="display: block;  margin-bottom: 10px;"
+				value="#{principalMB.projetosTO.descricao}" />
+			<p:outputLabel value="Priodade"
+				style=" margin-bottom: 10px; display: block;" />
+			<p:selectOneMenu id="prioridade"
+				style="width:100px; margin-left: 10px;margin-bottom: 10px; display: block;"
+				value="#{principalMB.projetosTO.prioridadeString}">
+				<f:selectItem itemLabel="ALTA" itemValue="ALTA" />
+				<f:selectItem itemLabel="MÉDIA" itemValue="MEDIA" />
+				<f:selectItem itemLabel="BAIXA" itemValue="BAIXA" />
+			</p:selectOneMenu>
+
 			<div style="float: right">
 				<p:outputLabel value="Atividades"
 					style="margin-bottom: 10px; display: block;" />
-				<p:pickList id="listAtividades" value="#{principalMB.departamentos}"
-					var="departamentos" itemLabel="#{departamentos}"
-					itemValue="#{departamentos}"
+				<p:pickList id="listAtividades" value="#{principalMB.atividades}"
+					converter="atividadeConverter" var="atividades"
+					itemLabel="#{atividades.nome}" itemValue="#{atividades}"
 					style="display: block;  margin-bottom: 10px;" />
 			</div>
 			<p:outputLabel value="Departamentos"
 				style="margin-bottom: 10px; display: block;" />
-			<p:pickList id="listDepartamentos"
+			<p:pickList id="listDepartamentos" converter="grupoConverter"
 				value="#{principalMB.departamentos}" var="departamentos"
-				itemLabel="#{departamentos}" itemValue="#{departamentos}"
+				itemLabel="#{departamentos.nome}" itemValue="#{departamentos}"
 				style="display: block;  margin-bottom: 10px;" />
 
 			<p:commandButton id="confirmProjeto" value="Salvar"
-				onclick="PF('criarProjetoDialog').hide();" update="@form"
-				process="@this" />
+				actionListener="#{principalMB.insertProjeto}" />
 			<p:commandButton id="declineProjeto" value="Cancelar"
 				onsuccess="PF('criarProjetoDialog').hide()" update="@form" />
 
@@ -117,10 +138,12 @@
 
 			<p:outputLabel value="Nome do Projeto"
 				style=" margin-bottom: 10px; display: block;" />
-			<p:inputText style="display: block;  margin-bottom: 10px;" value="#{principalMB.grupoTO.nome}"/>
+			<p:inputText style="display: block;  margin-bottom: 10px;"
+				value="#{principalMB.grupoTO.nome}" />
 			<p:outputLabel value="Descrição"
 				style=" margin-bottom: 10px; display: block;" />
-			<p:inputText style="display: block;  margin-bottom: 10px;" value="#{principalMB.grupoTO.descricao}"/>
+			<p:inputText style="display: block;  margin-bottom: 10px;"
+				value="#{principalMB.grupoTO.descricao}" />
 
 			<p:commandButton id="confirmDepartamento" value="Salvar"
 				actionListener="#{principalMB.insertDepartamento}">
@@ -168,7 +191,11 @@
 			</p:selectOneMenu>
 			<p:outputLabel value="Tag"
 				style=" margin-bottom: 10px; display: block;" />
-			<p:inputText style="display: block;  margin-bottom: 10px;" />
+			<p:selectOneMenu value="#{principalMB.atividaTo.tagId}">
+				<f:selectItems var="tagItens" value="#{principalMB.listTag}"
+					itemLabel="#{tagItens.nome}"
+					itemDescription="#{tagItens.descricao}" itemValue="#{tagItens.id}" />
+			</p:selectOneMenu>
 
 			<p:commandButton id="confirmAtividade" value="Salvar"
 				actionListener="#{principalMB.insertAtividade}">

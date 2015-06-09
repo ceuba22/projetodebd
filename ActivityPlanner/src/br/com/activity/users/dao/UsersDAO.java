@@ -5,6 +5,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.faces.context.FacesContext;
 
@@ -55,11 +57,69 @@ public class UsersDAO {
 			throw new RuntimeException(u);
 		}
 	}
+	
+	public List<Users> listUsuariosPorGrupo( long grupoID){
+		String sql = "SELECT * FROM users U, grupo_users GU WHERE U.ID = GU.USER_ID AND GU.GRUPO_ID = "+grupoID;
+		PreparedStatement stmt;
+		ResultSet rs;
+		List<Users> listUsuario = new ArrayList<Users>();
+		try {
+			stmt = connection.prepareStatement(sql);
+			rs = stmt.executeQuery(sql);
+			while(rs.next()){
+				Users usuario = new Users();
+				usuario.setNome(rs.getString("NOME"));
+				usuario.setSenha(rs.getString("SENHA"));
+				usuario.setId(rs.getLong("ID"));
+				usuario.setCargo(rs.getString("CARGO"));
+				usuario.setEmail(rs.getString("EMAIL"));
+				usuario.setManager(rs.getBoolean("MANAGER"));
+				usuario.setCriadoEm(rs.getDate("CRIADO_EM"));
+				usuario.setAtualizadoEm(rs.getDate("ATUALIZADO_EM"));
+				listUsuario.add(usuario);
+			}
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			listUsuario = new ArrayList<Users>();
+		}
+		return listUsuario;
+	}
+	
+	
+	public List<Users> listUsuariosPorLike( String query){
+		String sql = "SELECT * FROM users WHERE NOME LIKE'%"+query+"%'";
+		PreparedStatement stmt;
+		ResultSet rs;
+		List<Users> listUsuario = new ArrayList<Users>();
+		try {
+			stmt = connection.prepareStatement(sql);
+			rs = stmt.executeQuery(sql);
+			while(rs.next()){
+				Users usuario = new Users();
+				usuario.setNome(rs.getString("NOME"));
+				usuario.setSenha("SENHA");
+				usuario.setId(rs.getLong("ID"));
+				usuario.setCargo(rs.getString("CARGO"));
+				usuario.setEmail(rs.getString("EMAIL"));
+				usuario.setManager(rs.getBoolean("MANAGER"));
+				usuario.setCriadoEm(rs.getDate("CRIADO_EM"));
+				usuario.setAtualizadoEm(rs.getDate("ATUALIZADO_EM"));
+				listUsuario.add(usuario);
+			}
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			listUsuario = new ArrayList<Users>();
+		}
+		return listUsuario;
+	}
 
 	public boolean isloginUsers(Users users){
 		boolean islogin = false;
 		String sql = "SELECT * FROM users where EMAIL = '"+users.getEmail()+"' AND SENHA = '"+ActivityUtil.getInstance().md5(users.getSenha())+"'";
 		PreparedStatement stmt;
+		
 		
 		ResultSet rs;
 		try {
@@ -68,7 +128,7 @@ public class UsersDAO {
 			if(rs.first()){
 				usersMB = new UsersMB();
 				usersMB.setNome(rs.getString("NOME"));
-				usersMB.setSenha(sql);
+				usersMB.setSenha("SENHA");
 				usersMB.setId(rs.getLong("ID"));
 				usersMB.setCargo(rs.getString("CARGO"));
 				usersMB.setEmail(rs.getString("EMAIL"));
@@ -82,10 +142,37 @@ public class UsersDAO {
 			}
 			stmt.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return islogin;
+	}
+	
+	public Users getUsers(long usersID){
+		String sql = "SELECT * FROM users WHERE ID = "+usersID;
+		PreparedStatement stmt;
+		ResultSet rs;
+		Users users = new Users();
+		try {
+			stmt = connection.prepareStatement(sql);
+			rs = stmt.executeQuery(sql);
+			if(rs.first()){
+				users.setNome(rs.getString("NOME"));
+				users.setSenha("SENHA");
+				users.setId(rs.getLong("ID"));
+				users.setCargo(rs.getString("CARGO"));
+				users.setEmail(rs.getString("EMAIL"));
+				users.setManager(rs.getBoolean("MANAGER"));
+				users.setCriadoEm(rs.getDate("CRIADO_EM"));
+				users.setAtualizadoEm(rs.getDate("ATUALIZADO_EM"));
+				
+				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usersMB", usersMB);
+				
+			}
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
 	}
 
 	public UsersMB getUsersMB() {
