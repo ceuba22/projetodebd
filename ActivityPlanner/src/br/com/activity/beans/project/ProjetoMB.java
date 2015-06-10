@@ -1,47 +1,64 @@
-package br.com.activity.projetos.entidade;
+package br.com.activity.beans.project;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 import br.com.activity.atividade.entidade.Atividade;
 import br.com.activity.atividadeAlocada.to.AtividadeAlocadaTO;
 import br.com.activity.grupo.entidade.Grupo;
-import br.com.activity.users.entidade.Users;
+import br.com.activity.users.to.UsersTO;
 import br.com.activity.util.PrioridadeTipo;
 import br.com.activity.util.StatusTipo;
 
-public class Projetos {
-	
-	@Column(name="ID")
-	long id;
-	
-	@Column(name="NOME")
-	String nome;
-	
-	@Column(name="DESCRICAO")
-	private String descricao;
-	
-	@Column(name="PRIORIDADE")
-	private PrioridadeTipo prioridade;
-	
-	@Column(name="STATUS")
-	private StatusTipo status;
-	
-	@Column(name="CRIADO_EM")
+@ManagedBean
+@SessionScoped
+public class ProjetoMB implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4089861191778005390L;
+
+	private long id;
+
+	private String nome;
+
 	private Date criadoEm;
-	
-	@Column(name="CRIADO_POR")
-	private Users criadoPor;
-	
+
+	private String descricao;
+
+	private PrioridadeTipo prioridade;
+
+	private String prioridadeString;
+
+	private StatusTipo status;
+
+	private UsersTO criadoPor;
+
 	private List<Grupo> listGrupo;
-	
+
 	private List<Atividade> listAtividade;
 	
 	private List<AtividadeAlocadaTO> listAtividadeAlocada;
 	
-	private Date prazoDeConclusao;
+	private static ProjetoMB instance;
+	
+	public static ProjetoMB getInstance() {
+		if (instance == null) {
+			instance = new ProjetoMB();
+		}
+		return instance;
+	}
+
+
+	public ProjetoMB(){
+
+	}
+
 
 	public long getId() {
 		return id;
@@ -57,6 +74,14 @@ public class Projetos {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public Date getCriadoEm() {
+		return criadoEm;
+	}
+
+	public void setCriadoEm(Date criadoEm) {
+		this.criadoEm = criadoEm;
 	}
 
 	public String getDescricao() {
@@ -75,6 +100,14 @@ public class Projetos {
 		this.prioridade = prioridade;
 	}
 
+	public String getPrioridadeString() {
+		return prioridadeString;
+	}
+
+	public void setPrioridadeString(String prioridadeString) {
+		this.prioridadeString = prioridadeString;
+	}
+
 	public StatusTipo getStatus() {
 		return status;
 	}
@@ -83,19 +116,11 @@ public class Projetos {
 		this.status = status;
 	}
 
-	public Date getCriadoEm() {
-		return criadoEm;
-	}
-
-	public void setCriadoEm(Date criadoEm) {
-		this.criadoEm = criadoEm;
-	}
-
-	public Users getCriadoPor() {
+	public UsersTO getCriadoPor() {
 		return criadoPor;
 	}
 
-	public void setCriadoPor(Users criadoPor) {
+	public void setCriadoPor(UsersTO criadoPor) {
 		this.criadoPor = criadoPor;
 	}
 
@@ -115,25 +140,15 @@ public class Projetos {
 		this.listAtividade = listAtividade;
 	}
 
+
 	public List<AtividadeAlocadaTO> getListAtividadeAlocada() {
 		return listAtividadeAlocada;
 	}
+
 
 	public void setListAtividadeAlocada(
 			List<AtividadeAlocadaTO> listAtividadeAlocada) {
 		this.listAtividadeAlocada = listAtividadeAlocada;
 	}
-
-	public Date getPrazoDeConclusao() {
-		return prazoDeConclusao;
-	}
-
-	public void setPrazoDeConclusão(Date prazoDeConclusao) {
-		this.prazoDeConclusao = prazoDeConclusao;
-	}
-	
-	
-	
-	
 
 }

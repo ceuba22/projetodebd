@@ -7,8 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.activity.atividade.dao.AtividadeDAO;
 import br.com.activity.atividade.entidade.Atividade;
 import br.com.activity.facade.ActivityFacade;
+import br.com.activity.grupo.dao.GrupoDAO;
 import br.com.activity.grupo.entidade.Grupo;
 import br.com.activity.hibenate.ConnectionFactory;
 import br.com.activity.projetos.entidade.Projetos;
@@ -75,7 +77,7 @@ public class ProjetosDAO {
 	public void insertProjetos(Projetos projetos){
 
 		String sql = 
-				"INSERT INTO projeto (NOME, DESCRICAO, PRIORIDADE, STATUS, CRIADO_EM, CRIADO_POR) VALUES (?, ?, ?, ?, ?, ?);";
+				"INSERT INTO projeto (NOME, DESCRICAO, PRIORIDADE, STATUS, CRIADO_EM, CRIADO_POR, PRAZO_CONCLUSAO) VALUES (?, ?, ?, ?, ?, ?, ?);";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setString(1, projetos.getNome());
@@ -84,6 +86,7 @@ public class ProjetosDAO {
 			stmt.setString(4, projetos.getStatus().getValue());
 			stmt.setDate(5, new java.sql.Date(projetos.getCriadoEm().getTime()));
 			stmt.setLong(6, projetos.getCriadoPor().getId());
+			stmt.setDate(7, new java.sql.Date(projetos.getPrazoDeConclusao().getTime()));
 			stmt.execute();
 			stmt.close();
 			insertProjetoATividade(projetos.getListAtividade(), getProjeto(projetos).getId());
@@ -126,6 +129,9 @@ public class ProjetosDAO {
 				if(rs.getString("PRIORIDADE").equals("BAIXA")){
 					projeto.setPrioridade(PrioridadeTipo.BAIXA);
 				}
+				projeto.setListGrupo(GrupoDAO.getInstance().listGruposByProject(rs.getLong("ID")));
+				projeto.setListAtividade(AtividadeDAO.getInstance().listAtividadesByProjeto(rs.getLong("ID")));
+				projeto.setPrazoDeConclusão(rs.getDate("PRAZO_CONCLUSAO"));
 			}
 			stmt.close();
 
@@ -171,6 +177,10 @@ public class ProjetosDAO {
 				if(rs.getString("PRIORIDADE").equals("BAIXA")){
 					projetos.setPrioridade(PrioridadeTipo.BAIXA);
 				}
+				projetos.setListGrupo(GrupoDAO.getInstance().listGruposByProject(rs.getLong("ID")));
+				projetos.setListAtividade(AtividadeDAO.getInstance().listAtividadesByProjeto(rs.getLong("ID")));
+				projetos.setPrazoDeConclusão(rs.getDate("PRAZO_CONCLUSAO"));
+				
 				listProjetos.add(projetos);
 			}
 			stmt.close();

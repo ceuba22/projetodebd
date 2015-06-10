@@ -64,7 +64,8 @@
 							emptyMessage="Não Existe Projetos Ativos."
 							value="#{principalMB.listProjetosTO}">
 							<p:column headerText="Projeto">
-								<p:commandButton value="#{project.nome}" />
+								<p:commandButton value="#{project.nome}"
+									actionListener="#{principalMB.redirectProjetoUsuario(project)}" />
 							</p:column>
 
 							<p:column headerText="Descrição">
@@ -75,6 +76,25 @@
 								<p:outputLabel value="#{project.prioridade.value}" />
 
 							</p:column>
+							<p:column headerText="Criado em">
+								<p:outputLabel value="#{project.criadoEm}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:outputLabel>
+
+							</p:column>
+
+							<p:column headerText="Prazo de conclusão">
+								<p:outputLabel value="#{project.prazoDeConclusao}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:outputLabel>
+
+							</p:column>
+
+							<p:column headerText="Criado por">
+								<p:outputLabel value="#{project.criadoPor.nome}" />
+
+							</p:column>
+
 
 						</p:dataTable>
 					</p:panel>
@@ -191,7 +211,8 @@
 			</p:selectOneMenu>
 			<p:outputLabel value="Tag"
 				style=" margin-bottom: 10px; display: block;" />
-			<p:selectOneMenu value="#{principalMB.atividaTo.tagId}">
+			<p:selectOneMenu value="#{principalMB.atividaTo.tagId}"
+				style="display: block; margin-bottom: 10px;">
 				<f:selectItems var="tagItens" value="#{principalMB.listTag}"
 					itemLabel="#{tagItens.nome}"
 					itemDescription="#{tagItens.descricao}" itemValue="#{tagItens.id}" />

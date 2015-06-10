@@ -121,5 +121,29 @@ public class GrupoDAO {
 		return listgrupo;
 
 	}
+	
+	public List<Grupo> listGruposByProject(long projectId){
+		String sql = "SELECT * FROM  grupo G, projeto_grupo PG WHERE PG.ID_PROJETO ="+projectId+"  AND PG.ID_GRUPO = G.ID";
+		PreparedStatement stmt;
+		List<Grupo> listgrupo = new ArrayList<Grupo>();
+		ResultSet rs;
+		try {
+			stmt = connection.prepareStatement(sql);
+			rs = stmt.executeQuery(sql);
+			while(rs.next()){
+				Grupo grupo = new Grupo();
+				grupo.setId(rs.getLong("ID"));
+				grupo.setNome(rs.getString("NOME"));
+				grupo.setDescricao(rs.getString("DESCRICAO"));
+				grupo.setCriadoEm(rs.getDate("CRIADO_EM"));
+				listgrupo.add(grupo);
+			}
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listgrupo;
+
+	}
 
 }

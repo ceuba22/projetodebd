@@ -16,6 +16,7 @@ import org.primefaces.model.DualListModel;
 
 import br.com.activity.atividade.entidade.Atividade;
 import br.com.activity.atividade.to.AtividadeTO;
+import br.com.activity.beans.project.ProjetoMB;
 import br.com.activity.beans.users.UsersMB;
 import br.com.activity.facade.ActivityFacade;
 import br.com.activity.grupo.dao.GrupoDAO;
@@ -67,6 +68,8 @@ public class PrincipalMB  implements Serializable{
 	private DualListModel<Atividade> atividades;
 
 	private List<ProjetosTO> listProjetosTO;
+	
+	private ProjetosTO selectedProjetoTO;
 
 
 	private UsersMB usersMB = (UsersMB)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usersMB");
@@ -85,6 +88,7 @@ public class PrincipalMB  implements Serializable{
 		atividadeSource = new ArrayList<Atividade>();
 		atividadeTarget = new ArrayList<Atividade>();
 		listProjetosTO = new ArrayList<ProjetosTO>();
+		selectedProjetoTO = new ProjetosTO();
 		loadBean();
 	}
 
@@ -162,10 +166,21 @@ public class PrincipalMB  implements Serializable{
 		}
 	}
 	
-	public void redirectProjetoUsuario(){
+	public void redirectProjetoUsuario(ProjetosTO projeto){
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
-			context.getExternalContext().redirect("departamento/inserirUsuario-Departamento.jsf");
+			ProjetoMB projetoMB = new ProjetoMB();
+			projetoMB.setId(projeto.getId());
+			projetoMB.setDescricao(projeto.getDescricao());
+			projetoMB.setCriadoEm(projeto.getCriadoEm());
+			projetoMB.setNome(projeto.getNome());
+			projetoMB.setPrioridade(projeto.getPrioridade());
+			projetoMB.setListGrupo(projeto.getListGrupo());
+			projetoMB.setStatus(projeto.getStatus());
+			projetoMB.setListAtividade(projeto.getListAtividade());
+			projetoMB.setCriadoPor(projeto.getCriadoPor());
+			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("projetoMB", projetoMB);
+			context.getExternalContext().redirect("projeto/inserirUsuario-projeto.jsf");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -500,6 +515,16 @@ public class PrincipalMB  implements Serializable{
 
 	public void setListProjetosTO(List<ProjetosTO> listProjetosTO) {
 		this.listProjetosTO = listProjetosTO;
+	}
+
+
+	public ProjetosTO getSelectedProjetoTO() {
+		return selectedProjetoTO;
+	}
+
+
+	public void setSelectedProjetoTO(ProjetosTO selectedProjetoTO) {
+		this.selectedProjetoTO = selectedProjetoTO;
 	}
 
 

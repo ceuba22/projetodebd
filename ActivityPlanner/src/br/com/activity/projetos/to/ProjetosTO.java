@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import br.com.activity.atividade.entidade.Atividade;
+import br.com.activity.atividadeAlocada.to.AtividadeAlocadaTO;
 import br.com.activity.facade.ActivityFacade;
 import br.com.activity.grupo.entidade.Grupo;
 import br.com.activity.projetos.entidade.Projetos;
@@ -35,6 +36,10 @@ public class ProjetosTO {
 	
 	private List<Atividade> listAtividade;
 	
+	private List<AtividadeAlocadaTO> listAtividadesAlocadas;
+	
+	private Date prazoDeConclusao;
+	
 	public ProjetosTO(){
 		
 	}
@@ -44,11 +49,13 @@ public class ProjetosTO {
 		this.nome = projetos.getNome();
 		this.descricao = projetos.getDescricao();
 		this.prioridade = projetos.getPrioridade();
-		this.criadoEm = new Date();
+		this.criadoEm = projetos.getCriadoEm();
 		this.status = projetos.getStatus(); 
 		this.criadoPor = new UsersTO(projetos.getCriadoPor());
 		this.listAtividade = projetos.getListAtividade();
 		this.listGrupo = projetos.getListGrupo();
+		this.listAtividadesAlocadas = projetos.getListAtividadeAlocada();
+		this.prazoDeConclusao = projetos.getPrazoDeConclusao();
 		
 		
 		
@@ -73,6 +80,8 @@ public class ProjetosTO {
 		projetos.setCriadoEm(new Date());
 		projetos.setListGrupo(new ArrayList<Grupo>());
 		projetos.setListAtividade(new ArrayList<Atividade>());
+		projetos.setListAtividadeAlocada(new ArrayList<AtividadeAlocadaTO>());
+		projetos.setPrazoDeConclusão(this.prazoDeConclusao);
 		
 		try {
 			projetos.setCriadoPor(ActivityFacade.getInstance().getUsers(ActivityUtil.getInstance().getUsersTOLogado()));
@@ -161,6 +170,23 @@ public class ProjetosTO {
 
 	public void setListAtividade(List<Atividade> listAtividade) {
 		this.listAtividade = listAtividade;
+	}
+
+	public List<AtividadeAlocadaTO> getListAtividadesAlocadas() {
+		return listAtividadesAlocadas;
+	}
+
+	public void setListAtividadesAlocadas(
+			List<AtividadeAlocadaTO> listAtividadesAlocadas) {
+		this.listAtividadesAlocadas = listAtividadesAlocadas;
+	}
+
+	public Date getPrazoDeConclusao() {
+		return prazoDeConclusao;
+	}
+
+	public void setPrazoDeConclusão(Date prazoDeConclusao) {
+		this.prazoDeConclusao = prazoDeConclusao;
 	}
 	
 	

@@ -86,6 +86,45 @@ public class UsersDAO {
 		return listUsuario;
 	}
 	
+	public List<Users> listUsuariosPorListaDeGrupos( List<Long> listGruposID){
+		List<Users> listUsuario = new ArrayList<Users>();
+		for (Long grupoID : listGruposID) {
+			String sql = "SELECT U.ID,"
+					+ " U.NOME,"
+					+ " U.ATUALIZADO_EM,"
+					+ " U.ATUALIZADO_POR,"
+					+ " U.CARGO, U.EMAIL,"
+					+ " U.SENHA,"
+					+ " U.MANAGER, "
+					+ " U.CRIADO_EM,"
+					+ " U.CRIADO_POR"
+					+ " FROM users U, grupo G, grupo_users GU WHERE U.ID = GU.USER_ID AND G.ID = GU.GRUPO_ID AND U.ID= "+grupoID;
+			PreparedStatement stmt;
+			ResultSet rs;
+			try {
+				stmt = connection.prepareStatement(sql);
+				rs = stmt.executeQuery(sql);
+				while(rs.next()){
+					Users usuario = new Users();
+					usuario.setNome(rs.getString("NOME"));
+					usuario.setSenha(rs.getString("SENHA"));
+					usuario.setId(rs.getLong("ID"));
+					usuario.setCargo(rs.getString("CARGO"));
+					usuario.setEmail(rs.getString("EMAIL"));
+					usuario.setManager(rs.getBoolean("MANAGER"));
+					usuario.setCriadoEm(rs.getDate("CRIADO_EM"));
+					usuario.setAtualizadoEm(rs.getDate("ATUALIZADO_EM"));
+					listUsuario.add(usuario);
+				}
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				listUsuario = new ArrayList<Users>();
+			}
+		}
+		return listUsuario;
+	}
+	
 	
 	public List<Users> listUsuariosPorLike( String query){
 		String sql = "SELECT * FROM users WHERE NOME LIKE'%"+query+"%'";
@@ -164,8 +203,6 @@ public class UsersDAO {
 				users.setManager(rs.getBoolean("MANAGER"));
 				users.setCriadoEm(rs.getDate("CRIADO_EM"));
 				users.setAtualizadoEm(rs.getDate("ATUALIZADO_EM"));
-				
-				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usersMB", usersMB);
 				
 			}
 			stmt.close();
