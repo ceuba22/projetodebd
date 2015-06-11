@@ -27,6 +27,8 @@
 								onclick="PF('criarProjetoDialog').show()" />
 						</p:submenu>
 						<p:submenu label="Monitoramento">
+							<p:menuitem value="Monitorar Projeto"
+								actionListener="#{principalMB.redirectMonitoramento}" />
 						</p:submenu>
 						<p:separator />
 						<p:submenu label="Departamento">
@@ -126,6 +128,11 @@
 				<f:selectItem itemLabel="MÉDIA" itemValue="MEDIA" />
 				<f:selectItem itemLabel="BAIXA" itemValue="BAIXA" />
 			</p:selectOneMenu>
+			<p:outputLabel for="popup" value="Prazo de validação"
+				style=" margin-bottom: 10px; display: block;" />
+			<p:calendar id="popup"
+				value="#{principalMB.projetosTO.prazoDeConclusao}" locale="pt"
+				pattern="dd/MM/yyyy" style=" margin-bottom: 10px; display: block;" />
 
 			<div style="float: right">
 				<p:outputLabel value="Atividades"
@@ -289,7 +296,35 @@
 		<h:outputFormat rendered="#{principalMB.usersTO.manager ne true}" />
 	</h:form>
 </h:body>
-
+<script>
+PrimeFaces.locales['pt'] = {  
+                closeText: 'Fechar',  
+                prevText: 'Anterior',  
+                nextText: 'Próximo',  
+                currentText: 'Começo',  
+                monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],  
+                monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun', 'Jul','Ago','Set','Out','Nov','Dez'],  
+                dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],  
+                dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],  
+                dayNamesMin: ['D','S','T','Q','Q','S','S'],  
+                weekHeader: 'Semana',  
+                firstDay: 1,  
+                isRTL: false,  
+                showMonthAfterYear: false,  
+                yearSuffix: '',  
+                timeOnlyTitle: 'Só Horas',  
+                timeText: 'Tempo',  
+                hourText: 'Hora',  
+                minuteText: 'Minuto',  
+                secondText: 'Segundo',  
+                currentText: 'Data Atual',  
+                ampm: false,  
+                month: 'Mês',  
+                week: 'Semana',  
+                day: 'Dia',  
+                allDayText : 'Todo Dia'  
+            };  
+</script>
 
 </html>
 

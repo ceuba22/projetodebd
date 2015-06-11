@@ -81,7 +81,7 @@ public class ProjetosTO {
 		projetos.setListGrupo(new ArrayList<Grupo>());
 		projetos.setListAtividade(new ArrayList<Atividade>());
 		projetos.setListAtividadeAlocada(new ArrayList<AtividadeAlocadaTO>());
-		projetos.setPrazoDeConclusão(this.prazoDeConclusao);
+		projetos.setPrazoDeConclusao(this.prazoDeConclusao);
 		
 		try {
 			projetos.setCriadoPor(ActivityFacade.getInstance().getUsers(ActivityUtil.getInstance().getUsersTOLogado()));
@@ -185,7 +185,7 @@ public class ProjetosTO {
 		return prazoDeConclusao;
 	}
 
-	public void setPrazoDeConclusão(Date prazoDeConclusao) {
+	public void setPrazoDeConclusao(Date prazoDeConclusao) {
 		this.prazoDeConclusao = prazoDeConclusao;
 	}
 	

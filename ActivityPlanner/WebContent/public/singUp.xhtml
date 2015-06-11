@@ -7,24 +7,30 @@
 <h:head>
 	<title>Novo usuário</title>
 </h:head>
-<h:body  style="background-color: darkgrey;">
+<h:body style="background-color: darkgrey;">
+	<a href="#{request.contextPath}/"
+		style="float: right; margin-top: 10px; margin-right: 10px; border: 1px solid #a6c9e2; text-decoration: inherit; background: #0078ae; color: #ffffff; font-weight: normal; font-size: 1em; font-family: Verdana, Arial, sans-serif; border-radius: 5px; -webkit-appearance: button; padding: .3em 1em .3em 2.1em; line-height: 1.4;">
+		<span> <i class="fa fa-question"></i>Voltar
+	</span>
+	</a>
 	<h:form id="crudUsers" style="  margin-right: 10px;">
 		<p:panel header="Cadastro de Usuário" style="width:100%;">
-			<p:outputLabel value="Nome" style=" margin-bottom: 10px; display: block;" />
+			<p:outputLabel value="Nome"
+				style=" margin-bottom: 10px; display: block;" />
 			<p:inputText style="display: block;  margin-bottom: 10px;"
 				value="#{singUpMB.newUsers.nome}" />
-			<p:outputLabel value="Email"  style=" margin-bottom: 10px; display: block;"/>
+			<p:outputLabel value="Email"
+				style=" margin-bottom: 10px; display: block;" />
 			<p:inputText style="display: block;  margin-bottom: 10px;"
 				value="#{singUpMB.newUsers.email}" />
-			<p:outputLabel value="Cargo" style=" margin-bottom: 10px; display: block;" />
+			<p:outputLabel value="Cargo"
+				style=" margin-bottom: 10px; display: block;" />
 			<p:inputText style="display: block;  margin-bottom: 10px;"
 				value="#{singUpMB.newUsers.cargo}" />
-			<p:outputLabel value="Gerente" style=" margin-bottom: 10px; display: block;" />
-			<p:selectBooleanCheckbox value="#{singUpMB.newUsers.manager}"
-				style="margin-left: 10px; margin-bottom: 10px; display: block; width: 18px;" />
 			<p:outputLabel value="Senha"
 				style="  display: block; margin-bottom: 10px;" />
-			<p:password value="#{singUpMB.newUsers.senha}" style="margin-bottom: 10px;"/>
+			<p:password value="#{singUpMB.newUsers.senha}"
+				style="margin-bottom: 10px;" />
 			<p:commandButton styleClass="btn btn-success" icon="ui-icon-check"
 				value="Salvar" style="display: block;"
 				actionListener="#{singUpMB.save}" update="@form">

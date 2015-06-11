@@ -44,9 +44,10 @@ public class LoginMB implements Serializable{
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Atenção", "Login ou senha incorretos, favor verificar dados digitados."));	
 			}
 		} catch (ClassNotFoundException e) {
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Atenção", "Login ou senha incorretos, favor verificar dados digitados."));
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Atenção", "Login ou senha incorretos, favor verificar dados digitados."));
 			e.printStackTrace();
 		}
 	}

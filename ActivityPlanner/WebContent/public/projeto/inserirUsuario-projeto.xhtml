@@ -5,7 +5,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<title>Projeto Alocação de atividade</title>
+	<title>Monitoramento Projetos</title>
 </h:head>
 <h:body style="background-color: darkgrey;">
 	<h:form id="formPrincipal">
@@ -34,18 +34,8 @@
 						itemLabel="#{listAtividade.nome} - #{listAtividade.tempoExecucao}  #{listAtividade.tipoExecucao}"
 						itemValue="#{listAtividade.id}" />
 				</p:selectOneMenu>
-				<h:outputLabel value="Usuários Disponiveis: "
-					style="display:block; margin-bottom: 10px;" />
-				<p:selectOneMenu value="#{inserirUsuarioProjetoMB.usersID}"
-					style="display:block; margin-bottom: 10px;">
-					<f:selectItem itemLabel="Selecione..." itemValue="0" />
-					<f:selectItems
-						value="#{inserirUsuarioProjetoMB.listUsuariosDisponiveis}"
-						var="listUsers" itemLabel="#{listUsers.nome}"
-						itemValue="#{listUsers.id}" />
-				</p:selectOneMenu>
-
-				<p:commandButton id="confirmProjeto" value="Salvar"
+			
+				<p:commandButton id="confirmProjeto" value="Consultar"
 					actionListener="#{inserirUsuarioProjetoMB.addAtividadeAlocada}" />
 
 

@@ -165,6 +165,10 @@ public class PrincipalMB  implements Serializable{
 			e.printStackTrace();
 		}
 	}
+	public void redirectMonitoramento() throws IOException{
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().redirect("monitoramento/monitoramentoDetalhe.jsf");
+	}
 	
 	public void redirectProjetoUsuario(ProjetosTO projeto){
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -326,6 +330,9 @@ public class PrincipalMB  implements Serializable{
 			projetos.setListGrupo(getDepartamentos().getTarget());
 			try {
 				ActivityFacade.getInstance().inserirProjeto(projetos);
+				loadListProjetos();
+				requestContext.update("formPrincipal");
+				requestContext.execute("PF('criarProjetoDialog').hide()");
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}

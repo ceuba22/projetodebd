@@ -128,7 +128,7 @@ public class Projetos {
 		return prazoDeConclusao;
 	}
 
-	public void setPrazoDeConclusão(Date prazoDeConclusao) {
+	public void setPrazoDeConclusao(Date prazoDeConclusao) {
 		this.prazoDeConclusao = prazoDeConclusao;
 	}
 	

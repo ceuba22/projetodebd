@@ -40,7 +40,7 @@ public class UsersDAO {
 
 	public void adiciona(Users users){
 
-		String sql = "INSERT INTO users(nome, cargo, criado_em, atualizado_em, email, senha) VALUES(?,?,?,?,?,?)";
+		String sql = "INSERT INTO users(nome, cargo, criado_em, atualizado_em, email, senha, MANAGER) VALUES(?,?,?,?,?,?)";
 		try {
 
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -50,6 +50,7 @@ public class UsersDAO {
 			stmt.setDate(4, new java.sql.Date(users.getAtualizadoEm().getTime()));
 			stmt.setString(5, users.getEmail());
 			stmt.setString(6, ActivityUtil.getInstance().md5(users.getSenha()));
+			stmt.setBoolean(7, users.isManager());
 			stmt.execute();
 			stmt.close();
 
