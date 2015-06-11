@@ -9,100 +9,99 @@
 </h:head>
 <h:body style="background-color: darkgrey;">
 	<h:form id="formPrincipal">
-		<h:outputFormat rendered="#{principalMB.usersTO.manager eq true}">
-			<div>
-				<p:menubar>
+		<div>
+			<p:menubar>
 
-					<f:facet name="options">
-						<p:inputText style="margin-right:10px" placeholder="Search" />
-						<p:commandButton type="button" value="Logout"
-							icon="ui-icon-extlink" />
-					</f:facet>
-				</p:menubar>
+				<f:facet name="options">
+					<p:inputText style="margin-right:10px" placeholder="Search" />
+					<p:commandButton type="button" value="Logout"
+						icon="ui-icon-extlink" />
+				</f:facet>
+			</p:menubar>
 
-				<div style="float: left; margin: 50px 0px 0px 10px;">
-					<p:panelMenu style="width:300px; float: left;">
-						<p:submenu label="Projeto" icon="ui-icon-folder-collapsed">
-							<p:menuitem value="Criar Projeto" icon="ui-icon-folder-open"
-								onclick="PF('criarProjetoDialog').show()" />
-						</p:submenu>
-						<p:submenu label="Monitoramento">
-							<p:menuitem value="Monitorar Projeto"
-								actionListener="#{principalMB.redirectMonitoramento}" />
-						</p:submenu>
-						<p:separator />
-						<p:submenu label="Departamento">
-							<p:menuitem value="Criar Departamento" icon="ui-icon-flag"
-								onclick="PF('criarDepartamentoDialog').show()" />
-							<p:menuitem value="Departamentos" icon="ui-icon-flag"
-								actionListener="#{principalMB.redirectDepartamentoUsuario}" />
-						</p:submenu>
-						<p:submenu label="Atividade">
-							<p:menuitem value="Atividades" icon="ui-icon-clipboard"
-								actionListener="#{principalMB.redirectAtividade}" />
-							<p:menuitem value="Criar Atividade" icon="ui-icon-clipboard"
-								onclick="PF('criarAtividadeDialog').show()" />
-							<p:menuitem value="Criar Tag" icon="ui-icon-tag"
-								onclick="PF('criarTagDialog').show()" />
-						</p:submenu>
-						<p:submenu label="Relato">
-						</p:submenu>
-						<p:submenu label="Colaboradores">
-							<p:menuitem value="Adicionar Colaborador" icon="ui-icon-person"
-								onclick="PF('criarUsuarioDialog').show()" />
-						</p:submenu>
-						<p:submenu label="Relatórios">
-						</p:submenu>
-					</p:panelMenu>
-					<div align="right">
-						<p>Seja Bem-Vindo Sr(a): #{principalMB.usersTO.nome}.</p>
-						<p>Cargo: #{principalMB.usersTO.cargo}.</p>
-					</div>
-				</div>
-				<div id="dataTable"
-					style="float: right; width: 75%; margin: 50px 10px 0px 0px;">
-					<p:panel header="Projetos Ativos">
-						<p:dataTable id="project" var="project" widgetVar="project"
-							emptyMessage="Não Existe Projetos Ativos."
-							value="#{principalMB.listProjetosTO}">
-							<p:column headerText="Projeto">
-								<p:commandButton value="#{project.nome}"
-									actionListener="#{principalMB.redirectProjetoUsuario(project)}" />
-							</p:column>
-
-							<p:column headerText="Descrição">
-								<p:outputLabel value="#{project.descricao}" />
-
-							</p:column>
-							<p:column headerText="Prioridade">
-								<p:outputLabel value="#{project.prioridade.value}" />
-
-							</p:column>
-							<p:column headerText="Criado em">
-								<p:outputLabel value="#{project.criadoEm}">
-									<f:convertDateTime pattern="dd/MM/yyyy" />
-								</p:outputLabel>
-
-							</p:column>
-
-							<p:column headerText="Prazo de conclusão">
-								<p:outputLabel value="#{project.prazoDeConclusao}">
-									<f:convertDateTime pattern="dd/MM/yyyy" />
-								</p:outputLabel>
-
-							</p:column>
-
-							<p:column headerText="Criado por">
-								<p:outputLabel value="#{project.criadoPor.nome}" />
-
-							</p:column>
-
-
-						</p:dataTable>
-					</p:panel>
+			<div style="float: left; margin: 50px 0px 0px 10px;">
+				<p:panelMenu style="width:300px; float: left;" >
+					<p:submenu label="Projeto" icon="ui-icon-folder-collapsed" >
+						<p:menuitem value="Criar Projeto" icon="ui-icon-folder-open"
+							onclick="PF('criarProjetoDialog').show()" />
+					</p:submenu>
+					<p:submenu label="Monitoramento">
+						<p:menuitem value="Monitorar Projeto"
+							actionListener="#{principalMB.redirectMonitoramento}" />
+					</p:submenu>
+					<p:separator />
+					<p:submenu label="Departamento">
+						<p:menuitem value="Criar Departamento" icon="ui-icon-flag"
+							onclick="PF('criarDepartamentoDialog').show()" />
+						<p:menuitem value="Departamentos" icon="ui-icon-flag"
+							actionListener="#{principalMB.redirectDepartamentoUsuario}" />
+					</p:submenu>
+					<p:submenu label="Atividade">
+						<p:menuitem value="Atividades" icon="ui-icon-clipboard"
+							actionListener="#{principalMB.redirectAtividade}" />
+						<p:menuitem value="Criar Atividade" icon="ui-icon-clipboard"
+							onclick="PF('criarAtividadeDialog').show()" />
+						<p:menuitem value="Criar Tag" icon="ui-icon-tag"
+							onclick="PF('criarTagDialog').show()" />
+					</p:submenu>
+					<p:submenu label="Relato">
+					</p:submenu>
+					<p:submenu label="Colaboradores">
+						<p:menuitem value="Adicionar Colaborador" icon="ui-icon-person"
+							onclick="PF('criarUsuarioDialog').show()" />
+					</p:submenu>
+					<p:submenu label="Relatórios">
+					</p:submenu>
+				</p:panelMenu>
+				<div align="right">
+					<p>Seja Bem-Vindo Sr(a): #{principalMB.usersTO.nome}.</p>
+					<p>Cargo: #{principalMB.usersTO.cargo}.</p>
 				</div>
 			</div>
-		</h:outputFormat>
+			<div id="dataTable"
+				style="float: right; width: 75%; margin: 50px 10px 0px 0px;">
+				<p:panel header="Projetos Ativos">
+					<p:dataTable id="project" var="project" widgetVar="project"
+						emptyMessage="Não Existe Projetos Ativos."
+						value="#{principalMB.listProjetosTO}">
+						<p:column headerText="Projeto">
+							<p:commandButton value="#{project.nome}"
+								actionListener="#{principalMB.redirectProjetoUsuario(project)}" />
+						</p:column>
+
+						<p:column headerText="Descrição">
+							<p:outputLabel value="#{project.descricao}" />
+
+						</p:column>
+						<p:column headerText="Prioridade">
+							<p:outputLabel value="#{project.prioridade.value}" />
+
+						</p:column>
+						<p:column headerText="Criado em">
+							<p:outputLabel value="#{project.criadoEm}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</p:outputLabel>
+
+						</p:column>
+
+						<p:column headerText="Prazo de conclusão">
+							<p:outputLabel value="#{project.prazoDeConclusao}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</p:outputLabel>
+
+						</p:column>
+
+						<p:column headerText="Criado por">
+							<p:outputLabel value="#{project.criadoPor.nome}" />
+
+						</p:column>
+
+
+					</p:dataTable>
+				</p:panel>
+			</div>
+			
+		</div>
 
 		<p:dialog id="criarProjetoDialog" modal="true"
 			header="Formulário de Projeto"
@@ -293,7 +292,6 @@
 				actionListener="#{principalMB.cleanFormUsers}" update="@form"
 				onsuccess="PF('criarUsuarioDialog').hide()" />
 		</p:dialog>
-		<h:outputFormat rendered="#{principalMB.usersTO.manager ne true}" />
 	</h:form>
 </h:body>
 <script>

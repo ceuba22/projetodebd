@@ -5,7 +5,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<title>Projeto Alocação de atividade</title>
+	<title>Monitoramento</title>
 </h:head>
 <h:body style="background-color: darkgrey;">
 	<h:form id="formPrincipal">
@@ -22,8 +22,8 @@
 				<span> <i class="fa fa-question"></i>Voltar
 			</span>
 			</a>
-			<p:panel header="Alocar Atividade">
-				<h:outputLabel value="Atividades Selecionadas: "
+			<p:panel header="Monitorar projeto">
+				<h:outputLabel value="Projeto selecionado: "
 					style="display:block; margin-bottom: 10px;" />
 				<p:selectOneMenu value="#{monitoramentoDetalheMB.projetoId}"
 					style="display:block; margin-bottom: 10px;">
@@ -55,16 +55,11 @@
 
 							</p:column>
 							<p:column headerText="Tempo Realização Real %">
-								<p:outputLabel value="#{atividadeAlocada.atividadeTO.tag.nome}" />
 
 							</p:column>
 							<p:column headerText="Tempo Realização Teorico %">
-								<p:commandButton value="Excluir"
-									actionListener="#{inserirUsuarioProjetoMB.removerAtividadeAlocada(atividadeAlocada)}"
-									update="atividadeAlocada" />
 							</p:column>
 							<p:column headerText="Nivel de Comprometimento %">
-								<p:commandButton value="Editar" />
 							</p:column>
 
 						</p:dataTable>

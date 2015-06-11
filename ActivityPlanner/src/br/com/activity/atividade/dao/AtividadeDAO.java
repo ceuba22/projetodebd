@@ -52,13 +52,14 @@ public class AtividadeDAO {
 		}
 	}
 
-	public void inserirAtividadeAlocada(long usersId, long atividadeId, long date){
-		String sql = "INSERT INTO atividade_users (USER_ID, ATIVIDADE_ID, DATA_INICIO_REAL) VALUES (?, ?, ?)";
+	public void inserirAtividadeAlocada(long usersId, long atividadeId, long date, long projetoID){
+		String sql = "INSERT INTO atividade_users (USER_ID, ATIVIDADE_ID, DATA_INICIO_REAL, PROJETO_ID) VALUES (?, ?, ?, ?)";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setLong(1, usersId);
 			stmt.setLong(2, atividadeId);
 			stmt.setTimestamp(3, new java.sql.Timestamp(date));
+			stmt.setLong(4, projetoID);
 			stmt.execute();
 			stmt.close();
 
@@ -104,13 +105,14 @@ public class AtividadeDAO {
 				+ " AU.USER_ID,"
 				+ " AU.ATIVIDADE_ID,"
 				+ " AU.TEMPO_EXECUCAO_REAL,"
-				+ " AU.DATA_INICIO_REAL"
+				+ " AU.DATA_INICIO_REAL,"
+				+ " AU.PROJETO_ID"
 				+ " FROM atividade_users AU, users U, atividade A, projeto_atividade PA, grupo_users GU, projeto P "
 				+ "WHERE AU.USER_ID = U.ID"
 				+ " AND AU.ATIVIDADE_ID = A.ID"
 				+ " AND AU.ATIVIDADE_ID = PA.ATIVIDADE_ID "
 				+ "AND AU.USER_ID = GU.GRUPO_ID "
-				+ "AND P.ID = "+projetoId;
+				+ "AND AU.PROJETO_ID = "+projetoId;
 
 		PreparedStatement stmt;
 		ResultSet rs;

@@ -99,7 +99,7 @@ public class UsersDAO {
 					+ " U.MANAGER, "
 					+ " U.CRIADO_EM,"
 					+ " U.CRIADO_POR"
-					+ " FROM users U, grupo G, grupo_users GU WHERE U.ID = GU.USER_ID AND G.ID = GU.GRUPO_ID AND U.ID= "+grupoID;
+					+ " FROM users U, grupo G, grupo_users GU WHERE U.ID = GU.USER_ID AND G.ID = GU.GRUPO_ID AND GU.GRUPO_ID= "+grupoID;
 			PreparedStatement stmt;
 			ResultSet rs;
 			try {

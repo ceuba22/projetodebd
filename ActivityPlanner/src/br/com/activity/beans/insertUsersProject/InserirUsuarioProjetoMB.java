@@ -10,6 +10,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.context.RequestContext;
+
 import br.com.activity.atividade.dao.AtividadeDAO;
 import br.com.activity.atividadeAlocada.to.AtividadeAlocadaTO;
 import br.com.activity.beans.project.ProjetoMB;
@@ -96,10 +98,12 @@ public class InserirUsuarioProjetoMB implements Serializable{
 
 	public void addAtividadeAlocada(){
 		FacesContext context = FacesContext.getCurrentInstance();
+		RequestContext requestContext = RequestContext.getCurrentInstance();
 		try {
 			if(usersID != 0 && atividadeID != 0 ){
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Sucesso", "Tarefa alocada com sucesso."));
-				AtividadeDAO.getInstance().inserirAtividadeAlocada(usersID, atividadeID, new Date().getTime());
+				AtividadeDAO.getInstance().inserirAtividadeAlocada(usersID, atividadeID, new Date().getTime(), projetosTO.getId() );
+				requestContext.update("formPrincipal");
 				loadBean();
 			}
 		} catch (ClassNotFoundException e) {
