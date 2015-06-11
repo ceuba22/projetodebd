@@ -40,14 +40,14 @@ public class UsersDAO {
 
 	public void adiciona(Users users){
 
-		String sql = "INSERT INTO users(nome, cargo, criado_em, atualizado_em, email, senha, MANAGER) VALUES(?,?,?,?,?,?)";
+		String sql = "INSERT INTO users(nome, cargo, criado_em, atualizado_em, email, senha, MANAGER) VALUES(?,?,?,?,?,?,?)";
 		try {
 
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setString(1, users.getNome());
 			stmt.setString(2, users.getCargo());
-			stmt.setDate(3,new java.sql.Date(users.getCriadoEm().getTime()));
-			stmt.setDate(4, new java.sql.Date(users.getAtualizadoEm().getTime()));
+			stmt.setTimestamp(3,new java.sql.Timestamp(users.getCriadoEm().getTime()));
+			stmt.setTimestamp(4, new java.sql.Timestamp(users.getAtualizadoEm().getTime()));
 			stmt.setString(5, users.getEmail());
 			stmt.setString(6, ActivityUtil.getInstance().md5(users.getSenha()));
 			stmt.setBoolean(7, users.isManager());
@@ -75,8 +75,8 @@ public class UsersDAO {
 				usuario.setCargo(rs.getString("CARGO"));
 				usuario.setEmail(rs.getString("EMAIL"));
 				usuario.setManager(rs.getBoolean("MANAGER"));
-				usuario.setCriadoEm(rs.getDate("CRIADO_EM"));
-				usuario.setAtualizadoEm(rs.getDate("ATUALIZADO_EM"));
+				usuario.setCriadoEm(rs.getTimestamp("CRIADO_EM"));
+				usuario.setAtualizadoEm(rs.getTimestamp("ATUALIZADO_EM"));
 				listUsuario.add(usuario);
 			}
 			stmt.close();
@@ -113,8 +113,8 @@ public class UsersDAO {
 					usuario.setCargo(rs.getString("CARGO"));
 					usuario.setEmail(rs.getString("EMAIL"));
 					usuario.setManager(rs.getBoolean("MANAGER"));
-					usuario.setCriadoEm(rs.getDate("CRIADO_EM"));
-					usuario.setAtualizadoEm(rs.getDate("ATUALIZADO_EM"));
+					usuario.setCriadoEm(rs.getTimestamp("CRIADO_EM"));
+					usuario.setAtualizadoEm(rs.getTimestamp("ATUALIZADO_EM"));
 					listUsuario.add(usuario);
 				}
 				stmt.close();
@@ -143,8 +143,8 @@ public class UsersDAO {
 				usuario.setCargo(rs.getString("CARGO"));
 				usuario.setEmail(rs.getString("EMAIL"));
 				usuario.setManager(rs.getBoolean("MANAGER"));
-				usuario.setCriadoEm(rs.getDate("CRIADO_EM"));
-				usuario.setAtualizadoEm(rs.getDate("ATUALIZADO_EM"));
+				usuario.setCriadoEm(rs.getTimestamp("CRIADO_EM"));
+				usuario.setAtualizadoEm(rs.getTimestamp("ATUALIZADO_EM"));
 				listUsuario.add(usuario);
 			}
 			stmt.close();
@@ -173,8 +173,8 @@ public class UsersDAO {
 				usersMB.setCargo(rs.getString("CARGO"));
 				usersMB.setEmail(rs.getString("EMAIL"));
 				usersMB.setManager(rs.getBoolean("MANAGER"));
-				usersMB.setCriadoEm(rs.getDate("CRIADO_EM"));
-				usersMB.setAtualizadoEm(rs.getDate("ATUALIZADO_EM"));
+				usersMB.setCriadoEm(rs.getTimestamp("CRIADO_EM"));
+				usersMB.setAtualizadoEm(rs.getTimestamp("ATUALIZADO_EM"));
 				
 				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usersMB", usersMB);
 				
@@ -202,8 +202,8 @@ public class UsersDAO {
 				users.setCargo(rs.getString("CARGO"));
 				users.setEmail(rs.getString("EMAIL"));
 				users.setManager(rs.getBoolean("MANAGER"));
-				users.setCriadoEm(rs.getDate("CRIADO_EM"));
-				users.setAtualizadoEm(rs.getDate("ATUALIZADO_EM"));
+				users.setCriadoEm(rs.getTimestamp("CRIADO_EM"));
+				users.setAtualizadoEm(rs.getTimestamp("ATUALIZADO_EM"));
 				
 			}
 			stmt.close();

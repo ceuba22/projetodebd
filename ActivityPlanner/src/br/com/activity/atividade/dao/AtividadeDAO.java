@@ -39,7 +39,7 @@ public class AtividadeDAO {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setString(1, atividade.getNome());
 			stmt.setString(2, atividade.getDescricao());
-			stmt.setDate(3, new java.sql.Date(atividade.getCriadoEm().getTime()));
+			stmt.setTimestamp(3, new java.sql.Timestamp(atividade.getCriadoEm().getTime()));
 			stmt.setInt(4, atividade.getPeso());
 			stmt.setLong(5, atividade.getTag().getId());
 			stmt.setLong(6, atividade.getTempoExecucao());
@@ -58,7 +58,7 @@ public class AtividadeDAO {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setLong(1, usersId);
 			stmt.setLong(2, atividadeId);
-			stmt.setDate(3, new java.sql.Date(date));
+			stmt.setTimestamp(3, new java.sql.Timestamp(date));
 			stmt.execute();
 			stmt.close();
 
@@ -80,7 +80,7 @@ public class AtividadeDAO {
 				atividade.setId(rs.getLong("ID"));
 				atividade.setNome(rs.getString("NOME"));
 				atividade.setDescricao(rs.getString("DESCRICAO"));
-				atividade.setCriadoEm(rs.getDate("CRIADO_EM"));
+				atividade.setCriadoEm(rs.getTimestamp("CRIADO_EM"));
 				atividade.setPeso(rs.getInt("PESO"));
 				atividade.setTag(ActivityFacade.getInstance().getTag(rs.getLong("TAG_ID")));
 				atividade.setTempoExecucao(rs.getLong("TEMPO_EXECUCAO_PREVISTO"));
@@ -123,8 +123,8 @@ public class AtividadeDAO {
 				atividadeAlocada.setId(rs.getLong("ID"));
 				atividadeAlocada.setUsersTO(new UsersTO(UsersDAO.getInstance().getUsers((rs.getLong("USER_ID")))));;
 				atividadeAlocada.setAtividadeTO(new AtividadeTO(AtividadeDAO.getInstance().getAtividade(rs.getLong("ATIVIDADE_ID"))));
-				atividadeAlocada.setDataInicioReal((rs.getDate("DATA_INICIO_REAL")));
-				atividadeAlocada.setTempoExecucaoReal((rs.getDate("TEMPO_EXECUCAO_REAL")));
+				atividadeAlocada.setDataInicioReal((rs.getTimestamp("DATA_INICIO_REAL")));
+				atividadeAlocada.setTempoExecucaoReal((rs.getTimestamp("TEMPO_EXECUCAO_REAL")));
 				listAtividadesAlocadas.add(atividadeAlocada);
 			}
 			stmt.close();
@@ -149,7 +149,7 @@ public class AtividadeDAO {
 				atividade.setId(rs.getLong("ID"));
 				atividade.setNome(rs.getString("NOME"));
 				atividade.setDescricao(rs.getString("DESCRICAO"));
-				atividade.setCriadoEm(rs.getDate("CRIADO_EM"));
+				atividade.setCriadoEm(rs.getTimestamp("CRIADO_EM"));
 				atividade.setPeso(rs.getInt("PESO"));
 				atividade.setTag(ActivityFacade.getInstance().getTag(rs.getLong("TAG_ID")));
 				atividade.setTempoExecucao(rs.getLong("TEMPO_EXECUCAO_PREVISTO"));
@@ -178,7 +178,7 @@ public class AtividadeDAO {
 				atividade.setId(rs.getLong("ID"));
 				atividade.setNome(rs.getString("NOME"));
 				atividade.setDescricao(rs.getString("DESCRICAO"));
-				atividade.setCriadoEm(rs.getDate("CRIADO_EM"));
+				atividade.setCriadoEm(rs.getTimestamp("CRIADO_EM"));
 				atividade.setPeso(rs.getInt("PESO"));
 				atividade.setTag(ActivityFacade.getInstance().getTag(rs.getLong("TAG_ID")));
 				atividade.setTempoExecucao(rs.getLong("TEMPO_EXECUCAO_PREVISTO"));

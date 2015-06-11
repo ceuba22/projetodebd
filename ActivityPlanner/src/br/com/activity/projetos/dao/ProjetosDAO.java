@@ -84,9 +84,9 @@ public class ProjetosDAO {
 			stmt.setString(2, projetos.getDescricao());
 			stmt.setString(3, projetos.getPrioridade().getValue());
 			stmt.setString(4, projetos.getStatus().getValue());
-			stmt.setDate(5, new java.sql.Date(projetos.getCriadoEm().getTime()));
+			stmt.setTimestamp(5, new java.sql.Timestamp(projetos.getCriadoEm().getTime()));
 			stmt.setLong(6, projetos.getCriadoPor().getId());
-			stmt.setDate(7, new java.sql.Date(projetos.getPrazoDeConclusao().getTime()));
+			stmt.setTimestamp(7, new java.sql.Timestamp(projetos.getPrazoDeConclusao().getTime()));
 			stmt.execute();
 			stmt.close();
 			insertProjetoATividade(projetos.getListAtividade(), getProjeto(projetos).getId());
@@ -109,7 +109,7 @@ public class ProjetosDAO {
 				projeto.setId(rs.getLong("ID"));
 				projeto.setNome(rs.getString("NOME"));
 				projeto.setDescricao(rs.getString("DESCRICAO"));
-				projeto.setCriadoEm(rs.getDate("CRIADO_EM"));
+				projeto.setCriadoEm(rs.getTimestamp("CRIADO_EM"));
 				projeto.setCriadoPor(ActivityFacade.getInstance().getUsers(rs.getLong("CRIADO_POR")));
 				if(rs.getString("STATUS").equals("ABERTO")){
 					projeto.setStatus(StatusTipo.ABERTO);
@@ -131,7 +131,7 @@ public class ProjetosDAO {
 				}
 				projeto.setListGrupo(GrupoDAO.getInstance().listGruposByProject(rs.getLong("ID")));
 				projeto.setListAtividade(AtividadeDAO.getInstance().listAtividadesByProjeto(rs.getLong("ID")));
-				projeto.setPrazoDeConclusao(rs.getDate("PRAZO_CONCLUSAO"));
+				projeto.setPrazoDeConclusao(rs.getTimestamp("PRAZO_CONCLUSAO"));
 			}
 			stmt.close();
 
@@ -154,7 +154,7 @@ public class ProjetosDAO {
 				projeto.setId(rs.getLong("ID"));
 				projeto.setNome(rs.getString("NOME"));
 				projeto.setDescricao(rs.getString("DESCRICAO"));
-				projeto.setCriadoEm(rs.getDate("CRIADO_EM"));
+				projeto.setCriadoEm(rs.getTimestamp("CRIADO_EM"));
 				projeto.setCriadoPor(ActivityFacade.getInstance().getUsers(rs.getLong("CRIADO_POR")));
 				if(rs.getString("STATUS").equals("ABERTO")){
 					projeto.setStatus(StatusTipo.ABERTO);
@@ -176,7 +176,7 @@ public class ProjetosDAO {
 				}
 				projeto.setListGrupo(GrupoDAO.getInstance().listGruposByProject(rs.getLong("ID")));
 				projeto.setListAtividade(AtividadeDAO.getInstance().listAtividadesByProjeto(rs.getLong("ID")));
-				projeto.setPrazoDeConclusao(rs.getDate("PRAZO_CONCLUSAO"));
+				projeto.setPrazoDeConclusao(rs.getTimestamp("PRAZO_CONCLUSAO"));
 			}
 			stmt.close();
 
@@ -202,7 +202,7 @@ public class ProjetosDAO {
 				projetos.setId(rs.getLong("ID"));
 				projetos.setNome(rs.getString("NOME"));
 				projetos.setDescricao(rs.getString("DESCRICAO"));
-				projetos.setCriadoEm(rs.getDate("CRIADO_EM"));
+				projetos.setCriadoEm(rs.getTimestamp("CRIADO_EM"));
 				projetos.setCriadoPor(ActivityFacade.getInstance().getUsers(rs.getLong("CRIADO_POR")));
 				if(rs.getString("STATUS").equals("ABERTO")){
 					projetos.setStatus(StatusTipo.ABERTO);
@@ -224,7 +224,7 @@ public class ProjetosDAO {
 				}
 				projetos.setListGrupo(GrupoDAO.getInstance().listGruposByProject(rs.getLong("ID")));
 				projetos.setListAtividade(AtividadeDAO.getInstance().listAtividadesByProjeto(rs.getLong("ID")));
-				projetos.setPrazoDeConclusao(rs.getDate("PRAZO_CONCLUSAO"));
+				projetos.setPrazoDeConclusao(rs.getTimestamp("PRAZO_CONCLUSAO"));
 				
 				listProjetos.add(projetos);
 			}

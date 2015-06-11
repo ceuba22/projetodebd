@@ -35,7 +35,7 @@ public class GrupoDAO {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setString(1, grupo.getNome());
 			stmt.setString(2, grupo.getDescricao());
-			stmt.setDate(3, new java.sql.Date(grupo.getCriadoEm().getTime()));
+			stmt.setTimestamp(3, new java.sql.Timestamp(grupo.getCriadoEm().getTime()));
 			stmt.execute();
 			stmt.close();
 
@@ -73,7 +73,7 @@ public class GrupoDAO {
 				grupo.setId(rs.getLong("ID"));
 				grupo.setNome(rs.getString("NOME"));
 				grupo.setDescricao(rs.getString("DESCRICAO"));
-				grupo.setCriadoEm(rs.getDate("CRIADO_EM"));
+				grupo.setCriadoEm(rs.getTimestamp("CRIADO_EM"));
 			}
 			stmt.close();
 
@@ -110,7 +110,7 @@ public class GrupoDAO {
 				grupo.setId(rs.getLong("ID"));
 				grupo.setNome(rs.getString("NOME"));
 				grupo.setDescricao(rs.getString("DESCRICAO"));
-				grupo.setCriadoEm(rs.getDate("CRIADO_EM"));
+				grupo.setCriadoEm(rs.getTimestamp("CRIADO_EM"));
 				listgrupo.add(grupo);
 			}
 			stmt.close();
@@ -135,7 +135,7 @@ public class GrupoDAO {
 				grupo.setId(rs.getLong("ID"));
 				grupo.setNome(rs.getString("NOME"));
 				grupo.setDescricao(rs.getString("DESCRICAO"));
-				grupo.setCriadoEm(rs.getDate("CRIADO_EM"));
+				grupo.setCriadoEm(rs.getTimestamp("CRIADO_EM"));
 				listgrupo.add(grupo);
 			}
 			stmt.close();
