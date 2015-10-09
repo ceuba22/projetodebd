@@ -100,21 +100,16 @@ public class AtividadeDAO {
 	}
 
 	public List<AtividadeAlocadaTO> listAtividadesAlocadas(long projetoId){
-		String sql = "SELECT DISTINCT "
+		String sql =
+				"SELECT DISTINCT "
 				+ "AU.ID,"
 				+ " AU.USER_ID,"
 				+ " AU.ATIVIDADE_ID,"
 				+ " AU.TEMPO_EXECUCAO_REAL,"
-				+ " AU.DATA_INICIO_REAL,"
-				+ " PA.PROJETO_ID"
+				+ " AU.DATA_INICIO_REAL"
 				+ " FROM atividade_users AU, users U, atividade A, projeto_atividade PA, grupo_users GU, projeto P "
-				+ "WHERE AU.USER_ID = U.ID"
-				+ " AND AU.ATIVIDADE_ID = A.ID"
-				+ " AND AU.ATIVIDADE_ID = PA.ATIVIDADE_ID "
-				+ "AND AU.USER_ID = GU.GRUPO_ID "
-				+ "AND PA.PROJETO_ID = "+projetoId;
-
-		
+				+ "WHERE "
+				+ "AU.PROJETO_ID = "+projetoId;
 
 		PreparedStatement stmt;
 		ResultSet rs;
