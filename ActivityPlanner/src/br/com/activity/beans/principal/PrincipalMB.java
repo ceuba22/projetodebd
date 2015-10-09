@@ -311,6 +311,7 @@ public class PrincipalMB  implements Serializable{
 	}
 
 	public void insertProjeto(ActionEvent event){
+		@SuppressWarnings("unused")
 		FacesContext context = FacesContext.getCurrentInstance();
 		RequestContext requestContext = RequestContext.getCurrentInstance();
 

@@ -106,13 +106,15 @@ public class AtividadeDAO {
 				+ " AU.ATIVIDADE_ID,"
 				+ " AU.TEMPO_EXECUCAO_REAL,"
 				+ " AU.DATA_INICIO_REAL,"
-				+ " AU.PROJETO_ID"
+				+ " PA.PROJETO_ID"
 				+ " FROM atividade_users AU, users U, atividade A, projeto_atividade PA, grupo_users GU, projeto P "
 				+ "WHERE AU.USER_ID = U.ID"
 				+ " AND AU.ATIVIDADE_ID = A.ID"
 				+ " AND AU.ATIVIDADE_ID = PA.ATIVIDADE_ID "
 				+ "AND AU.USER_ID = GU.GRUPO_ID "
-				+ "AND AU.PROJETO_ID = "+projetoId;
+				+ "AND PA.PROJETO_ID = "+projetoId;
+
+		
 
 		PreparedStatement stmt;
 		ResultSet rs;

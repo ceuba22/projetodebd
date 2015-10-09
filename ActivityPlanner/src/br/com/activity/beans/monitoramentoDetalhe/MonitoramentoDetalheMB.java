@@ -51,8 +51,9 @@ public class MonitoramentoDetalheMB implements Serializable{
 	public void loadProjeto() throws ClassNotFoundException{
 		listAtividadeAlocadaTO = new ArrayList<AtividadeAlocadaTO>();
 		try {
-			if(AtividadeDAO.getInstance().listAtividadesAlocadas(projetoId).size() > 0){
-				listAtividadeAlocadaTO.addAll(AtividadeDAO.getInstance().listAtividadesAlocadas(projetoId)) ;
+			List<AtividadeAlocadaTO> atividade = AtividadeDAO.getInstance().listAtividadesAlocadas(projetoId);
+			if(atividade != null && atividade.size() > 0){
+				listAtividadeAlocadaTO.addAll(atividade) ;
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -66,6 +67,7 @@ public class MonitoramentoDetalheMB implements Serializable{
 	public void setListProjetosTO(List<ProjetosTO> listProjetosTO) {
 		this.listProjetosTO = listProjetosTO;
 	}
+	
 
 	public long getProjetoId() {
 		return projetoId;
