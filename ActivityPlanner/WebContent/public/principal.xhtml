@@ -4,12 +4,18 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
+<ui:include src="/template.xhtml" />
 <h:head>
 	<title>Inicio</title>
 </h:head>
 <h:body style="background-color: #e9eaed;">
 	<h:form id="formPrincipal">
 		<div>
+			<a href="#{request.contextPath}/public/singUp.jsf"
+				class="btn btn-primary"> <span> <i class="fa fa-question"></i>Não
+					sou cadastrado
+			</span>
+			</a>
 			<p:menubar>
 
 				<f:facet name="options">
@@ -20,8 +26,8 @@
 			</p:menubar>
 
 			<div style="float: left; margin: 50px 0px 0px 10px;">
-				<p:panelMenu style="width:300px; float: left;" >
-					<p:submenu label="Projeto" icon="ui-icon-folder-collapsed" >
+				<p:panelMenu style="width:300px; float: left;">
+					<p:submenu label="Projeto" icon="ui-icon-folder-collapsed">
 						<p:menuitem value="Criar Projeto" icon="ui-icon-folder-open"
 							onclick="PF('criarProjetoDialog').show()" />
 					</p:submenu>
@@ -100,7 +106,7 @@
 					</p:dataTable>
 				</p:panel>
 			</div>
-			
+
 		</div>
 
 		<p:dialog id="criarProjetoDialog" modal="true"

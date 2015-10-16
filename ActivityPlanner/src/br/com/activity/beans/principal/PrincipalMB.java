@@ -122,6 +122,7 @@ public class PrincipalMB  implements Serializable{
 	public void loadListGrupos(){
 		try {
 			if(ActivityFacade.getInstance().listGrupos().size() > 0){
+				departamentoSource = new ArrayList<Grupo>();
 				for (Grupo grupo : ActivityFacade.getInstance().listGrupos()) {
 					departamentoSource.add(grupo);
 				}
@@ -134,7 +135,7 @@ public class PrincipalMB  implements Serializable{
 	public void loadListProjetos(){
 		try {
 			if(ActivityFacade.getInstance().listProjetos().size() > 0){
-
+				listProjetosTO = new ArrayList<ProjetosTO>();
 				for (Projetos projetos : ActivityFacade.getInstance().listProjetos()) {
 					listProjetosTO.add(new ProjetosTO(projetos));
 				}

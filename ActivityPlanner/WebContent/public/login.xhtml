@@ -4,11 +4,8 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
+<ui:include src="/template.xhtml" />
 <h:head>
-	<link href="resource/bootstrap/css/bootstrap.min.css" rel="stylesheet"
-		media="screen"></link>
-	<script src="http://code.jquery.com/jquery-latest.js"></script>
-	<script src="resource/bootstrap/js/bootstrap.min.js"></script>
 	<title>Login</title>
 	<style>
 #divLogin {
@@ -22,32 +19,55 @@
 }
 </style>
 </h:head>
-<h:body style="background-color: darkgrey;">
-	<h:form>
-		<p:messages showDetail="true" />
-		<div id="divLogin">
-			<p:panel header="Login" style="width:100%;">
-				<div align="center">
-					<p:outputLabel value="Nome"
-						style=" margin-bottom: 10px; display: block;" />
-					<p:inputText style="display: block;  margin-bottom: 10px;"
-						value="#{loginMB.userLogin.email}" />
-					<p:outputLabel value="Senha"
-						style="  display: block; margin-bottom: 10px;" />
-					<p:password value="#{loginMB.userLogin.senha}"
-						style="margin-bottom: 10px;" />
-				</div>
-				<p:commandButton styleClass="btn btn-success" icon="ui-icon-check"
-					value="Logar" actionListener="#{loginMB.login}">
-				</p:commandButton>
-				<a href="#{request.contextPath}/public/singUp.jsf" class="btn btn-primary"> <span>
-						<i class="fa fa-question"></i>Não sou cadastrado
-				</span>
-				</a>
+<h:body style="background-color: cadetblue;">
+	<div class="container-fluid">
+		<div class="row-fluid" style="margin-left: 5%; margin-top: -5%;">
+			<div class="span5 offset3">
+				<h:form>
+					<p:messages showDetail="true" />
+					<div class="well" style="margin-top: 50%;">
+						<div class="page-header">
+							<h1 style="text-align: center;">Acesso ao sistema</h1>
+						</div>
+						<div class="form-horizontal">
+							<div class="control-group">
+								<label class="control-label" for="inputEmail">Email</label>
+								<div class="controls">
+									<input value="#{loginMB.userLogin.email}" type="text"
+										id="inputEmail" placeholder="Email" />
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="inputSenha">Senha</label>
+								<div class="controls">
+									<input value="#{loginMB.userLogin.senha}" type="password"
+										id="inputSenha" placeholder="Senha" />
+								</div>
+							</div>
+							<div class="control-group">
+								<div class="controls">
+									<label class="checkbox"> <input type="checkbox" />
+										Lembre-se de mim
+									</label>
+									<h:commandButton styleClass="btn btn-success"
+										icon="ui-icon-check" value="Logar"
+										actionListener="#{loginMB.login}">
+									</h:commandButton>
+									<a href="#{request.contextPath}/public/singUp.jsf"
+										class="btn btn-primary"> <span> <i
+											class="fa fa-question"></i>Não sou cadastrado
+									</span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</h:form>
+			</div>
+			<div class="span7"></div>
 
-			</p:panel>
 		</div>
-	</h:form>
+	</div>
 
 </h:body>
 </html>
