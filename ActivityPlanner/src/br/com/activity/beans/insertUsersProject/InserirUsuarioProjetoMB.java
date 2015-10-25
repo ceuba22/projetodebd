@@ -14,9 +14,10 @@ import org.primefaces.context.RequestContext;
 
 import br.com.activity.atividade.dao.AtividadeDAO;
 import br.com.activity.atividadeAlocada.to.AtividadeAlocadaTO;
-import br.com.activity.beans.project.ProjetoMB;
 import br.com.activity.grupo.entidade.Grupo;
-import br.com.activity.projetos.to.ProjetosTO;
+import br.com.activity.projetos.dao.ProjetosDAO;
+import br.com.activity.projetos.entidade.Projeto;
+import br.com.activity.projetos.to.ProjetoTO;
 import br.com.activity.users.dao.UsersDAO;
 import br.com.activity.users.entidade.Users;
 import br.com.activity.users.to.UsersTO;
@@ -30,11 +31,12 @@ public class InserirUsuarioProjetoMB implements Serializable{
 	 */
 	private static final long serialVersionUID = -2399322228195378573L;
 
-	private ProjetosTO projetosTO;
+	private ProjetoTO projetoTO;
 
 	private AtividadeAlocadaTO selectedAtividadeAlocadaTO;
 
 	private long atividadeID;
+
 
 	private long usersID;
 
@@ -42,11 +44,12 @@ public class InserirUsuarioProjetoMB implements Serializable{
 
 	private List<AtividadeAlocadaTO> listAtividadeAlocadaTO;
 
-	private ProjetoMB projetoMB = (ProjetoMB)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("projetoMB");
+	//	private ProjetoMB projetoMB = (ProjetoMB)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("projetoMB");
+
+	private long projetoId;
 
 	public InserirUsuarioProjetoMB() throws ClassNotFoundException{
-		loadProject();
-		loadBean();
+		//		loadProject();
 	}
 
 	public void loadBean() throws ClassNotFoundException{
@@ -56,34 +59,42 @@ public class InserirUsuarioProjetoMB implements Serializable{
 	}
 
 	public void loadProject(){
-		projetosTO = new ProjetosTO();
-		projetosTO.setId(projetoMB.getId());
-		projetosTO.setDescricao(projetoMB.getDescricao());
-		projetosTO.setCriadoEm(projetoMB.getCriadoEm());
-		projetosTO.setNome(projetoMB.getNome());
-		projetosTO.setPrioridade(projetoMB.getPrioridade());
-		projetosTO.setListGrupo(projetoMB.getListGrupo());
-		projetosTO.setStatus(projetoMB.getStatus());
-		projetosTO.setListAtividade(projetoMB.getListAtividade());
-		projetosTO.setCriadoPor(projetoMB.getCriadoPor());
-		projetosTO.setListAtividadesAlocadas(projetoMB.getListAtividadeAlocada());
+		try {
+			Projeto projeto = ProjetosDAO.getInstance().getProjetoById(this.projetoId);
+			projetoTO = new ProjetoTO();
+			projetoTO.setId(projeto.getId());
+			projetoTO.setDescricao(projeto.getDescricao());
+			projetoTO.setCriadoEm(projeto.getCriadoEm());
+			projetoTO.setNome(projeto.getNome());
+			projetoTO.setPrioridade(projeto.getPrioridade());
+			projetoTO.setListGrupo(projeto.getListGrupo());
+			projetoTO.setStatus(projeto.getStatus());
+			projetoTO.setListAtividade(projeto.getListAtividade());
+			projetoTO.setCriadoPor(new UsersTO(projeto.getCriadoPor()));
+			projetoTO.setListAtividadesAlocadas(projeto.getListAtividadeAlocada());
+			loadBean();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	public void loadListAtividadesAlocadas(){
 		listAtividadeAlocadaTO = new ArrayList<AtividadeAlocadaTO>();
 		try {
-			if(AtividadeDAO.getInstance().listAtividadesAlocadas(projetosTO.getId()).size() > 0){
-				listAtividadeAlocadaTO.addAll(AtividadeDAO.getInstance().listAtividadesAlocadas(projetosTO.getId())) ;
+			if(AtividadeDAO.getInstance().listAtividadesAlocadas(projetoTO.getId()).size() > 0){
+				listAtividadeAlocadaTO.addAll(AtividadeDAO.getInstance().listAtividadesAlocadas(projetoTO.getId())) ;
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 
 	public void loadlistUsuariosPorGrupos() throws ClassNotFoundException{
 		List<Long> listGruposId= new ArrayList<Long>();
-		for (Grupo grupo : projetosTO.getListGrupo()) {
+		for (Grupo grupo : projetoTO.getListGrupo()) {
 			listGruposId.add(grupo.getId());
 		}
 		listUsuariosDisponiveis = new ArrayList<UsersTO>();
@@ -93,7 +104,7 @@ public class InserirUsuarioProjetoMB implements Serializable{
 	}
 	public void removerAtividadeAlocada(AtividadeAlocadaTO atividadeAlocada) throws ClassNotFoundException{
 		AtividadeDAO.getInstance().removerAtividadeAlocada(atividadeAlocada.getUsersTO().getId(),atividadeAlocada.getAtividadeTO().getId());
-		
+
 	}
 
 	public void addAtividadeAlocada(){
@@ -102,7 +113,7 @@ public class InserirUsuarioProjetoMB implements Serializable{
 		try {
 			if(usersID != 0 && atividadeID != 0 ){
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Sucesso", "Tarefa alocada com sucesso."));
-				AtividadeDAO.getInstance().inserirAtividadeAlocada(usersID, atividadeID, new Date().getTime(), projetosTO.getId() );
+				AtividadeDAO.getInstance().inserirAtividadeAlocada(usersID, atividadeID, new Date().getTime(), projetoTO.getId() );
 				requestContext.update("formPrincipal");
 				loadBean();
 			}
@@ -112,12 +123,12 @@ public class InserirUsuarioProjetoMB implements Serializable{
 
 	}
 
-	public ProjetosTO getProjetosTO() {
-		return projetosTO;
+	public ProjetoTO getProjetoTO() {
+		return projetoTO;
 	}
 
-	public void setProjetosTO(ProjetosTO projetosTO) {
-		this.projetosTO = projetosTO;
+	public void setProjetoTO(ProjetoTO projetoTO) {
+		this.projetoTO = projetoTO;
 	}
 
 	public AtividadeAlocadaTO getSelectedAtividadeAlocadaTO() {
@@ -160,6 +171,14 @@ public class InserirUsuarioProjetoMB implements Serializable{
 	public void setListAtividadeAlocadaTO(
 			List<AtividadeAlocadaTO> listAtividadeAlocadaTO) {
 		this.listAtividadeAlocadaTO = listAtividadeAlocadaTO;
+	}
+
+	public long getProjetoId() {
+		return projetoId;
+	}
+
+	public void setProjetoId(long projetoId) {
+		this.projetoId = projetoId;
 	}
 
 

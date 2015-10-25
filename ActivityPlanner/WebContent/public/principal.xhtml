@@ -4,302 +4,254 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
-<ui:include src="/template.xhtml" />
-<h:head>
-	<title>Inicio</title>
-</h:head>
-<h:body style="background-color: #e9eaed;">
-	<h:form id="formPrincipal">
-		<div>
-			<a href="#{request.contextPath}/public/singUp.jsf"
-				class="btn btn-primary"> <span> <i class="fa fa-question"></i>Não
-					sou cadastrado
-			</span>
-			</a>
-			<p:menubar>
+<ui:composition template="/template.xhtml">
+	<ui:define name="main">
+		<h:form id="formPrincipal">
+			<div class="col-md-8">
+				<div id="dataTable" style="margin: 0px 10px 0px 0px;">
+					<p:panel header="Projetos Ativos">
+						<p:dataTable id="project" var="project" widgetVar="project"
+							emptyMessage="Não Existe Projetos Ativos."
+							value="#{principalMB.listProjetoTO}">
+							<p:column headerText="Projeto">
+								<p:outputLabel value="#{project.nome}"></p:outputLabel>
+							</p:column>
 
-				<f:facet name="options">
-					<p:inputText style="margin-right:10px" placeholder="Search" />
-					<p:commandButton type="button" value="Logout"
-						icon="ui-icon-extlink" />
-				</f:facet>
-			</p:menubar>
+							<p:column headerText="Descrição">
+								<p:outputLabel value="#{project.descricao}" />
 
-			<div style="float: left; margin: 50px 0px 0px 10px;">
-				<p:panelMenu style="width:300px; float: left;">
-					<p:submenu label="Projeto" icon="ui-icon-folder-collapsed">
-						<p:menuitem value="Criar Projeto" icon="ui-icon-folder-open"
-							onclick="PF('criarProjetoDialog').show()" />
-					</p:submenu>
-					<p:submenu label="Monitoramento">
-						<p:menuitem value="Monitorar Projeto"
-							actionListener="#{principalMB.redirectMonitoramento}" />
-					</p:submenu>
-					<p:separator />
-					<p:submenu label="Departamento">
-						<p:menuitem value="Criar Departamento" icon="ui-icon-flag"
-							onclick="PF('criarDepartamentoDialog').show()" />
-						<p:menuitem value="Departamentos" icon="ui-icon-flag"
-							actionListener="#{principalMB.redirectDepartamentoUsuario}" />
-					</p:submenu>
-					<p:submenu label="Atividade">
-						<p:menuitem value="Atividades" icon="ui-icon-clipboard"
-							actionListener="#{principalMB.redirectAtividade}" />
-						<p:menuitem value="Criar Atividade" icon="ui-icon-clipboard"
-							onclick="PF('criarAtividadeDialog').show()" />
-						<p:menuitem value="Criar Tag" icon="ui-icon-tag"
-							onclick="PF('criarTagDialog').show()" />
-					</p:submenu>
-					<p:submenu label="Relato">
-					</p:submenu>
-					<p:submenu label="Colaboradores">
-						<p:menuitem value="Adicionar Colaborador" icon="ui-icon-person"
-							onclick="PF('criarUsuarioDialog').show()" />
-					</p:submenu>
-					<p:submenu label="Relatórios">
-					</p:submenu>
-				</p:panelMenu>
-				<div align="right">
-					<p>Seja Bem-Vindo Sr(a): #{principalMB.usersTO.nome}.</p>
-					<p>Cargo: #{principalMB.usersTO.cargo}.</p>
+							</p:column>
+							<p:column headerText="Prioridade">
+								<p:outputLabel value="#{project.prioridade.value}" />
+
+							</p:column>
+							<p:column headerText="Criado em">
+								<p:outputLabel value="#{project.criadoEm}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:outputLabel>
+
+							</p:column>
+
+							<p:column headerText="Prazo de conclusão">
+								<p:outputLabel value="#{project.prazoDeConclusao}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:outputLabel>
+
+							</p:column>
+
+							<p:column headerText="Criado por">
+								<p:outputLabel value="#{project.criadoPor.nome}" />
+
+							</p:column>
+							<p:column headerText="Gestão">
+								<a class="btn btn-primary"
+									href="#{request.contextPath}/#{project.id}/inserir-usuario-atividade"></a>
+							</p:column>
+
+
+						</p:dataTable>
+					</p:panel>
 				</div>
 			</div>
-			<div id="dataTable"
-				style="float: right; width: 75%; margin: 50px 10px 0px 0px;">
-				<p:panel header="Projetos Ativos">
-					<p:dataTable id="project" var="project" widgetVar="project"
-						emptyMessage="Não Existe Projetos Ativos."
-						value="#{principalMB.listProjetosTO}">
-						<p:column headerText="Projeto">
-							<p:commandButton value="#{project.nome}"
-								actionListener="#{principalMB.redirectProjetoUsuario(project)}" />
-						</p:column>
-
-						<p:column headerText="Descrição">
-							<p:outputLabel value="#{project.descricao}" />
-
-						</p:column>
-						<p:column headerText="Prioridade">
-							<p:outputLabel value="#{project.prioridade.value}" />
-
-						</p:column>
-						<p:column headerText="Criado em">
-							<p:outputLabel value="#{project.criadoEm}">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
-							</p:outputLabel>
-
-						</p:column>
-
-						<p:column headerText="Prazo de conclusão">
-							<p:outputLabel value="#{project.prazoDeConclusao}">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
-							</p:outputLabel>
-
-						</p:column>
-
-						<p:column headerText="Criado por">
-							<p:outputLabel value="#{project.criadoPor.nome}" />
-
-						</p:column>
-
-
-					</p:dataTable>
-				</p:panel>
+			<div align="left">
+				<p>Seja Bem-Vindo Sr(a): #{principalMB.usersTO.nome}.</p>
+				<p>Cargo: #{principalMB.usersTO.cargo}.</p>
 			</div>
 
-		</div>
+			<p:dialog id="criarProjetoDialog" modal="true"
+				header="Formulário de Projeto"
+				message="Preencha corretamente os campos a seguir."
+				widgetVar="criarProjetoDialog" height="100%" width="75%"
+				closable="false">
+				<p:messages showDetail="true" />
 
-		<p:dialog id="criarProjetoDialog" modal="true"
-			header="Formulário de Projeto"
-			message="Preencha corretamente os campos a seguir."
-			widgetVar="criarProjetoDialog" height="100%" width="75%"
-			closable="false">
-			<p:messages showDetail="true" />
+				<p:outputLabel value="Nome do Projeto"
+					style=" margin-bottom: 10px; display: block;" />
+				<p:inputText style="display: block;  margin-bottom: 10px;"
+					value="#{principalMB.projetoTO.nome}" />
+				<p:outputLabel value="Descrição"
+					style=" margin-bottom: 10px; display: block;" />
+				<p:inputText style="display: block;  margin-bottom: 10px;"
+					value="#{principalMB.projetoTO.descricao}" />
+				<p:outputLabel value="Priodade"
+					style=" margin-bottom: 10px; display: block;" />
+				<p:selectOneMenu id="prioridade"
+					style="width:100px; margin-left: 10px;margin-bottom: 10px; display: block;"
+					value="#{principalMB.projetoTO.prioridadeString}">
+					<f:selectItem itemLabel="ALTA" itemValue="ALTA" />
+					<f:selectItem itemLabel="MÉDIA" itemValue="MEDIA" />
+					<f:selectItem itemLabel="BAIXA" itemValue="BAIXA" />
+				</p:selectOneMenu>
+				<p:outputLabel for="popup" value="Prazo de validação"
+					style=" margin-bottom: 10px; display: block;" />
+				<p:calendar id="popup"
+					value="#{principalMB.projetoTO.prazoDeConclusao}" locale="pt"
+					pattern="dd/MM/yyyy" style=" margin-bottom: 10px; display: block;" />
 
-			<p:outputLabel value="Nome do Projeto"
-				style=" margin-bottom: 10px; display: block;" />
-			<p:inputText style="display: block;  margin-bottom: 10px;"
-				value="#{principalMB.projetosTO.nome}" />
-			<p:outputLabel value="Descrição"
-				style=" margin-bottom: 10px; display: block;" />
-			<p:inputText style="display: block;  margin-bottom: 10px;"
-				value="#{principalMB.projetosTO.descricao}" />
-			<p:outputLabel value="Priodade"
-				style=" margin-bottom: 10px; display: block;" />
-			<p:selectOneMenu id="prioridade"
-				style="width:100px; margin-left: 10px;margin-bottom: 10px; display: block;"
-				value="#{principalMB.projetosTO.prioridadeString}">
-				<f:selectItem itemLabel="ALTA" itemValue="ALTA" />
-				<f:selectItem itemLabel="MÉDIA" itemValue="MEDIA" />
-				<f:selectItem itemLabel="BAIXA" itemValue="BAIXA" />
-			</p:selectOneMenu>
-			<p:outputLabel for="popup" value="Prazo de validação"
-				style=" margin-bottom: 10px; display: block;" />
-			<p:calendar id="popup"
-				value="#{principalMB.projetosTO.prazoDeConclusao}" locale="pt"
-				pattern="dd/MM/yyyy" style=" margin-bottom: 10px; display: block;" />
-
-			<div style="float: right">
-				<p:outputLabel value="Atividades"
+				<div style="float: right">
+					<p:outputLabel value="Atividades"
+						style="margin-bottom: 10px; display: block;" />
+					<p:pickList id="listAtividades" value="#{principalMB.atividades}"
+						converter="atividadeConverter" var="atividades"
+						itemLabel="#{atividades.nome}" itemValue="#{atividades}"
+						style="display: block;  margin-bottom: 10px;" />
+				</div>
+				<p:outputLabel value="Departamentos"
 					style="margin-bottom: 10px; display: block;" />
-				<p:pickList id="listAtividades" value="#{principalMB.atividades}"
-					converter="atividadeConverter" var="atividades"
-					itemLabel="#{atividades.nome}" itemValue="#{atividades}"
+				<p:pickList id="listDepartamentos" converter="grupoConverter"
+					value="#{principalMB.departamentos}" var="departamentos"
+					itemLabel="#{departamentos.nome}" itemValue="#{departamentos}"
 					style="display: block;  margin-bottom: 10px;" />
-			</div>
-			<p:outputLabel value="Departamentos"
-				style="margin-bottom: 10px; display: block;" />
-			<p:pickList id="listDepartamentos" converter="grupoConverter"
-				value="#{principalMB.departamentos}" var="departamentos"
-				itemLabel="#{departamentos.nome}" itemValue="#{departamentos}"
-				style="display: block;  margin-bottom: 10px;" />
 
-			<p:commandButton id="confirmProjeto" value="Salvar"
-				actionListener="#{principalMB.insertProjeto}" />
-			<p:commandButton id="declineProjeto" value="Cancelar"
-				onsuccess="PF('criarProjetoDialog').hide()" update="@form" />
+				<p:commandButton id="confirmProjeto" value="Salvar"
+					actionListener="#{principalMB.insertProjeto}" />
+				<p:commandButton id="declineProjeto" value="Cancelar"
+					onsuccess="PF('criarProjetoDialog').hide()" update="@form" />
 
-		</p:dialog>
+			</p:dialog>
 
-		<p:dialog id="criarDepartamentoDialog" modal="true"
-			header="Formulário de Departamento"
-			message="Preencha corretamente os campos a seguir."
-			widgetVar="criarDepartamentoDialog" height="100%" width="75%"
-			closable="false">
-			<p:messages showDetail="true" id="messageDepartamento" />
+			<p:dialog id="criarDepartamentoDialog" modal="true"
+				header="Formulário de Departamento"
+				message="Preencha corretamente os campos a seguir."
+				widgetVar="criarDepartamentoDialog" height="100%" width="75%"
+				closable="false">
+				<p:messages showDetail="true" id="messageDepartamento" />
 
-			<p:outputLabel value="Nome do Projeto"
-				style=" margin-bottom: 10px; display: block;" />
-			<p:inputText style="display: block;  margin-bottom: 10px;"
-				value="#{principalMB.grupoTO.nome}" />
-			<p:outputLabel value="Descrição"
-				style=" margin-bottom: 10px; display: block;" />
-			<p:inputText style="display: block;  margin-bottom: 10px;"
-				value="#{principalMB.grupoTO.descricao}" />
+				<p:outputLabel value="Nome do Projeto"
+					style=" margin-bottom: 10px; display: block;" />
+				<p:inputText style="display: block;  margin-bottom: 10px;"
+					value="#{principalMB.grupoTO.nome}" />
+				<p:outputLabel value="Descrição"
+					style=" margin-bottom: 10px; display: block;" />
+				<p:inputText style="display: block;  margin-bottom: 10px;"
+					value="#{principalMB.grupoTO.descricao}" />
 
-			<p:commandButton id="confirmDepartamento" value="Salvar"
-				actionListener="#{principalMB.insertDepartamento}">
-			</p:commandButton>
-			<p:commandButton id="declineDepartamento" value="Cancelar"
-				actionListener="#{principalMB.cleanFormDepartamento}" update="@form"
-				onsuccess="PF('criarDepartamentoDialog').hide()" />
+				<p:commandButton id="confirmDepartamento" value="Salvar"
+					actionListener="#{principalMB.insertDepartamento}">
+				</p:commandButton>
+				<p:commandButton id="declineDepartamento" value="Cancelar"
+					actionListener="#{principalMB.cleanFormDepartamento}"
+					update="@form" onsuccess="PF('criarDepartamentoDialog').hide()" />
 
-		</p:dialog>
+			</p:dialog>
 
 
 
-		<p:dialog id="criarAtividadeDialog" modal="true"
-			header="Formulário de Atividade"
-			message="Preencha corretamente os campos a seguir."
-			widgetVar="criarAtividadeDialog" height="100%" width="75%"
-			closable="false">
-			<p:messages showDetail="true" id="messageAtividade" />
+			<p:dialog id="criarAtividadeDialog" modal="true"
+				header="Formulário de Atividade"
+				message="Preencha corretamente os campos a seguir."
+				widgetVar="criarAtividadeDialog" height="100%" width="75%"
+				closable="false">
+				<p:messages showDetail="true" id="messageAtividade" />
 
-			<p:outputLabel value="Nome do Atividade"
-				style=" margin-bottom: 10px; display: block;" />
-			<p:inputText style="display: block;  margin-bottom: 10px;"
-				value="#{principalMB.atividaTo.nome}">
-			</p:inputText>
-			<p:outputLabel value="Descrição"
-				style=" margin-bottom: 10px; display: block;" />
-			<p:inputTextarea rows="5" cols="30" autoResize="false"
-				style="display: block;  margin-bottom: 10px;"
-				value="#{principalMB.atividaTo.descricao}" />
+				<p:outputLabel value="Nome do Atividade"
+					style=" margin-bottom: 10px; display: block;" />
+				<p:inputText style="display: block;  margin-bottom: 10px;"
+					value="#{principalMB.atividaTo.nome}">
+				</p:inputText>
+				<p:outputLabel value="Descrição"
+					style=" margin-bottom: 10px; display: block;" />
+				<p:inputTextarea rows="5" cols="30" autoResize="false"
+					style="display: block;  margin-bottom: 10px;"
+					value="#{principalMB.atividaTo.descricao}" />
 
-			<h:outputLabel for="peso" value="Peso "
-				style="margin-bottom: 10px; display: block;" />
-			<p:spinner id="peso" maxlength="10"
-				style=" display: table;  margin-bottom: 10px;"
-				value="#{principalMB.atividaTo.peso}" />
-			<p:outputLabel value="Tempo de Execucao: "
-				style=" margin-bottom: 10px;" />
-			<p:inputText style="margin-bottom: 10px;"
-				value="#{principalMB.atividaTo.tempoExecucao}" />
-			<p:selectOneMenu id="console" style="width:100px; margin-left: 10px;"
-				value="#{principalMB.atividaTo.tipoExecucao}">
-				<f:selectItem itemLabel="min" itemValue="MIN" />
-				<f:selectItem itemLabel="Hora" itemValue="HORA" />
-				<f:selectItem itemLabel="Dia(s)" itemValue="DIA" />
-			</p:selectOneMenu>
-			<p:outputLabel value="Tag"
-				style=" margin-bottom: 10px; display: block;" />
-			<p:selectOneMenu value="#{principalMB.atividaTo.tagId}"
-				style="display: block; margin-bottom: 10px;">
-				<f:selectItems var="tagItens" value="#{principalMB.listTag}"
-					itemLabel="#{tagItens.nome}"
-					itemDescription="#{tagItens.descricao}" itemValue="#{tagItens.id}" />
-			</p:selectOneMenu>
+				<h:outputLabel for="peso" value="Peso "
+					style="margin-bottom: 10px; display: block;" />
+				<p:spinner id="peso" maxlength="10"
+					style=" display: table;  margin-bottom: 10px;"
+					value="#{principalMB.atividaTo.peso}" />
+				<p:outputLabel value="Tempo de Execucao: "
+					style=" margin-bottom: 10px;" />
+				<p:inputText style="margin-bottom: 10px;"
+					value="#{principalMB.atividaTo.tempoExecucao}" />
+				<p:selectOneMenu id="console"
+					style="width:100px; margin-left: 10px;"
+					value="#{principalMB.atividaTo.tipoExecucao}">
+					<f:selectItem itemLabel="min" itemValue="MIN" />
+					<f:selectItem itemLabel="Hora" itemValue="HORA" />
+					<f:selectItem itemLabel="Dia(s)" itemValue="DIA" />
+				</p:selectOneMenu>
+				<p:outputLabel value="Tag"
+					style=" margin-bottom: 10px; display: block;" />
+				<p:selectOneMenu value="#{principalMB.atividaTo.tagId}"
+					style="display: block; margin-bottom: 10px;">
+					<f:selectItems var="tagItens" value="#{principalMB.listTag}"
+						itemLabel="#{tagItens.nome}"
+						itemDescription="#{tagItens.descricao}" itemValue="#{tagItens.id}" />
+				</p:selectOneMenu>
 
-			<p:commandButton id="confirmAtividade" value="Salvar"
-				actionListener="#{principalMB.insertAtividade}">
-			</p:commandButton>
-			<p:commandButton id="declineAtividade" value="Cancelar"
-				actionListener="#{principalMB.cleanFormAtividade}" update="@form"
-				onsuccess="PF('criarAtividadeDialog').hide()" />
-		</p:dialog>
+				<p:commandButton id="confirmAtividade" value="Salvar"
+					actionListener="#{principalMB.insertAtividade}">
+				</p:commandButton>
+				<p:commandButton id="declineAtividade" value="Cancelar"
+					actionListener="#{principalMB.cleanFormAtividade}" update="@form"
+					onsuccess="PF('criarAtividadeDialog').hide()" />
+			</p:dialog>
 
 
-		<p:dialog id="criarTagDialog" modal="true" header="Formulário de Tag"
-			message="Preencha corretamente os campos a seguir."
-			widgetVar="criarTagDialog" height="100%" width="75%" closable="false">
-			<p:messages showDetail="true" id="messageTag" />
+			<p:dialog id="criarTagDialog" modal="true" header="Formulário de Tag"
+				message="Preencha corretamente os campos a seguir."
+				widgetVar="criarTagDialog" height="100%" width="75%"
+				closable="false">
+				<p:messages showDetail="true" id="messageTag" />
 
-			<p:outputLabel value="Nome da Tag"
-				style=" margin-bottom: 10px; display: block;" />
-			<p:inputText style="display: block;  margin-bottom: 10px;"
-				value="#{principalMB.tagTO.nome}">
-			</p:inputText>
-			<p:outputLabel value="Descrição"
-				style=" margin-bottom: 10px; display: block;" />
-			<p:inputTextarea rows="5" cols="30" autoResize="false"
-				style="display: block;  margin-bottom: 10px;"
-				value="#{principalMB.tagTO.descricao}" />
+				<p:outputLabel value="Nome da Tag"
+					style=" margin-bottom: 10px; display: block;" />
+				<p:inputText style="display: block;  margin-bottom: 10px;"
+					value="#{principalMB.tagTO.nome}">
+				</p:inputText>
+				<p:outputLabel value="Descrição"
+					style=" margin-bottom: 10px; display: block;" />
+				<p:inputTextarea rows="5" cols="30" autoResize="false"
+					style="display: block;  margin-bottom: 10px;"
+					value="#{principalMB.tagTO.descricao}" />
 
-			<p:commandButton id="confirmTag" value="Salvar"
-				actionListener="#{principalMB.insertTag}">
-			</p:commandButton>
-			<p:commandButton id="declineTag" value="Cancelar"
-				actionListener="#{principalMB.cleanFormTag}" update="@form"
-				onsuccess="PF('criarTagDialog').hide()" />
-		</p:dialog>
+				<p:commandButton id="confirmTag" value="Salvar"
+					actionListener="#{principalMB.insertTag}">
+				</p:commandButton>
+				<p:commandButton id="declineTag" value="Cancelar"
+					actionListener="#{principalMB.cleanFormTag}" update="@form"
+					onsuccess="PF('criarTagDialog').hide()" />
+			</p:dialog>
 
-		<p:dialog id="criarUsuarioDialog" modal="true"
-			header="Formulário de Usuário"
-			message="Preencha corretamente os campos a seguir."
-			widgetVar="criarUsuarioDialog" height="100%" width="75%"
-			closable="false">
-			<p:messages showDetail="true" id="messageUsuario" />
+			<p:dialog id="criarUsuarioDialog" modal="true"
+				header="Formulário de Usuário"
+				message="Preencha corretamente os campos a seguir."
+				widgetVar="criarUsuarioDialog" height="100%" width="75%"
+				closable="false">
+				<p:messages showDetail="true" id="messageUsuario" />
 
-			<p:outputLabel value="Nome"
-				style=" margin-bottom: 10px; display: block;" />
-			<p:inputText style="display: block;  margin-bottom: 10px;"
-				value="#{principalMB.newUsers.nome}" />
-			<p:outputLabel value="Email"
-				style=" margin-bottom: 10px; display: block;" />
-			<p:inputText style="display: block;  margin-bottom: 10px;"
-				value="#{principalMB.newUsers.email}" />
-			<p:outputLabel value="Cargo"
-				style=" margin-bottom: 10px; display: block;" />
-			<p:inputText style="display: block;  margin-bottom: 10px;"
-				value="#{principalMB.newUsers.cargo}" />
-			<p:outputLabel value="Gerente"
-				style=" margin-bottom: 10px; display: block;" />
-			<p:selectBooleanCheckbox value="#{principalMB.newUsers.manager}"
-				style="margin-left: 10px; margin-bottom: 10px; display: block; width: 18px;" />
-			<p:outputLabel value="Senha"
-				style="  display: block; margin-bottom: 10px;" />
-			<p:password value="#{principalMB.newUsers.senha}"
-				style="margin-bottom: 10px; display: block;" />
+				<p:outputLabel value="Nome"
+					style=" margin-bottom: 10px; display: block;" />
+				<p:inputText style="display: block;  margin-bottom: 10px;"
+					value="#{principalMB.newUsers.nome}" />
+				<p:outputLabel value="Email"
+					style=" margin-bottom: 10px; display: block;" />
+				<p:inputText style="display: block;  margin-bottom: 10px;"
+					value="#{principalMB.newUsers.email}" />
+				<p:outputLabel value="Cargo"
+					style=" margin-bottom: 10px; display: block;" />
+				<p:inputText style="display: block;  margin-bottom: 10px;"
+					value="#{principalMB.newUsers.cargo}" />
+				<p:outputLabel value="Gerente"
+					style=" margin-bottom: 10px; display: block;" />
+				<p:selectBooleanCheckbox value="#{principalMB.newUsers.manager}"
+					style="margin-left: 10px; margin-bottom: 10px; display: block; width: 18px;" />
+				<p:outputLabel value="Senha"
+					style="  display: block; margin-bottom: 10px;" />
+				<p:password value="#{principalMB.newUsers.senha}"
+					style="margin-bottom: 10px; display: block;" />
 
-			<p:commandButton id="confirmUser" value="Salvar"
-				actionListener="#{principalMB.insertUsuario}">
-			</p:commandButton>
-			<p:commandButton id="declineUser" value="Cancelar"
-				actionListener="#{principalMB.cleanFormUsers}" update="@form"
-				onsuccess="PF('criarUsuarioDialog').hide()" />
-		</p:dialog>
-	</h:form>
-</h:body>
+				<p:commandButton id="confirmUser" value="Salvar"
+					actionListener="#{principalMB.insertUsuario}">
+				</p:commandButton>
+				<p:commandButton id="declineUser" value="Cancelar"
+					actionListener="#{principalMB.cleanFormUsers}" update="@form"
+					onsuccess="PF('criarUsuarioDialog').hide()" />
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
 <script>
 PrimeFaces.locales['pt'] = {  
                 closeText: 'Fechar',  

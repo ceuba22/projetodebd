@@ -4,40 +4,51 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
-<ui:include src="/template.xhtml" />
 <h:head>
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" />
+
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
 	<title>Novo usuário</title>
 </h:head>
-<h:body style="background-color: darkgrey;">
+<h:body style="background-color: cadetblue;">
 	<a href="#{request.contextPath}/" class="btn btn-warning"
-		style="float: right; margin-top: 10px; margin-right: 10px;">
-		<span> <i class="fa fa-question"></i>Voltar
-	</span>
+		style="float: right; margin-top: 10px; margin-right: 10px;"> <span>
+			Voltar </span>
 	</a>
 	<div class="row">
 		<div class="span8">
 			<h:form id="crudUsers" style="  margin-right: 10px;">
 				<p:panel header="Cadastro de Usuário" style="width:100%;">
-					<p:outputLabel value="Nome"
-						style=" margin-bottom: 10px; display: block;" />
-					<p:inputText style="display: block;  margin-bottom: 10px;"
-						value="#{singUpMB.newUsers.nome}" />
-					<p:outputLabel value="Email"
-						style=" margin-bottom: 10px; display: block;" />
-					<p:inputText style="display: block;  margin-bottom: 10px;"
-						value="#{singUpMB.newUsers.email}" />
-					<p:outputLabel value="Cargo"
-						style=" margin-bottom: 10px; display: block;" />
-					<p:inputText style="display: block;  margin-bottom: 10px;"
-						value="#{singUpMB.newUsers.cargo}" />
-					<p:outputLabel value="Senha"
-						style="  display: block; margin-bottom: 10px;" />
-					<p:password value="#{singUpMB.newUsers.senha}"
-						style="margin-bottom: 10px;" />
-					<p:commandButton styleClass="btn btn-success" icon="ui-icon-check"
-						value="Salvar" style="display: block;"
-						actionListener="#{singUpMB.save}" update="@form">
-					</p:commandButton>
+					<div style="margin-left: 10px;">
+						<p:outputLabel value="Nome"
+							style=" margin-bottom: 10px; display: block;" />
+						<p:inputText style="display: block;  margin-bottom: 10px;"
+							value="#{singUpMB.newUsers.nome}" />
+						<p:outputLabel value="Email"
+							style=" margin-bottom: 10px; display: block;" />
+						<p:inputText style="display: block;  margin-bottom: 10px;"
+							value="#{singUpMB.newUsers.email}" />
+						<p:outputLabel value="Cargo"
+							style=" margin-bottom: 10px; display: block;" />
+						<p:inputText style="display: block;  margin-bottom: 10px;"
+							value="#{singUpMB.newUsers.cargo}" />
+						<p:outputLabel value="Senha"
+							style="  display: block; margin-bottom: 10px;" />
+						<p:password value="#{singUpMB.newUsers.senha}"
+							style="margin-bottom: 10px;" />
+						<p:commandButton styleClass="btn btn-success" icon="ui-icon-check"
+							value="Salvar" style="display: block;"
+							actionListener="#{singUpMB.save}" update="@form">
+						</p:commandButton>
+					</div>
 				</p:panel>
 			</h:form>
 		</div>

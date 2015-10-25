@@ -1,0 +1,32 @@
+<pretty-config xmlns="http://ocpsoft.org/schema/rewrite-config-prettyfaces"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://ocpsoft.org/schema/rewrite-config-prettyfaces
+                      http://ocpsoft.org/xml/ns/prettyfaces/rewrite-config-prettyfaces.xsd">
+
+	<url-mapping id="login">
+		<pattern value="/login" />
+		<view-id value="/login.jsf" />
+	</url-mapping>
+	
+	<url-mapping id="login">
+		<pattern value="/cadastro" />
+		<view-id value="/public/singUp.jsf" />
+	</url-mapping>
+	
+	<url-mapping id="principal">
+		<pattern value="/inicio" />
+		<view-id value="/public/principal.jsf" />
+		<action onPostback="false">#{principalMB.loadBean}</action>
+	</url-mapping>
+	<url-mapping id="projetoForm">
+		<pattern value="/criar-projeto" />
+		<view-id value="/public/projeto/projetoForm.jsf" />
+		<action onPostback="false">#{projetoFormMB.loadBean}</action>
+	</url-mapping>
+	<url-mapping id="UsarioProjetoForm">
+		<pattern value="/#{inserirUsuarioProjetoMB.projetoId}/inserir-usuario-atividade" />
+		<view-id value="/public/projeto/inserirUsuario-projeto.jsf" />
+		<action onPostback="false">#{inserirUsuarioProjetoMB.loadProject}</action>
+	</url-mapping>
+
+</pretty-config>

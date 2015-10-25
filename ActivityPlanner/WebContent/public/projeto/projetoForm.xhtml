@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:include template="/template.xhtml" />
+<ui:composition>
+	<ui:define name="main">
+		<h:form id="formPrincipal">
+			<h:outputFormat rendered="#{projetoFormMB.usersTO.manager eq true}">
+				<div class="form-horizontal">
+					<p:messages showDetail="true" />
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-2 control-label">Nome
+							do Projeto</label>
+						<div class="col-sm-10">
+							<p:inputText style="display: block;  margin-bottom: 10px;"
+								value="#{projetoFormMB.projetoTO.nome}" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-2 control-label">Descrição</label>
+						<div class="col-sm-10">
+							<p:inputText style="display: block;  margin-bottom: 10px;"
+								value="#{projetoFormMB.projetoTO.descricao}" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-2 control-label">Priodade</label>
+						<div class="col-sm-10">
+							<p:selectOneMenu id="prioridade"
+								style="width:100px; margin-left: 10px;margin-bottom: 10px; display: block;"
+								value="#{projetoFormMB.projetoTO.prioridadeString}">
+								<f:selectItem itemLabel="ALTA" itemValue="ALTA" />
+								<f:selectItem itemLabel="MÉDIA" itemValue="MEDIA" />
+								<f:selectItem itemLabel="BAIXA" itemValue="BAIXA" />
+							</p:selectOneMenu>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-2 control-label">Prazo
+							de validação</label>
+						<div class="col-sm-10">
+							<p:calendar id="popup"
+								value="#{projetoFormMB.projetoTO.prazoDeConclusao}" locale="pt"
+								pattern="dd/MM/yyyy"
+								style=" margin-bottom: 10px; display: block;" />
+						</div>
+					</div>
+
+					<div>
+						<p:outputLabel value="Atividades"
+							style="margin-bottom: 10px; display: block;" />
+						<p:pickList id="listAtividades"
+							value="#{projetoFormMB.atividades}"
+							converter="atividadeConverter" var="atividades"
+							itemLabel="#{atividades.nome}" itemValue="#{atividades}"
+							style="display: block;  margin-bottom: 10px;" />
+					</div>
+					<div>
+						<p:outputLabel value="Departamentos"
+							style="margin-bottom: 10px; display: block;" />
+						<p:pickList id="listDepartamentos" converter="grupoConverter"
+							value="#{projetoFormMB.departamentos}" var="departamentos"
+							itemLabel="#{departamentos.nome}" itemValue="#{departamentos}"
+							style="display: block;  margin-bottom: 10px;" />
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<p:commandButton id="confirmProjeto" value="Salvar"
+								actionListener="#{projetoFormMB.insertProjeto}" />
+							<p:commandButton id="declineProjeto" value="Cancelar"
+								onsuccess="PF('criarProjetoDialog').hide()" update="@form" />
+						</div>
+					</div>
+				</div>
+			</h:outputFormat>
+		</h:form>
+	</ui:define>
+</ui:composition>
+<script>
+PrimeFaces.locales['pt'] = {  
+                closeText: 'Fechar',  
+                prevText: 'Anterior',  
+                nextText: 'Próximo',  
+                currentText: 'Começo',  
+                monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],  
+                monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun', 'Jul','Ago','Set','Out','Nov','Dez'],  
+                dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],  
+                dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],  
+                dayNamesMin: ['D','S','T','Q','Q','S','S'],  
+                weekHeader: 'Semana',  
+                firstDay: 1,  
+                isRTL: false,  
+                showMonthAfterYear: false,  
+                yearSuffix: '',  
+                timeOnlyTitle: 'Só Horas',  
+                timeText: 'Tempo',  
+                hourText: 'Hora',  
+                minuteText: 'Minuto',  
+                secondText: 'Segundo',  
+                currentText: 'Data Atual',  
+                ampm: false,  
+                month: 'Mês',  
+                week: 'Semana',  
+                day: 'Dia',  
+                allDayText : 'Todo Dia'  
+            };  
+</script>
+</html>

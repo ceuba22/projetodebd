@@ -10,8 +10,8 @@ import javax.faces.bean.ViewScoped;
 import br.com.activity.atividade.dao.AtividadeDAO;
 import br.com.activity.atividadeAlocada.to.AtividadeAlocadaTO;
 import br.com.activity.facade.ActivityFacade;
-import br.com.activity.projetos.entidade.Projetos;
-import br.com.activity.projetos.to.ProjetosTO;
+import br.com.activity.projetos.entidade.Projeto;
+import br.com.activity.projetos.to.ProjetoTO;
 
 @ManagedBean
 @ViewScoped
@@ -22,7 +22,7 @@ public class MonitoramentoDetalheMB implements Serializable{
 	 */
 	private static final long serialVersionUID = -7700350398011631393L;
 
-	private List<ProjetosTO> listProjetosTO;
+	private List<ProjetoTO> listProjetoTO;
 	
 	private long projetoId;
 	
@@ -35,12 +35,12 @@ public class MonitoramentoDetalheMB implements Serializable{
 	}
 
 	public void loadListProjetos(){
-		listProjetosTO = new ArrayList<ProjetosTO>();
+		listProjetoTO = new ArrayList<ProjetoTO>();
 		try {
 			if(ActivityFacade.getInstance().listProjetos().size() > 0){
 
-				for (Projetos projetos : ActivityFacade.getInstance().listProjetos()) {
-					listProjetosTO.add(new ProjetosTO(projetos));
+				for (Projeto projetos : ActivityFacade.getInstance().listProjetos()) {
+					listProjetoTO.add(new ProjetoTO(projetos));
 				}
 			}
 		} catch (ClassNotFoundException e) {
@@ -60,12 +60,12 @@ public class MonitoramentoDetalheMB implements Serializable{
 		}
 	}
 
-	public List<ProjetosTO> getListProjetosTO() {
-		return listProjetosTO;
+	public List<ProjetoTO> getListProjetoTO() {
+		return listProjetoTO;
 	}
 
-	public void setListProjetosTO(List<ProjetosTO> listProjetosTO) {
-		this.listProjetosTO = listProjetosTO;
+	public void setListProjetoTO(List<ProjetoTO> listProjetoTO) {
+		this.listProjetoTO = listProjetoTO;
 	}
 	
 

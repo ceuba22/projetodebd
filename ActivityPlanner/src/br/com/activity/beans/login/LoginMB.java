@@ -39,7 +39,7 @@ public class LoginMB implements Serializable{
 			if(ActivityFacade.getInstance().isloginUsers(users)){
 				setUserLogin(new UsersTO());
 				usuario = (UsersMB)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-				context.getExternalContext().redirect("public/principal.jsf"); 
+				context.getExternalContext().redirect("inicio"); 
 			}else{
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Atenção", "Login ou senha incorretos, favor verificar dados digitados."));	
 			}

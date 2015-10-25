@@ -12,7 +12,7 @@ import br.com.activity.users.entidade.Users;
 import br.com.activity.util.PrioridadeTipo;
 import br.com.activity.util.StatusTipo;
 
-public class Projetos {
+public class Projeto {
 	
 	@Column(name="ID")
 	long id;

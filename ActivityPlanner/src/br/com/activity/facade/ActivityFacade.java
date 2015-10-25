@@ -7,7 +7,7 @@ import br.com.activity.atividade.entidade.Atividade;
 import br.com.activity.grupo.dao.GrupoDAO;
 import br.com.activity.grupo.entidade.Grupo;
 import br.com.activity.projetos.dao.ProjetosDAO;
-import br.com.activity.projetos.entidade.Projetos;
+import br.com.activity.projetos.entidade.Projeto;
 import br.com.activity.tag.dao.TagDAO;
 import br.com.activity.tag.entidade.Tag;
 import br.com.activity.users.dao.UsersDAO;
@@ -29,11 +29,11 @@ public class ActivityFacade {
 	
 	//======================== PROJETOS ==============================
 	
-	public void inserirProjeto(Projetos projetos) throws ClassNotFoundException{
+	public void inserirProjeto(Projeto projetos) throws ClassNotFoundException{
 		ProjetosDAO.getInstance().insertProjetos(projetos);
 	}
 	
-	public List<Projetos> listProjetos() throws ClassNotFoundException{
+	public List<Projeto> listProjetos() throws ClassNotFoundException{
 		return ProjetosDAO.getInstance().listProjetos();
 	}
 	

@@ -13,9 +13,111 @@
 
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-	<link href="resource/bootstrap/css/bootstrap.min.css" rel="stylesheet"
-		media="screen"></link>
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
-	<script src="resource/bootstrap/js/bootstrap.min.js"></script>
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
 </h:head>
+<h:body style="background-color: cadetblue;">
+	<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="collapse navbar-collapse"
+			id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="#">Link</a></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false">Dropdown <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="#">Action</a></li>
+						<li><a href="#">Another action</a></li>
+						<li><a href="#">Something else here</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="#">Separated link</a></li>
+					</ul></li>
+			</ul>
+		</div>
+	</div>
+	</nav>
+	<div>
+		<div class="row">
+			<div class="row" style="margin: 10px;">
+				<div class="col-md-4">
+					<div class="btn-group-vertical" role="group" aria-label="..."
+						style="display: block">
+						<button type="button" class="btn btn-default dropdown-toggle"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Projeto <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" style="width: 100%; text-align: center;">
+							<li><a href="#{request.contextPath}/criar-projeto">Criar
+									Projeto</a></li>
+						</ul>
+					</div>
+					<div class="btn-group-vertical" role="group" aria-label="..."
+						style="display: block">
+						<button type="button" class="btn btn-default dropdown-toggle"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Monitoramento <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" style="width: 100%; text-align: center;">
+							<li><a href="#">Monitorar Projetos</a></li>
+						</ul>
+					</div>
+					<div class="btn-group-vertical" role="group" aria-label="..."
+						style="display: block">
+						<button type="button" class="btn btn-default dropdown-toggle"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Departamento <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" style="width: 100%; text-align: center;">
+							<li><a href="#">Criar Departamento</a></li>
+							<li><a href="#">Departamentos</a></li>
+						</ul>
+					</div>
+					<div class="btn-group-vertical" role="group" aria-label="..."
+						style="display: block">
+						<button type="button" class="btn btn-default dropdown-toggle"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Atividade <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" style="width: 100%; text-align: center;">
+							<li><a href="#">Criar Atividade</a></li>
+							<li><a href="#">Atividades</a></li>
+							<li><a href="#">Criar Tag</a></li>
+						</ul>
+					</div>
+					<div class="btn-group-vertical" role="group" aria-label="..."
+						style="display: block">
+						<button type="button" class="btn btn-default dropdown-toggle"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Relato <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" style="width: 100%; text-align: center;">
+						</ul>
+					</div>
+					<div class="btn-group-vertical" role="group" aria-label="..."
+						style="display: block">
+						<button type="button" class="btn btn-default dropdown-toggle"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Colaboradores <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" style="width: 100%; text-align: center;">
+							<li><a href="#">Adicionar Colaboradores</a></li>
+						</ul>
+					</div>
+					<div class="btn-group-vertical" role="group" aria-label="..."
+						style="display: block">
+						<button type="button" class="btn btn-default dropdown-toggle"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Relatorios <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" style="width: 100%; text-align: center;">
+						</ul>
+					</div>
+				</div>
+				<ui:insert name="main"></ui:insert>
+			</div>
+		</div>
+	</div>
+</h:body>
 </html>

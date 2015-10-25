@@ -13,7 +13,7 @@ import br.com.activity.facade.ActivityFacade;
 import br.com.activity.grupo.dao.GrupoDAO;
 import br.com.activity.grupo.entidade.Grupo;
 import br.com.activity.hibenate.ConnectionFactory;
-import br.com.activity.projetos.entidade.Projetos;
+import br.com.activity.projetos.entidade.Projeto;
 import br.com.activity.util.PrioridadeTipo;
 import br.com.activity.util.StatusTipo;
 
@@ -74,7 +74,7 @@ public class ProjetosDAO {
 	}
 
 
-	public void insertProjetos(Projetos projetos){
+	public void insertProjetos(Projeto projetos){
 
 		String sql = 
 				"INSERT INTO projeto (NOME, DESCRICAO, PRIORIDADE, STATUS, CRIADO_EM, CRIADO_POR, PRAZO_CONCLUSAO) VALUES (?, ?, ?, ?, ?, ?, ?);";
@@ -98,9 +98,9 @@ public class ProjetosDAO {
 
 	}
 
-	public Projetos getProjeto(Projetos projetos){
+	public Projeto getProjeto(Projeto projetos){
 		String sql = "SELECT * FROM projeto WHERE NOME = '"+projetos.getNome()+"' AND DESCRICAO = '"+projetos.getDescricao()+"' AND PRIORIDADE = '"+projetos.getPrioridade()+"' AND STATUS = '"+projetos.getStatus()+"'";
-		Projetos projeto = new Projetos();
+		Projeto projeto = new Projeto();
 		ResultSet rs;
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -143,9 +143,9 @@ public class ProjetosDAO {
 		return projeto;
 	}
 	
-	public Projetos getProjetoById(long projetosId){
+	public Projeto getProjetoById(long projetosId){
 		String sql = "SELECT * FROM projeto WHERE ID = "+projetosId;
-		Projetos projeto = new Projetos();
+		Projeto projeto = new Projeto();
 		ResultSet rs;
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -189,16 +189,16 @@ public class ProjetosDAO {
 	}
 
 
-	public List<Projetos> listProjetos(){
+	public List<Projeto> listProjetos(){
 		String sql = "SELECT * FROM projeto";
 		PreparedStatement stmt;
-		List<Projetos> listProjetos = new ArrayList<Projetos>();
+		List<Projeto> listProjetos = new ArrayList<Projeto>();
 		ResultSet rs;
 		try {
 			stmt = connection.prepareStatement(sql);
 			rs = stmt.executeQuery(sql);
 			while(rs.next()){
-				Projetos projetos = new Projetos();
+				Projeto projetos = new Projeto();
 				projetos.setId(rs.getLong("ID"));
 				projetos.setNome(rs.getString("NOME"));
 				projetos.setDescricao(rs.getString("DESCRICAO"));

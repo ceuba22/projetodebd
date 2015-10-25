@@ -8,13 +8,13 @@ import br.com.activity.atividade.entidade.Atividade;
 import br.com.activity.atividadeAlocada.to.AtividadeAlocadaTO;
 import br.com.activity.facade.ActivityFacade;
 import br.com.activity.grupo.entidade.Grupo;
-import br.com.activity.projetos.entidade.Projetos;
+import br.com.activity.projetos.entidade.Projeto;
 import br.com.activity.users.to.UsersTO;
 import br.com.activity.util.ActivityUtil;
 import br.com.activity.util.PrioridadeTipo;
 import br.com.activity.util.StatusTipo;
 
-public class ProjetosTO {
+public class ProjetoTO {
 	
 	private long id;
 	
@@ -40,56 +40,56 @@ public class ProjetosTO {
 	
 	private Date prazoDeConclusao;
 	
-	public ProjetosTO(){
+	public ProjetoTO(){
 		
 	}
 	
-	public ProjetosTO(Projetos projetos){
-		this.id = projetos.getId();
-		this.nome = projetos.getNome();
-		this.descricao = projetos.getDescricao();
-		this.prioridade = projetos.getPrioridade();
-		this.criadoEm = projetos.getCriadoEm();
-		this.status = projetos.getStatus(); 
-		this.criadoPor = new UsersTO(projetos.getCriadoPor());
-		this.listAtividade = projetos.getListAtividade();
-		this.listGrupo = projetos.getListGrupo();
-		this.listAtividadesAlocadas = projetos.getListAtividadeAlocada();
-		this.prazoDeConclusao = projetos.getPrazoDeConclusao();
+	public ProjetoTO(Projeto projeto){
+		this.id = projeto.getId();
+		this.nome = projeto.getNome();
+		this.descricao = projeto.getDescricao();
+		this.prioridade = projeto.getPrioridade();
+		this.criadoEm = projeto.getCriadoEm();
+		this.status = projeto.getStatus(); 
+		this.criadoPor = new UsersTO(projeto.getCriadoPor());
+		this.listAtividade = projeto.getListAtividade();
+		this.listGrupo = projeto.getListGrupo();
+		this.listAtividadesAlocadas = projeto.getListAtividadeAlocada();
+		this.prazoDeConclusao = projeto.getPrazoDeConclusao();
 		
 		
 		
 		
 	}
 	
-	public Projetos toVO(){
-		Projetos projetos = new Projetos();
+	public Projeto toVO(){
+		Projeto projeto = new Projeto();
 		
-		projetos.setNome(this.getNome());
-		projetos.setDescricao(this.getDescricao());
+		projeto.setNome(this.getNome());
+		projeto.setDescricao(this.getDescricao());
 		if(this.prioridadeString.equals("ALTA")){
-			projetos.setPrioridade(PrioridadeTipo.ALTA);	
+			projeto.setPrioridade(PrioridadeTipo.ALTA);	
 		}
 		if(this.prioridadeString.equals("MEDIA")){
-			projetos.setPrioridade(PrioridadeTipo.MEDIA);
+			projeto.setPrioridade(PrioridadeTipo.MEDIA);
 		}
 		if(this.prioridadeString.equals("BAIXA")){
-			projetos.setPrioridade(PrioridadeTipo.BAIXA);
+			projeto.setPrioridade(PrioridadeTipo.BAIXA);
 		}
-		projetos.setStatus(this.getStatus());
-		projetos.setCriadoEm(new Date());
-		projetos.setListGrupo(new ArrayList<Grupo>());
-		projetos.setListAtividade(new ArrayList<Atividade>());
-		projetos.setListAtividadeAlocada(new ArrayList<AtividadeAlocadaTO>());
-		projetos.setPrazoDeConclusao(this.prazoDeConclusao);
+		projeto.setStatus(this.getStatus());
+		projeto.setCriadoEm(new Date());
+		projeto.setListGrupo(new ArrayList<Grupo>());
+		projeto.setListAtividade(new ArrayList<Atividade>());
+		projeto.setListAtividadeAlocada(new ArrayList<AtividadeAlocadaTO>());
+		projeto.setPrazoDeConclusao(this.prazoDeConclusao);
 		
 		try {
-			projetos.setCriadoPor(ActivityFacade.getInstance().getUsers(ActivityUtil.getInstance().getUsersTOLogado()));
+			projeto.setCriadoPor(ActivityFacade.getInstance().getUsers(ActivityUtil.getInstance().getUsersTOLogado()));
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		
-		return projetos;	
+		return projeto;	
 	}
 
 	public long getId() {

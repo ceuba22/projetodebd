@@ -4,8 +4,8 @@ import java.util.Date;
 
 import br.com.activity.atividade.entidade.Atividade;
 import br.com.activity.atividade.to.AtividadeTO;
-import br.com.activity.projetos.entidade.Projetos;
-import br.com.activity.projetos.to.ProjetosTO;
+import br.com.activity.projetos.entidade.Projeto;
+import br.com.activity.projetos.to.ProjetoTO;
 import br.com.activity.users.entidade.Users;
 import br.com.activity.users.to.UsersTO;
 
@@ -17,7 +17,7 @@ public class AtividadeAlocadaTO {
 	
 	private AtividadeTO atividadeTO;
 	
-	private ProjetosTO projetosTO;
+	private ProjetoTO ProjetoTO;
 	
 	private Date dataInicioReal;
 	
@@ -28,11 +28,11 @@ public class AtividadeAlocadaTO {
 		
 	}
 	
-	public AtividadeAlocadaTO(long id, Users users, Atividade atividade, Projetos projetos, Date dataInicioReal, Date tempoExecucaoReal){
+	public AtividadeAlocadaTO(long id, Users users, Atividade atividade, Projeto projetos, Date dataInicioReal, Date tempoExecucaoReal){
 		this.setId(id);
 		this.setUsersTO(new UsersTO(users));
 		this.setAtividadeTO(new AtividadeTO(atividade));
-		this.setProjetosTO(new ProjetosTO(projetos));
+		this.setProjetoTO(new ProjetoTO(projetos));
 		this.setDataInicioReal(dataInicioReal);
 		this.setTempoExecucaoReal(tempoExecucaoReal);
 	}
@@ -54,12 +54,12 @@ public class AtividadeAlocadaTO {
 		this.atividadeTO = atividadeTO;
 	}
 
-	public ProjetosTO getProjetosTO() {
-		return projetosTO;
+	public ProjetoTO getProjetoTO() {
+		return ProjetoTO;
 	}
 
-	public void setProjetosTO(ProjetosTO projetosTO) {
-		this.projetosTO = projetosTO;
+	public void setProjetoTO(ProjetoTO ProjetoTO) {
+		this.ProjetoTO = ProjetoTO;
 	}
 
 	public long getId() {
