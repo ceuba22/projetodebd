@@ -7,6 +7,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import br.com.activity.beans.users.UsersMB;
 import br.com.activity.facade.ActivityFacade;
@@ -29,6 +30,9 @@ public class LoginMB implements Serializable{
 	private UsersMB usuario;
 	
 	public LoginMB(){
+		FacesContext fc = FacesContext.getCurrentInstance();  
+	       HttpSession session = (HttpSession)fc.getExternalContext().getSession(false);  
+	       session.invalidate(); 
 		userLogin =  new UsersTO();
 	}
 		

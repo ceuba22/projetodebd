@@ -44,12 +44,10 @@ public class InserirUsuarioProjetoMB implements Serializable{
 
 	private List<AtividadeAlocadaTO> listAtividadeAlocadaTO;
 
-	//	private ProjetoMB projetoMB = (ProjetoMB)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("projetoMB");
 
 	private long projetoId;
 
 	public InserirUsuarioProjetoMB() throws ClassNotFoundException{
-		//		loadProject();
 	}
 
 	public void loadBean() throws ClassNotFoundException{

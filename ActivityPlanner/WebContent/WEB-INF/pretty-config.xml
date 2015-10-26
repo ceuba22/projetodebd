@@ -2,13 +2,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://ocpsoft.org/schema/rewrite-config-prettyfaces
                       http://ocpsoft.org/xml/ns/prettyfaces/rewrite-config-prettyfaces.xsd">
-
+	
 	<url-mapping id="login">
 		<pattern value="/login" />
 		<view-id value="/login.jsf" />
 	</url-mapping>
 	
-	<url-mapping id="login">
+	<url-mapping id="singUp">
 		<pattern value="/cadastro" />
 		<view-id value="/public/singUp.jsf" />
 	</url-mapping>
