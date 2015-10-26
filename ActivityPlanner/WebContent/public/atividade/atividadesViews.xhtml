@@ -4,99 +4,95 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
-<h:head>
-	<title>Atividades</title>
-</h:head>
-<h:body style="background-color: darkgrey;">
-	<h:form id="formPrincipal">
-		<h:outputFormat rendered="#{principalMB.usersTO.manager eq true}">
-			<div>
-				<p:menubar>
-					<f:facet name="options">
-						<p:inputText style="margin-right:10px" placeholder="Search" />
-						<p:commandButton type="button" value="Logout"
-							icon="ui-icon-extlink" />
-					</f:facet>
-				</p:menubar>
-				<a href="#{request.contextPath}/public/principal.jsf"
-					style="float: right; margin-top: 10px; margin-right: 10px; border: 1px solid #a6c9e2; text-decoration: inherit; background: #0078ae; color: #ffffff; font-weight: normal; font-size: 1em; font-family: Verdana, Arial, sans-serif; border-radius: 5px; -webkit-appearance: button; padding: .3em 1em .3em 2.1em; line-height: 1.4;">
-					<span> <i class="fa fa-question"></i>Voltar
-				</span>
-				</a>
-				<div id="dataTable"
-					style="float: right; width: 100%; margin: 50px 10px 20px 10px;">
-					<p:dataTable id="atividade" var="atividade" widgetVar="atividade"
-						emptyMessage="Não Existe Projetos Ativos." style="margin-left: 10px;"
-						value="#{atividadeViewsMB.listAtividadeTO}">
-						<p:column headerText="Atividades">
-							<p:commandButton value="#{atividade.nome}">
-							</p:commandButton>
+<ui:composition template="/template.xhtml">
+	<ui:define name="main">
+		<div class="col-md-8">
+			<h:form id="formPrincipal">
+				<h:outputFormat rendered="#{principalMB.usersTO.manager eq true}">
+					<div>
+						<a href="#{request.contextPath}/public/principal.jsf"
+							style="float: right; margin-top: 10px; margin-right: 10px; border: 1px solid #a6c9e2; text-decoration: inherit; background: #0078ae; color: #ffffff; font-weight: normal; font-size: 1em; font-family: Verdana, Arial, sans-serif; border-radius: 5px; -webkit-appearance: button; padding: .3em 1em .3em 2.1em; line-height: 1.4;">
+							<span> <i class="fa fa-question"></i>Voltar
+						</span>
+						</a>
+						<div id="dataTable"
+							style="float: right; width: 100%; margin: 50px 10px 20px 10px;">
+							<p:dataTable id="atividade" var="atividade" widgetVar="atividade"
+								emptyMessage="Não Existe Projetos Ativos."
+								style="margin-left: 10px;"
+								value="#{atividadeViewsMB.listAtividadeTO}">
+								<p:column headerText="Atividades">
+									<p:commandButton value="#{atividade.nome}">
+									</p:commandButton>
 
-						</p:column>
-						<p:column headerText="Editar Atividade" style="width: 122px;">
-							<p:commandButton value="Editar" tyleClass="btn btn-danger">
-								<f:attribute name="selectedGrupo" value="#{atividade}" />
-							</p:commandButton>
-						</p:column>
-						<p:column headerText="Excluir Atividade" style="width: 122px;">
-							<p:commandButton value="Excluir"/>
-						</p:column>
+								</p:column>
+								<p:column headerText="Editar Atividade" style="width: 122px;">
+									<p:commandButton value="Editar" tyleClass="btn btn-danger">
+										<f:attribute name="selectedGrupo" value="#{atividade}" />
+									</p:commandButton>
+								</p:column>
+								<p:column headerText="Excluir Atividade" style="width: 122px;">
+									<p:commandButton value="Excluir" />
+								</p:column>
 
-					</p:dataTable>
-				</div>
-			</div>
+							</p:dataTable>
+						</div>
+					</div>
 
-			<p:dialog id="criarAtividadeDialog" modal="true"
-				header="Formulário de Atividade"
-				message="Preencha corretamente os campos a seguir."
-				widgetVar="criarAtividadeDialog" height="100%" width="75%"
-				closable="false">
-				<p:messages showDetail="true" id="messageAtividade" />
+					<p:dialog id="criarAtividadeDialog" modal="true"
+						header="Formulário de Atividade"
+						message="Preencha corretamente os campos a seguir."
+						widgetVar="criarAtividadeDialog" height="100%" width="75%"
+						closable="false">
+						<p:messages showDetail="true" id="messageAtividade" />
 
-				<p:outputLabel value="Nome do Atividade"
-					style=" margin-bottom: 10px; display: block;" />
-				<p:inputText style="display: block;  margin-bottom: 10px;"
-					value="#{principalMB.atividaTo.nome}">
-				</p:inputText>
-				<p:outputLabel value="Descrição"
-					style=" margin-bottom: 10px; display: block;" />
-				<p:inputTextarea rows="5" cols="30" autoResize="false"
-					style="display: block;  margin-bottom: 10px;"
-					value="#{principalMB.atividaTo.descricao}" />
+						<p:outputLabel value="Nome do Atividade"
+							style=" margin-bottom: 10px; display: block;" />
+						<p:inputText style="display: block;  margin-bottom: 10px;"
+							value="#{principalMB.atividaTo.nome}">
+						</p:inputText>
+						<p:outputLabel value="Descrição"
+							style=" margin-bottom: 10px; display: block;" />
+						<p:inputTextarea rows="5" cols="30" autoResize="false"
+							style="display: block;  margin-bottom: 10px;"
+							value="#{principalMB.atividaTo.descricao}" />
 
-				<h:outputLabel for="peso" value="Peso "
-					style="margin-bottom: 10px; display: block;" />
-				<p:spinner id="peso" maxlength="10"
-					style=" display: table;  margin-bottom: 10px;"
-					value="#{principalMB.atividaTo.peso}" />
-				<p:outputLabel value="Tempo de Execucao: "
-					style=" margin-bottom: 10px;" />
-				<p:inputText style="margin-bottom: 10px;"
-					value="#{principalMB.atividaTo.tempoExecucao}" />
-				<p:selectOneMenu id="console"
-					style="width:100px; margin-left: 10px;"
-					value="#{principalMB.atividaTo.tipoExecucao}">
-					<f:selectItem itemLabel="min" itemValue="MIN" />
-					<f:selectItem itemLabel="Hora" itemValue="HORA" />
-					<f:selectItem itemLabel="Dia(s)" itemValue="DIA" />
-				</p:selectOneMenu>
-				<p:outputLabel value="Tag"
-					style=" margin-bottom: 10px; display: block;" />
-				<p:selectOneMenu value="#{principalMB.atividaTo.tagId}">
-					<f:selectItems var="tagItens" value="#{principalMB.listTag}"
-						itemLabel="#{tagItens.nome}"
-						itemDescription="#{tagItens.descricao}" itemValue="#{tagItens.id}" />
-				</p:selectOneMenu>
+						<h:outputLabel for="peso" value="Peso "
+							style="margin-bottom: 10px; display: block;" />
+						<p:spinner id="peso" maxlength="10"
+							style=" display: table;  margin-bottom: 10px;"
+							value="#{principalMB.atividaTo.peso}" />
+						<p:outputLabel value="Tempo de Execucao: "
+							style=" margin-bottom: 10px;" />
+						<p:inputText style="margin-bottom: 10px;"
+							value="#{principalMB.atividaTo.tempoExecucao}" />
+						<p:selectOneMenu id="console"
+							style="width:100px; margin-left: 10px;"
+							value="#{principalMB.atividaTo.tipoExecucao}">
+							<f:selectItem itemLabel="min" itemValue="MIN" />
+							<f:selectItem itemLabel="Hora" itemValue="HORA" />
+							<f:selectItem itemLabel="Dia(s)" itemValue="DIA" />
+						</p:selectOneMenu>
+						<p:outputLabel value="Tag"
+							style=" margin-bottom: 10px; display: block;" />
+						<p:selectOneMenu value="#{principalMB.atividaTo.tagId}">
+							<f:selectItems var="tagItens" value="#{principalMB.listTag}"
+								itemLabel="#{tagItens.nome}"
+								itemDescription="#{tagItens.descricao}"
+								itemValue="#{tagItens.id}" />
+						</p:selectOneMenu>
 
-				<p:commandButton id="confirmAtividade" value="Salvar"
-					actionListener="#{principalMB.insertAtividade}">
-				</p:commandButton>
-				<p:commandButton id="declineAtividade" value="Cancelar"
-					actionListener="#{principalMB.cleanFormAtividade}" update="@form"
-					onsuccess="PF('criarAtividadeDialog').hide()" />
-			</p:dialog>
+						<p:commandButton id="confirmAtividade" value="Salvar"
+							actionListener="#{principalMB.insertAtividade}">
+						</p:commandButton>
+						<p:commandButton id="declineAtividade" value="Cancelar"
+							actionListener="#{principalMB.cleanFormAtividade}" update="@form"
+							onsuccess="PF('criarAtividadeDialog').hide()" />
+					</p:dialog>
 
-		</h:outputFormat>
-	</h:form>
-</h:body>
+				</h:outputFormat>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>
 </html>

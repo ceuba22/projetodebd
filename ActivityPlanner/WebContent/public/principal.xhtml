@@ -45,7 +45,7 @@
 							</p:column>
 							<p:column headerText="Gestão">
 								<a class="btn btn-primary"
-									href="#{request.contextPath}/#{project.id}/inserir-usuario-atividade"></a>
+									href="#{request.contextPath}/#{project.id}/inserir-usuario-atividade"> <i class="fa fa-check"></i></a>
 							</p:column>
 
 
@@ -53,11 +53,6 @@
 					</p:panel>
 				</div>
 			</div>
-			<div align="left">
-				<p>Seja Bem-Vindo Sr(a): #{principalMB.usersTO.nome}.</p>
-				<p>Cargo: #{principalMB.usersTO.cargo}.</p>
-			</div>
-
 			<p:dialog id="criarProjetoDialog" modal="true"
 				header="Formulário de Projeto"
 				message="Preencha corretamente os campos a seguir."

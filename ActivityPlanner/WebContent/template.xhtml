@@ -5,6 +5,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
+	<title>Activity Planner</title>
 	<link rel="stylesheet"
 		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
 
@@ -16,17 +17,27 @@
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
 	<link rel="stylesheet"
 		href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+	<style>
+.icon {
+	margin-right: 3px;
+}
+</style>
 </h:head>
 <h:body style="background-color: cadetblue;">
 	<nav class="navbar navbar-default">
 	<div class="container-fluid">
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav navbar-left">
+				<li><a href="#{request.contextPath}/inicio"><i
+						class="fa fa-home icon"></i>Inicio</a></li>
+			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#">Link</a></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false">Dropdown <span class="caret"></span></a>
+					aria-expanded="false"> <img  src="resource/no-user-image.jpg"
+						class="img-circle" alt="" style="width: 25px;"></img>
+						#{principalMB.usersTO.nome}<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="#">Action</a></li>
 						<li><a href="#">Another action</a></li>
@@ -82,7 +93,7 @@
 						</button>
 						<ul class="dropdown-menu" style="width: 100%; text-align: center;">
 							<li><a href="#">Criar Atividade</a></li>
-							<li><a href="#">Atividades</a></li>
+							<li><a href="#{request.contextPath}/atividades">Atividades</a></li>
 							<li><a href="#">Criar Tag</a></li>
 						</ul>
 					</div>

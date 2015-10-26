@@ -28,5 +28,11 @@
 		<view-id value="/public/projeto/inserirUsuario-projeto.jsf" />
 		<action onPostback="false">#{inserirUsuarioProjetoMB.loadProject}</action>
 	</url-mapping>
+	
+	<url-mapping id="atividadeList">
+		<pattern value="/atividades" />
+		<view-id value="/public/atividade/atividadesViews.jsf" />
+	</url-mapping>
+
 
 </pretty-config>
