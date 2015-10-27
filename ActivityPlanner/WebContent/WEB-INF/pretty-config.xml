@@ -33,6 +33,14 @@
 		<pattern value="/atividades" />
 		<view-id value="/public/atividade/atividadesViews.jsf" />
 	</url-mapping>
-
-
+	
+	<url-mapping id="departamentoList">
+		<pattern value="/departamentos" />
+		<view-id value="/public/departamento/inserirUsuario-Departamento.jsf" />
+	</url-mapping>
+	<url-mapping id="departamentoForm">
+		<pattern value="/criar-departamento" />
+		<view-id value="/public/departamento/departamentoForm.jsf" />
+	</url-mapping>
+	
 </pretty-config>

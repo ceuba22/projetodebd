@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ps="http://xmlns.jcp.org/jsf/passthrough">
+<ui:composition template="/template.xhtml">
+	<ui:define name="main">
+		<div class="col-md-8">
+			<div class="page-header">
+				<h3>Cadastro de departamento</h3>
+			</div>
+			<div class="jumbotron" style="padding: 20px;">
+				<h:form id="formPrincipal">
+					<p:messages showDetail="true" id="messageDepartamento" />
+
+					<p:outputLabel value="Nome do Projeto"
+						style=" margin-bottom: 10px; display: block;" />
+					<p:inputText style="display: block;  margin-bottom: 10px;"
+						value="#{departamentoFormMB.grupoTO.nome}" />
+					<p:outputLabel value="Descrição"
+						style=" margin-bottom: 10px; display: block;" />
+					<p:inputText style="display: block;  margin-bottom: 10px;"
+						value="#{departamentoFormMB.grupoTO.descricao}" />
+
+					<h:commandButton id="confirmDepartamento" value="Salvar" styleClass="btn btn-primary"
+						actionListener="#{departamentoFormMB.insertDepartamento}">
+					</h:commandButton>
+				</h:form>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

@@ -10,6 +10,8 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
+import org.primefaces.context.RequestContext;
+
 import br.com.activity.grupo.dao.GrupoDAO;
 import br.com.activity.grupo.entidade.Grupo;
 import br.com.activity.grupo.to.GrupoTO;
@@ -31,17 +33,19 @@ public class InsertUsuarioDepartamentoMB implements Serializable{
 
 	private GrupoTO selectedGrupo;
 
-
 	private List<Users> listUserAutoComplete;
 
 	private List<UsersTO> listUserByGrupo;
 
 	private Users selectedUser;
 
+	private boolean active;
+
 
 
 	public InsertUsuarioDepartamentoMB(){
 		try {
+			setActive(false);
 			selectedGrupo = new GrupoTO();
 			selectedUser =  new Users();
 			loadListGrupo();
@@ -61,6 +65,7 @@ public class InsertUsuarioDepartamentoMB implements Serializable{
 			GrupoDAO.getInstance().addUsuarioAoDepto(selectedUser.getId(), selectedGrupo.getId());
 			selectedUser = new Users();
 			loadDialogAddUsers(event);
+			setActive(false);
 		}else{
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Atenção", "Colaborador já é membro do departamento."));
@@ -79,9 +84,12 @@ public class InsertUsuarioDepartamentoMB implements Serializable{
 	}
 
 	public void loadDialogAddUsers(ActionEvent event) throws ClassNotFoundException {
+		RequestContext requestContext = RequestContext.getCurrentInstance();
 		listUserByGrupo = new ArrayList<UsersTO>();
 		if(selectedGrupo.getId() != 0){
 			listarUsuariosPorGrupo(selectedGrupo);
+			setActive(true);
+			requestContext.update("formPrincipal");
 
 		}else{
 			selectedGrupo = (GrupoTO) event.getComponent().getAttributes().get("selectedGrupo");
@@ -144,6 +152,14 @@ public class InsertUsuarioDepartamentoMB implements Serializable{
 
 	public void setListUserByGrupo(List<UsersTO> listUserByGrupo) {
 		this.listUserByGrupo = listUserByGrupo;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 }
