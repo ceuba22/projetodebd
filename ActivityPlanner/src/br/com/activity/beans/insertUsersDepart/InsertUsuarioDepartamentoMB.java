@@ -36,8 +36,10 @@ public class InsertUsuarioDepartamentoMB implements Serializable{
 	private List<Users> listUserAutoComplete;
 
 	private List<UsersTO> listUserByGrupo;
+	
+	private List<Users> listUsers;
 
-	private Users selectedUser;
+	private long selectedUser;
 
 	private boolean active;
 
@@ -47,7 +49,11 @@ public class InsertUsuarioDepartamentoMB implements Serializable{
 		try {
 			setActive(false);
 			selectedGrupo = new GrupoTO();
-			selectedUser =  new Users();
+			listUsers = new ArrayList<Users>();
+			for (Users user : UsersDAO.getInstance().listUsuarios()) {
+				listUsers.add(user);
+				
+			}
 			loadListGrupo();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -57,15 +63,18 @@ public class InsertUsuarioDepartamentoMB implements Serializable{
 
 	public void cleanFormDepartamento(){
 		selectedGrupo = new GrupoTO();
-		selectedUser = new Users();
+		selectedUser = 0;
+		setActive(false);
+
 	}
 
 	public void addUsuarioAoDepto(ActionEvent event) throws ClassNotFoundException{
-		if(!GrupoDAO.getInstance().jaPossuiUsuarioNoGrupo(selectedUser.getId(), selectedGrupo.getId())){
-			GrupoDAO.getInstance().addUsuarioAoDepto(selectedUser.getId(), selectedGrupo.getId());
-			selectedUser = new Users();
-			loadDialogAddUsers(event);
-			setActive(false);
+		RequestContext requestContext = RequestContext.getCurrentInstance();
+		if(!GrupoDAO.getInstance().jaPossuiUsuarioNoGrupo(selectedUser, selectedGrupo.getId())){
+			GrupoDAO.getInstance().addUsuarioAoDepto(selectedUser, selectedGrupo.getId());
+			selectedUser = 0;
+			listarUsuariosPorGrupo(selectedGrupo);
+			requestContext.update("formPrincipal");
 		}else{
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Atenção", "Colaborador já é membro do departamento."));
@@ -85,6 +94,7 @@ public class InsertUsuarioDepartamentoMB implements Serializable{
 
 	public void loadDialogAddUsers(ActionEvent event) throws ClassNotFoundException {
 		RequestContext requestContext = RequestContext.getCurrentInstance();
+		selectedGrupo = (GrupoTO) event.getComponent().getAttributes().get("selectedGrupo");
 		listUserByGrupo = new ArrayList<UsersTO>();
 		if(selectedGrupo.getId() != 0){
 			listarUsuariosPorGrupo(selectedGrupo);
@@ -92,13 +102,15 @@ public class InsertUsuarioDepartamentoMB implements Serializable{
 			requestContext.update("formPrincipal");
 
 		}else{
-			selectedGrupo = (GrupoTO) event.getComponent().getAttributes().get("selectedGrupo");
 			listarUsuariosPorGrupo(selectedGrupo);
+			setActive(true);
+			requestContext.update("formPrincipal");
 		}
 
 	}
 
 	public void listarUsuariosPorGrupo(GrupoTO grupo)throws ClassNotFoundException{
+		listUserByGrupo = new ArrayList<UsersTO>();
 		for (Users usuario : UsersDAO.getInstance().listUsuariosPorGrupo(grupo.getId())) {
 			listUserByGrupo.add(new UsersTO(usuario));
 
@@ -130,11 +142,11 @@ public class InsertUsuarioDepartamentoMB implements Serializable{
 		this.selectedGrupo = selectedGrupo;
 	}
 
-	public Users getSelectedUser() {
+	public long getSelectedUser() {
 		return selectedUser;
 	}
 
-	public void setSelectedUser(Users selectedUser) {
+	public void setSelectedUser(long selectedUser) {
 		this.selectedUser = selectedUser;
 	}
 
@@ -160,6 +172,14 @@ public class InsertUsuarioDepartamentoMB implements Serializable{
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public List<Users> getListUsers() {
+		return listUsers;
+	}
+
+	public void setListUsers(List<Users> listUsers) {
+		this.listUsers = listUsers;
 	}
 
 }

@@ -10,11 +10,6 @@
 			<h:form id="formPrincipal">
 				<h:outputFormat rendered="#{principalMB.usersTO.manager eq true}">
 					<div>
-						<a href="#{request.contextPath}/public/principal.jsf"
-							style="float: right; margin-top: 10px; margin-right: 10px; border: 1px solid #a6c9e2; text-decoration: inherit; background: #0078ae; color: #ffffff; font-weight: normal; font-size: 1em; font-family: Verdana, Arial, sans-serif; border-radius: 5px; -webkit-appearance: button; padding: .3em 1em .3em 2.1em; line-height: 1.4;">
-							<span> <i class="fa fa-question"></i>Voltar
-						</span>
-						</a>
 						<div id="dataTable"
 							style="float: right; width: 100%; margin: 50px 10px 20px 10px;">
 							<p:dataTable id="atividade" var="atividade" widgetVar="atividade"

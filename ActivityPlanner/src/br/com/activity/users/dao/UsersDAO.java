@@ -87,6 +87,34 @@ public class UsersDAO {
 		return listUsuario;
 	}
 	
+	public List<Users> listUsuarios(){
+		String sql = "SELECT * FROM users";
+		PreparedStatement stmt;
+		ResultSet rs;
+		List<Users> listUsuario = new ArrayList<Users>();
+		try {
+			stmt = connection.prepareStatement(sql);
+			rs = stmt.executeQuery(sql);
+			while(rs.next()){
+				Users usuario = new Users();
+				usuario.setNome(rs.getString("NOME"));
+				usuario.setSenha(rs.getString("SENHA"));
+				usuario.setId(rs.getLong("ID"));
+				usuario.setCargo(rs.getString("CARGO"));
+				usuario.setEmail(rs.getString("EMAIL"));
+				usuario.setManager(rs.getBoolean("MANAGER"));
+				usuario.setCriadoEm(rs.getTimestamp("CRIADO_EM"));
+				usuario.setAtualizadoEm(rs.getTimestamp("ATUALIZADO_EM"));
+				listUsuario.add(usuario);
+			}
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			listUsuario = new ArrayList<Users>();
+		}
+		return listUsuario;
+	}
+	
 	public List<Users> listUsuariosPorListaDeGrupos( List<Long> listGruposID){
 		List<Users> listUsuario = new ArrayList<Users>();
 		for (Long grupoID : listGruposID) {

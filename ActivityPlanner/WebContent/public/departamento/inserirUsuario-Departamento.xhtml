@@ -12,34 +12,37 @@
 			</div>
 			<h:form id="formPrincipal">
 				<h:outputFormat rendered="#{principalMB.usersTO.manager eq true}">
-					<h:outputFormat rendered="#{insertUsuarioDepartamentoMB.active eq true}">
+					<h:outputFormat
+						rendered="#{insertUsuarioDepartamentoMB.active eq true}">
+						<p:messages showDetail="true" id="messageDepartamento" />
 						<div class="form-group">
-							<p:messages showDetail="true" id="messageDepartamento" />
-							<p:outputLabel value="Nome do Usuáro" for="userComplete" />
-							<p:autoComplete var="userComplete" widgetVar="userComplete"
-								id="userComplete" converter="userConverter" multiple="false"
-								minQueryLength="2" forceSelection="false" queryDelay="400"
-								value="#{insertUsuarioDepartamentoMB.selectedUser}"
-								itemLabel="#{userComplete.nome}" itemValue="#{userComplete}"
-								completeMethod="#{insertUsuarioDepartamentoMB.listUsuariosPorLike}"
-								style=" margin-bottom: 10px; display: block;" />
+							<label>Usuário </label>
 
-							<p:commandButton id="confirmAddUsers" value="Salvar"
-								actionListener="#{insertUsuarioDepartamentoMB.addUsuarioAoDepto}">
-							</p:commandButton>
-							<p:commandButton id="declineAddUsers" value="Encerrar"
-								actionListener="#{insertUsuarioDepartamentoMB.cleanFormDepartamento}"
-								style=" margin-bottom: 10px;" />
-
-							<p:dataTable id="users" var="users" widgetVar="users"
-								emptyMessage="Não Existe Projetos Ativos."
-								value="#{insertUsuarioDepartamentoMB.listUserByGrupo}">
-								<p:column headerText="Grupos">
-									<h:outputText value="#{users.nome}" />
-								</p:column>
-
-							</p:dataTable>
+							<h:selectOneMenu style="width: 30%" styleClass="form-control"
+								value="#{insertUsuarioDepartamentoMB.selectedUser}">
+								<f:selectItems var="user" itemLabel="#{user.nome}"
+									value="#{insertUsuarioDepartamentoMB.listUsers}"
+									itemValue="#{user.id}">
+								</f:selectItems>
+							</h:selectOneMenu>
 						</div>
+						<div class="form-group">
+							<h:commandButton id="confirmAddUsers" value="Salvar"
+								styleClass="btn btn-success" style="margin-right: 5px;"
+								actionListener="#{insertUsuarioDepartamentoMB.addUsuarioAoDepto}">
+							</h:commandButton>
+							<h:commandButton id="declineAddUsers" value="Encerrar"
+								styleClass="btn btn-danger"
+								actionListener="#{insertUsuarioDepartamentoMB.cleanFormDepartamento}" />
+						</div>
+						<p:dataTable id="users" var="users" widgetVar="users"
+							emptyMessage="Não Existe usuários neste departamento."
+							value="#{insertUsuarioDepartamentoMB.listUserByGrupo}">
+							<p:column headerText="Membros">
+								<h:outputText value="#{users.nome}" />
+							</p:column>
+
+						</p:dataTable>
 					</h:outputFormat>
 					<div>
 						<div id="dataTable"
