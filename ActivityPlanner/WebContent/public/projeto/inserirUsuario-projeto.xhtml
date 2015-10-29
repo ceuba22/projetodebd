@@ -7,38 +7,46 @@
 <ui:composition template="/template.xhtml">
 	<ui:define name="main">
 		<div class="col-md-8">
-			<h:form id="formPrincipal">
-				<h:outputFormat rendered="#{principalMB.usersTO.manager eq true}">
-					<p:panel header="Alocar Atividade">
-						<h:outputLabel value="Atividades Selecionadas: "
-							style="display:block; margin-bottom: 10px;" />
-						<p:selectOneMenu value="#{inserirUsuarioProjetoMB.atividadeID}"
-							style="display:block; margin-bottom: 10px;">
-							<f:selectItem itemLabel="Selecione..." itemValue="0" />
-							<f:selectItems
-								value="#{inserirUsuarioProjetoMB.projetoTO.listAtividade}"
-								var="listAtividade"
-								itemLabel="#{listAtividade.nome} - #{listAtividade.tempoExecucao}  #{listAtividade.tipoExecucao}"
-								itemValue="#{listAtividade.id}" />
-						</p:selectOneMenu>
-
-						<h:outputLabel value="Colaborador no projeto: "
-							style="display:block; margin-bottom: 10px;" />
-						<p:selectOneMenu value="#{inserirUsuarioProjetoMB.usersID}"
-							style="display:block; margin-bottom: 10px;">
-							<f:selectItem itemLabel="Selecione..." itemValue="0" />
-							<f:selectItems
-								value="#{inserirUsuarioProjetoMB.listUsuariosDisponiveis}"
-								var="listUsers" itemLabel="#{listUsers.nome}"
-								itemValue="#{listUsers.id}" />
-						</p:selectOneMenu>
-
-						<p:commandButton id="confirmProjeto" value="Alocar atividade"
-							actionListener="#{inserirUsuarioProjetoMB.addAtividadeAlocada}" />
+			<div class="page-header">
+				<h3>Alocação de Atividade</h3>
+			</div>
+			<div class="jumbotron" style="padding: 20px;">
+				<h:form id="formPrincipal">
+					<h:outputFormat rendered="#{principalMB.usersTO.manager eq true}">
+						<div class="form-group">
+							<label>Atividades Selecionadas:</label>
+							<h:selectOneMenu value="#{inserirUsuarioProjetoMB.atividadeID}"
+								styleClass="form-control"
+								style="display:block; margin-bottom: 10px;">
+								<f:selectItem itemLabel="Selecione..." itemValue="0" />
+								<f:selectItems
+									value="#{inserirUsuarioProjetoMB.projetoTO.listAtividade}"
+									var="listAtividade"
+									itemLabel="#{listAtividade.nome} - #{listAtividade.tempoExecucao}  #{listAtividade.tipoExecucao}"
+									itemValue="#{listAtividade.id}" />
+							</h:selectOneMenu>
+						</div>
+						<div class="form-group">
+							<label>Colaborador no projeto: </label>
+							<h:selectOneMenu value="#{inserirUsuarioProjetoMB.usersID}"
+								styleClass="form-control"
+								style="display:block; margin-bottom: 10px;">
+								<f:selectItem itemLabel="Selecione..." itemValue="0" />
+								<f:selectItems
+									value="#{inserirUsuarioProjetoMB.listUsuariosDisponiveis}"
+									var="listUsers" itemLabel="#{listUsers.nome}"
+									itemValue="#{listUsers.id}" />
+							</h:selectOneMenu>
+						</div>
+						<div class="form-group">
+							<h:commandButton id="confirmProjeto" value="Alocar atividade"
+								styleClass="btn btn-primary"
+								actionListener="#{inserirUsuarioProjetoMB.addAtividadeAlocada}" />
+						</div>
 
 
 						<div id="dataTable"
-							style="float: right; width: 100%; margin: 20px 10px 0px 0px;">
+							style="width: 100%; margin: 20px 10px 0px 0px;">
 							<p:panel header="Atividade Alocadas">
 								<p:dataTable id="atividadeAlocada" var="atividadeAlocada"
 									widgetVar="atividadeAlocada"
@@ -70,10 +78,9 @@
 							</p:panel>
 						</div>
 
-					</p:panel>
-
-				</h:outputFormat>
-			</h:form>
+					</h:outputFormat>
+				</h:form>
+			</div>
 		</div>
 	</ui:define>
 </ui:composition>

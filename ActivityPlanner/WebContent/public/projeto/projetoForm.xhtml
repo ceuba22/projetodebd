@@ -9,74 +9,71 @@
 	<ui:define name="main">
 		<div class="col-md-8">
 			<div class="page-header">
-				<h3>Cadastro de projeto</h3>
+				<h3>Cadastro de Projeto</h3>
 			</div>
 			<div class="jumbotron" style="padding: 20px;">
 				<h:form id="formPrincipal">
 					<h:outputFormat rendered="#{projetoFormMB.usersTO.manager eq true}">
-						<div>
-							<p:messages showDetail="true" />
-							<div class="form-group">
-								<label>Nome do Projeto</label>
+						<p:messages showDetail="true" id="messageProjeto" />
+						<div class="form-group">
+							<label>Nome do Projeto</label>
+							<h:inputText styleClass="form-control"
+								value="#{projetoFormMB.projetoTO.nome}" />
+						</div>
+						<div class="form-group">
+							<label>Descrição</label>
+							<div>
 								<h:inputText styleClass="form-control"
-									value="#{projetoFormMB.projetoTO.nome}" />
+									value="#{projetoFormMB.projetoTO.descricao}" />
 							</div>
-							<div class="form-group">
-								<label>Descrição</label>
-								<div>
-									<h:inputText styleClass="form-control"
-										value="#{projetoFormMB.projetoTO.descricao}" />
-								</div>
+						</div>
+						<div class="form-group">
+							<label>Priodade</label>
+							<div>
+								<h:selectOneMenu id="prioridade" styleClass="form-control"
+									style="width:100px; margin-bottom: 10px;"
+									value="#{projetoFormMB.projetoTO.prioridadeString}">
+									<f:selectItem itemLabel="ALTA" itemValue="ALTA" />
+									<f:selectItem itemLabel="MÉDIA" itemValue="MEDIA" />
+									<f:selectItem itemLabel="BAIXA" itemValue="BAIXA" />
+								</h:selectOneMenu>
 							</div>
-							<div class="form-group">
-								<label>Priodade</label>
-								<div>
-									<h:selectOneMenu id="prioridade" styleClass="form-control"
-										style="width:100px; margin-bottom: 10px;"
-										value="#{projetoFormMB.projetoTO.prioridadeString}">
-										<f:selectItem itemLabel="ALTA" itemValue="ALTA" />
-										<f:selectItem itemLabel="MÉDIA" itemValue="MEDIA" />
-										<f:selectItem itemLabel="BAIXA" itemValue="BAIXA" />
-									</h:selectOneMenu>
-								</div>
+						</div>
+						<div class="form-group">
+							<label>Prazo de validação</label>
+							<div>
+								<h:inputText
+									value="#{projetoFormMB.projetoTO.prazoDeConclusaoString}"
+									ps:placeholder="Exemplo 10/12/1993 10:12"
+									styleClass="form-control">
+								</h:inputText>
 							</div>
-							<div class="form-group">
-								<label>Prazo de validação</label>
-								<div>
-									<h:inputText
-										value="#{projetoFormMB.projetoTO.prazoDeConclusaoString}"
-										ps:placeholder="Exemplo 10/12/1993 10:12" styleClass="form-control">
-									</h:inputText>
-								</div>
-							</div>
+						</div>
 
-							<div class="form-group">
-								<label>Atividades </label>
-								<h:selectManyCheckbox value="#{projetoFormMB.atividadeTarget}">
-									<f:selectItems value="#{projetoFormMB.atividadeSource}"
-										itemValue="#{atividade.id}" var="atividade"
-										itemLabel="#{atividade.nome}"></f:selectItems>
-								</h:selectManyCheckbox>
+						<div class="form-group">
+							<label>Atividades </label>
+							<h:selectManyCheckbox value="#{projetoFormMB.atividadeTarget}">
+								<f:selectItems value="#{projetoFormMB.atividadeSource}"
+									itemValue="#{atividade.id}" var="atividade"
+									itemLabel="#{atividade.nome}"></f:selectItems>
+							</h:selectManyCheckbox>
 
-							</div>
-							<div class="form-group">
-								<label>Departamentos </label>
-								<h:selectManyCheckbox
-									value="#{projetoFormMB.departamentosTarget}">
-									<f:selectItems value="#{projetoFormMB.departamentoSource}"
-										itemValue="#{departamento.id}" var="departamento"
-										itemLabel="#{departamento.nome}"></f:selectItems>
-								</h:selectManyCheckbox>
+						</div>
+						<div class="form-group">
+							<label>Departamentos </label>
+							<h:selectManyCheckbox
+								value="#{projetoFormMB.departamentosTarget}">
+								<f:selectItems value="#{projetoFormMB.departamentoSource}"
+									itemValue="#{departamento.id}" var="departamento"
+									itemLabel="#{departamento.nome}"></f:selectItems>
+							</h:selectManyCheckbox>
 
-							</div>
-							<div class="form-group">
-								<div>
-									<h:commandButton id="confirmProjeto" value="Salvar"
-										styleClass="btn btn-primary"
-										actionListener="#{projetoFormMB.insertProjeto}" />
+						</div>
+						<div class="form-group">
+							<h:commandButton id="confirmProjeto" value="Salvar"
+								styleClass="btn btn-primary"
+								actionListener="#{projetoFormMB.insertProjeto}" />
 
-								</div>
-							</div>
 						</div>
 					</h:outputFormat>
 				</h:form>
@@ -84,33 +81,4 @@
 		</div>
 	</ui:define>
 </ui:composition>
-<script>
-PrimeFaces.locales['pt'] = {  
-                closeText: 'Fechar',  
-                prevText: 'Anterior',  
-                nextText: 'Próximo',  
-                currentText: 'Começo',  
-                monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],  
-                monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun', 'Jul','Ago','Set','Out','Nov','Dez'],  
-                dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],  
-                dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],  
-                dayNamesMin: ['D','S','T','Q','Q','S','S'],  
-                weekHeader: 'Semana',  
-                firstDay: 1,  
-                isRTL: false,  
-                showMonthAfterYear: false,  
-                yearSuffix: '',  
-                timeOnlyTitle: 'Só Horas',  
-                timeText: 'Tempo',  
-                hourText: 'Hora',  
-                minuteText: 'Minuto',  
-                secondText: 'Segundo',  
-                currentText: 'Data Atual',  
-                ampm: false,  
-                month: 'Mês',  
-                week: 'Semana',  
-                day: 'Dia',  
-                allDayText : 'Todo Dia'  
-            };  
-</script>
 </html>
