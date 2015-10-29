@@ -16,7 +16,7 @@ import org.primefaces.model.DualListModel;
 
 import br.com.activity.atividade.entidade.Atividade;
 import br.com.activity.atividade.to.AtividadeTO;
-import br.com.activity.beans.project.ProjetoMB;
+import br.com.activity.beans.projeto.ProjetoMB;
 import br.com.activity.beans.users.UsersMB;
 import br.com.activity.facade.ActivityFacade;
 import br.com.activity.grupo.dao.GrupoDAO;

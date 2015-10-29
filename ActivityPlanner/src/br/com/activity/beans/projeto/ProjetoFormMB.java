@@ -1,5 +1,6 @@
 package br.com.activity.beans.projeto;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,11 +11,12 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import org.primefaces.context.RequestContext;
-import org.primefaces.model.DualListModel;
 
+import br.com.activity.atividade.dao.AtividadeDAO;
 import br.com.activity.atividade.entidade.Atividade;
 import br.com.activity.beans.users.UsersMB;
 import br.com.activity.facade.ActivityFacade;
+import br.com.activity.grupo.dao.GrupoDAO;
 import br.com.activity.grupo.entidade.Grupo;
 import br.com.activity.projetos.entidade.Projeto;
 import br.com.activity.projetos.to.ProjetoTO;
@@ -28,13 +30,11 @@ public class ProjetoFormMB implements Serializable {
 	private static final long serialVersionUID = 6100456552860528688L;
 
 	private ProjetoTO projetoTO;
-	private DualListModel<Atividade> atividades;
 	private List<Atividade> atividadeSource;
-	private List<Atividade> atividadeTarget;
+	private List<String> atividadeTarget;
 	private List<ProjetoTO> listProjetoTO;
-	private DualListModel<Grupo> departamentos;
 	private List<Grupo> departamentoSource;
-	private List<Grupo> departamentosTarget;
+	private List<String> departamentosTarget;
 	private UsersTO usersTO;
 
 	private UsersMB usersMB = (UsersMB)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usersMB");
@@ -42,16 +42,14 @@ public class ProjetoFormMB implements Serializable {
 
 	public ProjetoFormMB() {
 		departamentoSource = new ArrayList<Grupo>();
-		departamentosTarget = new ArrayList<Grupo>();
+		departamentosTarget = new ArrayList<String>();
 		atividadeSource = new ArrayList<Atividade>();
-		atividadeTarget = new ArrayList<Atividade>();
+		atividadeTarget = new ArrayList<String>();
 	}
 
 	public void loadBean(){
 
 		projetoTO = new ProjetoTO();
-		departamentos = new DualListModel<Grupo>(departamentoSource, departamentosTarget);
-		atividades = new DualListModel<Atividade>(atividadeSource, atividadeTarget);
 		listProjetoTO = new ArrayList<ProjetoTO>();
 		setUsersTO(new UsersTO());
 		usersTO.setNome(usersMB.getNome());
@@ -63,8 +61,7 @@ public class ProjetoFormMB implements Serializable {
 
 	}
 
-	@SuppressWarnings("unused")
-	public void insertProjeto(ActionEvent event){
+	public void insertProjeto(ActionEvent event) throws ClassNotFoundException, IOException{
 		FacesContext context = FacesContext.getCurrentInstance();
 		RequestContext requestContext = RequestContext.getCurrentInstance();
 
@@ -80,13 +77,19 @@ public class ProjetoFormMB implements Serializable {
 		if(!hasError){
 			Projeto projetos = projetoTO.toVO();
 			projetos.setStatus(StatusTipo.ABERTO);
-			projetos.setListAtividade(getAtividades().getTarget());
-			projetos.setListGrupo(getDepartamentos().getTarget());
+			for (String atividadeId : getAtividadeTarget()) {
+				projetos.getListAtividade().add(AtividadeDAO.getInstance().getAtividade(Long.valueOf(atividadeId))) ;
+			}
+			
+			for (String departamentoId : getDepartamentosTarget()) {
+				projetos.getListGrupo().add(GrupoDAO.getInstance().getGrupo(Long.valueOf(departamentoId))) ;
+			}
 			try {
 				ActivityFacade.getInstance().inserirProjeto(projetos);
 				loadListProjetos();
+				projetoTO = new ProjetoTO();
 				requestContext.update("formPrincipal");
-				requestContext.execute("PF('criarProjetoDialog').hide()");
+				context.getExternalContext().redirect("inicio");
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
@@ -141,13 +144,6 @@ public class ProjetoFormMB implements Serializable {
 	public void setProjetoTO(ProjetoTO projetoTO) {
 		this.projetoTO = projetoTO;
 	}
-	public DualListModel<Atividade> getAtividades() {
-		return atividades;
-	}
-
-	public void setAtividades(DualListModel<Atividade> atividades) {
-		this.atividades = atividades;
-	}
 	public List<Atividade> getAtividadeSource() {
 		return atividadeSource;
 	}
@@ -156,11 +152,11 @@ public class ProjetoFormMB implements Serializable {
 		this.atividadeSource = atividadeSource;
 	}
 
-	public List<Atividade> getAtividadeTarget() {
+	public List<String> getAtividadeTarget() {
 		return atividadeTarget;
 	}
 
-	public void setAtividadeTarget(List<Atividade> atividadeTarget) {
+	public void setAtividadeTarget(List<String> atividadeTarget) {
 		this.atividadeTarget = atividadeTarget;
 	}
 
@@ -172,14 +168,6 @@ public class ProjetoFormMB implements Serializable {
 		this.listProjetoTO = listProjetoTO;
 	}
 
-	public DualListModel<Grupo> getDepartamentos() {
-		return departamentos;
-	}
-
-	public void setDepartamentos(DualListModel<Grupo> departamentos) {
-		this.departamentos = departamentos;
-	}
-
 	public List<Grupo> getDepartamentoSource() {
 		return departamentoSource;
 	}
@@ -188,11 +176,11 @@ public class ProjetoFormMB implements Serializable {
 		this.departamentoSource = departamentoSource;
 	}
 
-	public List<Grupo> getDepartamentosTarget() {
+	public List<String> getDepartamentosTarget() {
 		return departamentosTarget;
 	}
 
-	public void setDepartamentosTarget(List<Grupo> departamentosTarget) {
+	public void setDepartamentosTarget(List<String> departamentosTarget) {
 		this.departamentosTarget = departamentosTarget;
 	}
 

@@ -17,74 +17,30 @@
 								style="margin-left: 10px;"
 								value="#{atividadeViewsMB.listAtividadeTO}">
 								<p:column headerText="Atividades">
-									<p:commandButton value="#{atividade.nome}">
-									</p:commandButton>
-
+									<label>#{atividade.nome}</label>
 								</p:column>
-								<p:column headerText="Editar Atividade" style="width: 122px;">
-									<p:commandButton value="Editar" tyleClass="btn btn-danger">
-										<f:attribute name="selectedGrupo" value="#{atividade}" />
-									</p:commandButton>
+								<p:column headerText="Descrição">
+									<label>#{atividade.descricao}</label>
 								</p:column>
-								<p:column headerText="Excluir Atividade" style="width: 122px;">
-									<p:commandButton value="Excluir" />
+								<p:column headerText="Tag">
+									<label>#{atividade.tag.nome}</label>
+								</p:column>
+								<p:column headerText="Tempo Execução">
+									<label>#{atividade.tempoExecucao}  #{atividade.tipoExecucao}</label>
+								</p:column>
+								<p:column headerText="Peso">
+									<label>#{atividade.peso}</label>
+								</p:column>
+								<p:column headerText="Gestão">
+									<a class="btn btn-warning"
+										href="#{request.contextPath}/editar-atividade/#{atividade.id}"><i
+										class="fa fa-pencil-square-o"></i></a>
+									<h:commandButton value="Excluir" styleClass="btn btn-danger" />
 								</p:column>
 
 							</p:dataTable>
 						</div>
 					</div>
-
-					<p:dialog id="criarAtividadeDialog" modal="true"
-						header="Formulário de Atividade"
-						message="Preencha corretamente os campos a seguir."
-						widgetVar="criarAtividadeDialog" height="100%" width="75%"
-						closable="false">
-						<p:messages showDetail="true" id="messageAtividade" />
-
-						<p:outputLabel value="Nome do Atividade"
-							style=" margin-bottom: 10px; display: block;" />
-						<p:inputText style="display: block;  margin-bottom: 10px;"
-							value="#{principalMB.atividaTo.nome}">
-						</p:inputText>
-						<p:outputLabel value="Descrição"
-							style=" margin-bottom: 10px; display: block;" />
-						<p:inputTextarea rows="5" cols="30" autoResize="false"
-							style="display: block;  margin-bottom: 10px;"
-							value="#{principalMB.atividaTo.descricao}" />
-
-						<h:outputLabel for="peso" value="Peso "
-							style="margin-bottom: 10px; display: block;" />
-						<p:spinner id="peso" maxlength="10"
-							style=" display: table;  margin-bottom: 10px;"
-							value="#{principalMB.atividaTo.peso}" />
-						<p:outputLabel value="Tempo de Execucao: "
-							style=" margin-bottom: 10px;" />
-						<p:inputText style="margin-bottom: 10px;"
-							value="#{principalMB.atividaTo.tempoExecucao}" />
-						<p:selectOneMenu id="console"
-							style="width:100px; margin-left: 10px;"
-							value="#{principalMB.atividaTo.tipoExecucao}">
-							<f:selectItem itemLabel="min" itemValue="MIN" />
-							<f:selectItem itemLabel="Hora" itemValue="HORA" />
-							<f:selectItem itemLabel="Dia(s)" itemValue="DIA" />
-						</p:selectOneMenu>
-						<p:outputLabel value="Tag"
-							style=" margin-bottom: 10px; display: block;" />
-						<p:selectOneMenu value="#{principalMB.atividaTo.tagId}">
-							<f:selectItems var="tagItens" value="#{principalMB.listTag}"
-								itemLabel="#{tagItens.nome}"
-								itemDescription="#{tagItens.descricao}"
-								itemValue="#{tagItens.id}" />
-						</p:selectOneMenu>
-
-						<p:commandButton id="confirmAtividade" value="Salvar"
-							actionListener="#{principalMB.insertAtividade}">
-						</p:commandButton>
-						<p:commandButton id="declineAtividade" value="Cancelar"
-							actionListener="#{principalMB.cleanFormAtividade}" update="@form"
-							onsuccess="PF('criarAtividadeDialog').hide()" />
-					</p:dialog>
-
 				</h:outputFormat>
 			</h:form>
 		</div>

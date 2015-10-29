@@ -1,4 +1,4 @@
-package br.com.activity.beans.project;
+package br.com.activity.beans.projeto;
 
 import java.io.Serializable;
 import java.util.Date;

@@ -46,6 +46,10 @@ public class ActivityFacade {
 	public void inserirAtividade(Atividade atividade) throws ClassNotFoundException{
 		AtividadeDAO.getInstance().inserirAtividade(atividade);
 	}
+	
+	public Atividade getAtividade (long atividadeID) throws ClassNotFoundException{
+		return AtividadeDAO.getInstance().getAtividade(atividadeID);
+	}
 
 	public List<Atividade> listAtividades() throws ClassNotFoundException{
 		return AtividadeDAO.getInstance().listAtividades();
@@ -75,6 +79,9 @@ public class ActivityFacade {
 
 	public Tag getTag(long tagId) throws ClassNotFoundException{
 		return TagDAO.getInstance().getTag(tagId);
+	}
+	public List<Tag> listTags() throws ClassNotFoundException{
+		return TagDAO.getInstance().listTags();
 	}
 
 	//==============================================================

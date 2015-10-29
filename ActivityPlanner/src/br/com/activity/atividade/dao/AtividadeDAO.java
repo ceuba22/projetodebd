@@ -30,7 +30,31 @@ public class AtividadeDAO {
 
 	public AtividadeDAO() throws ClassNotFoundException{
 		this.connection = new ConnectionFactory().getConnection();
+		
+		
 	}
+	
+//	public void atualizarAtividade(Atividade atividade){
+//		String sql = "INSERT INTO atividade(NOME, DESCRICAO, CRIADO_EM, TAG_ID, PESO, TEMPO_EXECUCAO_PREVISTO, TEMPO_TIPO) VALUES(?,?,?,?,?,?,?)";
+//		try {
+//
+//			PreparedStatement stmt = connection.prepareStatement(sql);
+//			stmt.setString(1, atividade.getNome());
+//			stmt.setString(2, atividade.getDescricao());
+//			stmt.setTimestamp(3, new java.sql.Timestamp(atividade.getCriadoEm().getTime()));
+//			stmt.setInt(4, atividade.getPeso());
+//			stmt.setLong(5, atividade.getTag().getId());
+//			stmt.setLong(6, atividade.getTempoExecucao());
+//			stmt.setString(7, atividade.getTipoExecucao());
+//			stmt.execute();
+//			stmt.close();
+//
+//		} catch (SQLException u) {
+//			throw new RuntimeException(u);
+//		}
+//	}
+//	
+//	UPDATE atividade SET NOME ='a', DESCRICAO='b' WHERE ID ='16';
 
 	public void inserirAtividade(Atividade atividade){
 		String sql = "INSERT INTO atividade(NOME, DESCRICAO, CRIADO_EM, TAG_ID, PESO, TEMPO_EXECUCAO_PREVISTO, TEMPO_TIPO) VALUES(?,?,?,?,?,?,?)";

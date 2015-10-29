@@ -33,6 +33,15 @@
 		<pattern value="/atividades" />
 		<view-id value="/public/atividade/atividadesViews.jsf" />
 	</url-mapping>
+	<url-mapping id="atividadeForm">
+		<pattern value="/criar-atividade" />
+		<view-id value="/public/atividade/atividadeForm.jsf" />
+	</url-mapping>
+	<url-mapping id="atividadeEditForm">
+		<pattern value="/editar-atividade/#{atividadeFormMB.atividadeId}" />
+		<view-id value="/public/atividade/atividadeForm.jsf" />
+		<action onPostback="false">#{atividadeFormMB.loadEditAtividade}</action>
+	</url-mapping>
 	
 	<url-mapping id="departamentoList">
 		<pattern value="/departamentos" />

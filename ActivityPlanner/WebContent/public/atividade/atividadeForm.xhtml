@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ps="http://xmlns.jcp.org/jsf/passthrough">
+<ui:composition template="/template.xhtml">
+	<ui:define name="main">
+		<div class="col-md-8">
+			<div class="page-header">
+				<h3>Cadastro de Atividade</h3>
+			</div>
+			<div class="jumbotron" style="padding: 20px;">
+				<h:form id="formPrincipal">
+					<h:outputFormat
+						rendered="#{atividadeFormMB.usersTO.manager eq true}">
+						<p:messages showDetail="true" id="messageAtividade" />
+						<div class="form-group">
+							<label>Nome do Atividade</label>
+							<h:inputText styleClass="form-control"
+								value="#{atividadeFormMB.atividaTo.nome}">
+							</h:inputText>
+						</div>
+						<div class="form-group">
+							<label>Descrição</label>
+							<h:inputTextarea rows="5" cols="30" autoResize="false"
+								styleClass="form-control"
+								value="#{atividadeFormMB.atividaTo.descricao}" />
+						</div>
+						<div class="form-group">
+							<label>Peso</label>
+							<p:spinner id="peso" maxlength="10" style=" display: table;"
+								value="#{atividadeFormMB.atividaTo.peso}" />
+						</div>
+						<div class="form-group">
+							<label>Tempo de Execucao: </label>
+							<h:inputText styleClass="form-control"
+								style="width: 5% !important; margin-left: 10px; display: inline;"
+								value="#{atividadeFormMB.atividaTo.tempoExecucao}" />
+							<h:selectOneMenu id="console" styleClass="form-control"
+								style="width:10%; margin-left: 10px; display: inline;"
+								value="#{atividadeFormMB.atividaTo.tipoExecucao}">
+								<f:selectItem itemLabel="min" itemValue="MIN" />
+								<f:selectItem itemLabel="Hora(s)" itemValue="HORA" />
+								<f:selectItem itemLabel="Dia(s)" itemValue="DIA" />
+							</h:selectOneMenu>
+						</div>
+						<div class="form-group">
+							<label>Tag</label>
+							<h:selectOneMenu value="#{atividadeFormMB.atividaTo.tagId}"
+								style="display: block; width:20%;" styleClass="form-control">
+								<f:selectItems var="tagItens" value="#{atividadeFormMB.listTag}"
+									itemLabel="#{tagItens.nome}"
+									itemDescription="#{tagItens.descricao}"
+									itemValue="#{tagItens.id}" />
+							</h:selectOneMenu>
+						</div>
+
+						<div class="form-group">
+							<h:commandButton id="confirmAtividade" value="Salvar"
+								styleClass="btn btn-primary"
+								actionListener="#{atividadeFormMB.insertAtividade}">
+							</h:commandButton>
+						</div>
+					</h:outputFormat>
+				</h:form>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

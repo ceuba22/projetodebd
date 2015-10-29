@@ -27,14 +27,14 @@
 							</p:column>
 							<p:column headerText="Criado em">
 								<p:outputLabel value="#{project.criadoEm}">
-									<f:convertDateTime pattern="dd/MM/yyyy" />
+									<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="#{initParam.timezone}" />
 								</p:outputLabel>
 
 							</p:column>
 
 							<p:column headerText="Prazo de conclusão">
 								<p:outputLabel value="#{project.prazoDeConclusao}">
-									<f:convertDateTime pattern="dd/MM/yyyy" />
+									<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="#{initParam.timezone}" />
 								</p:outputLabel>
 
 							</p:column>
@@ -53,57 +53,6 @@
 					</p:panel>
 				</div>
 			</div>
-			<p:dialog id="criarProjetoDialog" modal="true"
-				header="Formulário de Projeto"
-				message="Preencha corretamente os campos a seguir."
-				widgetVar="criarProjetoDialog" height="100%" width="75%"
-				closable="false">
-				<p:messages showDetail="true" />
-
-				<p:outputLabel value="Nome do Projeto"
-					style=" margin-bottom: 10px; display: block;" />
-				<p:inputText style="display: block;  margin-bottom: 10px;"
-					value="#{principalMB.projetoTO.nome}" />
-				<p:outputLabel value="Descrição"
-					style=" margin-bottom: 10px; display: block;" />
-				<p:inputText style="display: block;  margin-bottom: 10px;"
-					value="#{principalMB.projetoTO.descricao}" />
-				<p:outputLabel value="Priodade"
-					style=" margin-bottom: 10px; display: block;" />
-				<p:selectOneMenu id="prioridade"
-					style="width:100px; margin-left: 10px;margin-bottom: 10px; display: block;"
-					value="#{principalMB.projetoTO.prioridadeString}">
-					<f:selectItem itemLabel="ALTA" itemValue="ALTA" />
-					<f:selectItem itemLabel="MÉDIA" itemValue="MEDIA" />
-					<f:selectItem itemLabel="BAIXA" itemValue="BAIXA" />
-				</p:selectOneMenu>
-				<p:outputLabel for="popup" value="Prazo de validação"
-					style=" margin-bottom: 10px; display: block;" />
-				<p:calendar id="popup"
-					value="#{principalMB.projetoTO.prazoDeConclusao}" locale="pt"
-					pattern="dd/MM/yyyy" style=" margin-bottom: 10px; display: block;" />
-
-				<div style="float: right">
-					<p:outputLabel value="Atividades"
-						style="margin-bottom: 10px; display: block;" />
-					<p:pickList id="listAtividades" value="#{principalMB.atividades}"
-						converter="atividadeConverter" var="atividades"
-						itemLabel="#{atividades.nome}" itemValue="#{atividades}"
-						style="display: block;  margin-bottom: 10px;" />
-				</div>
-				<p:outputLabel value="Departamentos"
-					style="margin-bottom: 10px; display: block;" />
-				<p:pickList id="listDepartamentos" converter="grupoConverter"
-					value="#{principalMB.departamentos}" var="departamentos"
-					itemLabel="#{departamentos.nome}" itemValue="#{departamentos}"
-					style="display: block;  margin-bottom: 10px;" />
-
-				<p:commandButton id="confirmProjeto" value="Salvar"
-					actionListener="#{principalMB.insertProjeto}" />
-				<p:commandButton id="declineProjeto" value="Cancelar"
-					onsuccess="PF('criarProjetoDialog').hide()" update="@form" />
-
-			</p:dialog>
 
 			<p:dialog id="criarDepartamentoDialog" modal="true"
 				header="Formulário de Departamento"

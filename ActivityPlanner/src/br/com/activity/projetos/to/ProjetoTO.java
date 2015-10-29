@@ -40,6 +40,8 @@ public class ProjetoTO {
 	
 	private Date prazoDeConclusao;
 	
+	private String prazoDeConclusaoString;
+	
 	public ProjetoTO(){
 		
 	}
@@ -81,7 +83,11 @@ public class ProjetoTO {
 		projeto.setListGrupo(new ArrayList<Grupo>());
 		projeto.setListAtividade(new ArrayList<Atividade>());
 		projeto.setListAtividadeAlocada(new ArrayList<AtividadeAlocadaTO>());
-		projeto.setPrazoDeConclusao(this.prazoDeConclusao);
+		try {
+			projeto.setPrazoDeConclusao(ActivityUtil.getInstance().formataData(this.prazoDeConclusaoString));
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 		
 		try {
 			projeto.setCriadoPor(ActivityFacade.getInstance().getUsers(ActivityUtil.getInstance().getUsersTOLogado()));
@@ -187,6 +193,14 @@ public class ProjetoTO {
 
 	public void setPrazoDeConclusao(Date prazoDeConclusao) {
 		this.prazoDeConclusao = prazoDeConclusao;
+	}
+
+	public String getPrazoDeConclusaoString() {
+		return prazoDeConclusaoString;
+	}
+
+	public void setPrazoDeConclusaoString(String prazoDeConclusaoString) {
+		this.prazoDeConclusaoString = prazoDeConclusaoString;
 	}
 	
 	
