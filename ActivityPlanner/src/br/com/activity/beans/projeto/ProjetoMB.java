@@ -8,7 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import br.com.activity.atividade.entidade.Atividade;
-import br.com.activity.atividadeAlocada.to.AtividadeAlocadaTO;
+import br.com.activity.atividade.to.AtividadeAlocadaTO;
 import br.com.activity.grupo.entidade.Grupo;
 import br.com.activity.users.to.UsersTO;
 import br.com.activity.util.PrioridadeTipo;

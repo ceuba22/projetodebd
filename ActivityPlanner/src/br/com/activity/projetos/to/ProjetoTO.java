@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import br.com.activity.atividade.entidade.Atividade;
-import br.com.activity.atividadeAlocada.to.AtividadeAlocadaTO;
+import br.com.activity.atividade.to.AtividadeAlocadaTO;
 import br.com.activity.facade.ActivityFacade;
 import br.com.activity.grupo.entidade.Grupo;
 import br.com.activity.projetos.entidade.Projeto;

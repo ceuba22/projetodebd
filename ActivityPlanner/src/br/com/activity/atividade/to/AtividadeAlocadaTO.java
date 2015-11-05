@@ -1,9 +1,8 @@
-package br.com.activity.atividadeAlocada.to;
+package br.com.activity.atividade.to;
 
 import java.util.Date;
 
 import br.com.activity.atividade.entidade.Atividade;
-import br.com.activity.atividade.to.AtividadeTO;
 import br.com.activity.projetos.entidade.Projeto;
 import br.com.activity.projetos.to.ProjetoTO;
 import br.com.activity.users.entidade.Users;

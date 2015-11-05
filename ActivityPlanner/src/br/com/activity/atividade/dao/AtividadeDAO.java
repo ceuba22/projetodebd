@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.activity.atividade.entidade.Atividade;
+import br.com.activity.atividade.to.AtividadeAlocadaTO;
 import br.com.activity.atividade.to.AtividadeTO;
-import br.com.activity.atividadeAlocada.to.AtividadeAlocadaTO;
 import br.com.activity.facade.ActivityFacade;
 import br.com.activity.hibenate.ConnectionFactory;
 import br.com.activity.users.dao.UsersDAO;

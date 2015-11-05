@@ -13,7 +13,7 @@ import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
 
 import br.com.activity.atividade.dao.AtividadeDAO;
-import br.com.activity.atividadeAlocada.to.AtividadeAlocadaTO;
+import br.com.activity.atividade.to.AtividadeAlocadaTO;
 import br.com.activity.grupo.entidade.Grupo;
 import br.com.activity.projetos.dao.ProjetosDAO;
 import br.com.activity.projetos.entidade.Projeto;

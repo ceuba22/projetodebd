@@ -8,7 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import br.com.activity.atividade.dao.AtividadeDAO;
-import br.com.activity.atividadeAlocada.to.AtividadeAlocadaTO;
+import br.com.activity.atividade.to.AtividadeAlocadaTO;
 import br.com.activity.facade.ActivityFacade;
 import br.com.activity.projetos.entidade.Projeto;
 import br.com.activity.projetos.to.ProjetoTO;

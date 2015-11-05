@@ -6,7 +6,7 @@ import java.util.List;
 import javax.persistence.Column;
 
 import br.com.activity.atividade.entidade.Atividade;
-import br.com.activity.atividadeAlocada.to.AtividadeAlocadaTO;
+import br.com.activity.atividade.to.AtividadeAlocadaTO;
 import br.com.activity.grupo.entidade.Grupo;
 import br.com.activity.users.entidade.Users;
 import br.com.activity.util.PrioridadeTipo;
